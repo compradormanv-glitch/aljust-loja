@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al.just | Loja Online</title>
+  <meta name="description" content="Al.just - material informático, de escritório e escolar.">
+  <link rel="icon" href="assets/logo.jpg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="topbar">
+    <div>Entrega em Angola • Produtos de qualidade • Atendimento rápido</div>
+    <div>WhatsApp: <span id="topWhatsapp">+244 9XX XXX XXX</span></div>
+  </div>
+
+  <header class="header">
+    <a class="brand" href="#inicio">
+      <img src="assets/logo.jpg" alt="Logotipo Al.just">
+    </a>
+    <div class="search-wrap">
+      <input id="searchInput" type="search" placeholder="Pesquisar produtos..." aria-label="Pesquisar produtos">
+      <button id="searchBtn" aria-label="Pesquisar">🔎</button>
+    </div>
+    <button class="cart-btn" id="openCartBtn">🛒 Carrinho <span id="cartCount">0</span></button>
+  </header>
+
+  <nav class="nav">
+    <a href="#inicio">Início</a>
+    <a href="#categorias">Categorias</a>
+    <a href="#produtos">Produtos</a>
+    <a href="#sobre">Sobre Nós</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <span class="eyebrow">LOJA ONLINE AL.JUST</span>
+        <h1>Tecnologia, escritório e educação num só lugar.</h1>
+        <p>Encontre produtos para estudar, trabalhar e equipar o seu negócio.</p>
+        <div class="hero-actions">
+          <a href="#produtos" class="btn btn-red">Ver produtos</a>
+          <button class="btn btn-dark" id="heroWhatsappBtn">Comprar pelo WhatsApp</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="device laptop">💻</div>
+        <div class="device printer">🖨️</div>
+        <div class="device school">📚</div>
+      </div>
+    </section>
+
+    <section class="section" id="categorias">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">ESCOLHA UMA CATEGORIA</span>
+          <h2>O que procura?</h2>
+        </div>
+      </div>
+      <div class="category-grid">
+        <button class="category-card cat-blue" data-category="Informática">
+          <span class="category-icon">💻</span>
+          <strong>Material Informático</strong>
+          <small>Computadores, impressoras, acessórios e mais.</small>
+        </button>
+        <button class="category-card cat-red" data-category="Escritório">
+          <span class="category-icon">🖨️</span>
+          <strong>Material de Escritório</strong>
+          <small>Papel, canetas, agrafadores, pastas e mais.</small>
+        </button>
+        <button class="category-card cat-navy" data-category="Escolar">
+          <span class="category-icon">🎒</span>
+          <strong>Material Escolar</strong>
+          <small>Cadernos, mochilas, lápis, blocos e mais.</small>
+        </button>
+      </div>
+    </section>
+
+    <section class="section" id="produtos">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">CATÁLOGO</span>
+          <h2>Produtos em destaque</h2>
+        </div>
+        <select id="categoryFilter" aria-label="Filtrar por categoria">
+          <option value="Todos">Todas as categorias</option>
+          <option value="Informática">Informática</option>
+          <option value="Escritório">Escritório</option>
+          <option value="Escolar">Escolar</option>
+        </select>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+      <div class="empty-state" id="emptyState" hidden>Nenhum produto encontrado.</div>
+    </section>
+
+    <section class="benefits">
+      <div><span>🛡️</span><div><strong>Compra segura</strong><small>Pedido confirmado antes do envio.</small></div></div>
+      <div><span>🚚</span><div><strong>Entrega em Angola</strong><small>Combine a entrega com a nossa equipa.</small></div></div>
+      <div><span>💬</span><div><strong>Atendimento</strong><small>Fale connosco pelo WhatsApp.</small></div></div>
+      <div><span>✅</span><div><strong>Qualidade</strong><small>Produtos selecionados para si.</small></div></div>
+    </section>
+
+    <section class="section about" id="sobre">
+      <div>
+        <span class="eyebrow">SOBRE A AL.JUST</span>
+        <h2>Soluções para estudar, trabalhar e crescer.</h2>
+        <p>A Al.just é uma loja focada em material informático, material de escritório e material escolar. Este site foi preparado para apresentar os produtos, montar o carrinho e enviar o pedido pelo WhatsApp.</p>
+      </div>
+      <div class="about-box">
+        <strong>Como comprar</strong>
+        <ol>
+          <li>Escolha os produtos.</li>
+          <li>Adicione ao carrinho.</li>
+          <li>Confirme os dados.</li>
+          <li>Envie o pedido pelo WhatsApp.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="contact section" id="contacto">
+      <span class="eyebrow">CONTACTO</span>
+      <h2>Fale com a Al.just</h2>
+      <div class="contact-grid">
+        <a href="#" id="contactWhatsapp" class="contact-card">💬 <strong>WhatsApp</strong><span>Enviar pedido</span></a>
+        <a href="mailto:info@aljust.ao" class="contact-card">✉️ <strong>E-mail</strong><span>info@aljust.ao</span></a>
+        <div class="contact-card">📍 <strong>Localização</strong><span>Luanda, Angola</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand">
+      <img src="assets/logo.jpg" alt="Al.just">
+      <p>Soluções para estudar, trabalhar e crescer.</p>
+    </div>
+    <div class="footer-links">
+      <strong>Links</strong>
+      <a href="#produtos">Produtos</a>
+      <a href="#categorias">Categorias</a>
+      <a href="#sobre">Sobre nós</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="footer-links">
+      <strong>Redes sociais</strong>
+      <a href="https://www.instagram.com/al.just/" target="_blank" rel="noopener">Instagram</a>
+      <a href="#" target="_blank">Facebook</a>
+      <a href="#" target="_blank">TikTok</a>
+    </div>
+  </footer>
+  <div class="copyright">© <span id="year"></span> Al.just. Todos os direitos reservados.</div>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-head">
+      <h3>Seu carrinho</h3>
+      <button id="closeCartBtn">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-total">
+      <span>Total</span><strong id="cartTotal">0 Kz</strong>
+    </div>
+    <button class="btn btn-red full" id="checkoutBtn">Finalizar pelo WhatsApp</button>
+  </aside>
+  <div class="overlay" id="overlay"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
