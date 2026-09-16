@@ -1,20 +1,9 @@
-AL.JUST - Painel Administrativo
+AL.just — PAINEL ADMINISTRATIVO COMPLETO
 
-Como usar:
-1. Extraia o ficheiro ZIP.
-2. Abra admin.html para cadastrar e gerir produtos.
-3. Abra index.html para visualizar os produtos publicados.
+Inclui: escolher imagem do computador, cadastrar, publicar/ocultar, editar, eliminar, visualizar e guardar produtos; layout PC/telemóvel; identidade AL.just.
 
-Funções incluídas:
-- Escolher imagem do computador
-- Cadastrar produto
-- Publicar/retirar publicação
-- Editar produto
-- Eliminar produto
-- Ver produtos cadastrados
-- Guardar produtos no localStorage do navegador
+INSTALAÇÃO: extraia o ZIP > GitHub > Add file > Upload files > envie os 4 ficheiros > Commit changes.
 
-Nota:
-Esta versão guarda os dados apenas no navegador e no dispositivo onde foi utilizada.
-Para uma loja online real com vários administradores e acesso de diferentes dispositivos,
-será necessário ligar a um banco de dados e a um servidor/backend.
+PAINEL: https://compradormanv-glitch.github.io/aljust-loja/admin.html
+
+NOTA: esta versão usa localStorage do navegador. GitHub Pages é estático; para produtos publicados aparecerem em TODOS os aparelhos/clientes será necessário um banco de dados online. A parte de empresas/NIF deve permanecer nos ficheiros atuais da loja; não substituir a loja inteira por estes ficheiros.

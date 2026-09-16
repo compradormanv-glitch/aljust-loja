@@ -1,0 +1,1 @@
+// Funções auxiliares para a loja AL.just. Os produtos publicados ficam disponíveis no mesmo navegador. const ALJUST_PRODUCTS_KEY="aljust_products_v3"; function aljustProdutosPublicados(){try{return JSON.parse(localStorage.getItem(ALJUST_PRODUCTS_KEY)||"[]").filter(p=>p.published)}catch(e){return[]}}
