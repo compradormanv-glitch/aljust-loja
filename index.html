@@ -9,40 +9,120 @@
 </head>
 <body>
 <div class="topbar"><span>Entrega em Angola • Atendimento rápido</span><span>WhatsApp: +244 926 163 681</span></div>
-<header>
+
+<header class="header">
   <a href="#inicio" class="brand"><img src="logo.jpg" alt="Al.just"></a>
   <div class="search"><input id="search" placeholder="Pesquisar produtos..."><button id="searchBtn">🔎</button></div>
   <button class="cart" id="openCart">🛒 Carrinho <b id="cartCount">0</b></button>
 </header>
+
 <nav><a href="#inicio">Início</a><a href="#categorias">Categorias</a><a href="#produtos">Produtos</a><a href="#sobre">Sobre Nós</a><a href="#contacto">Contacto</a></nav>
 
 <main>
-<section class="hero" id="inicio"><div><span class="eyebrow">LOJA ONLINE AL.JUST</span><h1>Tecnologia, escritório e educação num só lugar.</h1><p>Escolha os produtos e defina a quantidade no carrinho.</p><a class="btn red" href="#produtos">Ver produtos</a></div><div class="hero-art">💻 🖨️ 📚</div></section>
+<section class="hero" id="inicio">
+  <div>
+    <span class="eyebrow">LOJA ONLINE AL.JUST</span>
+    <h1>Tecnologia, escritório e educação num só lugar.</h1>
+    <p>Escolha os produtos e finalize a sua compra pelo método de pagamento pretendido.</p>
+    <a class="btn red" href="#produtos">Ver produtos</a>
+  </div>
+  <div class="hero-art">💻 🖨️ 📚</div>
+</section>
 
-<section class="section" id="categorias"><span class="eyebrow">CATEGORIAS</span><h2>O que procura?</h2>
-<div class="cats">
-<button data-cat="Informática">💻 <b>Material Informático</b><small>Computadores, impressoras e acessórios.</small></button>
-<button data-cat="Escritório">🖨️ <b>Material de Escritório</b><small>Papel, canetas, pastas e mais.</small></button>
-<button data-cat="Escolar">🎒 <b>Material Escolar</b><small>Cadernos, mochilas, lápis e mais.</small></button>
-</div></section>
+<section class="section" id="categorias">
+  <span class="eyebrow">CATEGORIAS</span><h2>O que procura?</h2>
+  <div class="cats">
+    <button data-cat="Informática">💻 <b>Material Informático</b><small>Computadores, impressoras e acessórios.</small></button>
+    <button data-cat="Escritório">🖨️ <b>Material de Escritório</b><small>Papel, canetas, pastas e mais.</small></button>
+    <button data-cat="Escolar">🎒 <b>Material Escolar</b><small>Cadernos, mochilas, lápis e mais.</small></button>
+  </div>
+</section>
 
-<section class="section" id="produtos"><div class="headrow"><div><span class="eyebrow">CATÁLOGO</span><h2>Produtos</h2><p id="status">A carregar...</p></div><select id="filter"><option>Todos</option><option>Informática</option><option>Escritório</option><option>Escolar</option></select></div>
-<div id="grid" class="grid"></div><p id="empty" class="empty" hidden>Nenhum produto encontrado.</p><p id="error" class="error" hidden>Não foi possível carregar os produtos.</p></section>
+<section class="section" id="produtos">
+  <div class="headrow">
+    <div><span class="eyebrow">CATÁLOGO</span><h2>Produtos</h2><p id="status">A carregar...</p></div>
+    <select id="filter"><option>Todos</option><option>Informática</option><option>Escritório</option><option>Escolar</option></select>
+  </div>
+  <div id="grid" class="grid"></div>
+  <p id="empty" class="empty" hidden>Nenhum produto encontrado.</p>
+</section>
 
-<section class="benefits"><div>🛡️ <b>Compra segura</b></div><div>🚚 <b>Entrega em Angola</b></div><div>💬 <b>Atendimento WhatsApp</b></div><div>✅ <b>Qualidade</b></div></section>
+<section class="benefits">
+  <div>🛡️ <b>Compra segura</b></div><div>🚚 <b>Entrega em Angola</b></div>
+  <div>💬 <b>Atendimento WhatsApp</b></div><div>✅ <b>Qualidade</b></div>
+</section>
+
 <section class="section" id="sobre"><span class="eyebrow">SOBRE</span><h2>Al.just</h2><p>Loja de material informático, de escritório e escolar.</p></section>
 <section class="section" id="contacto"><span class="eyebrow">CONTACTO</span><h2>Fale connosco</h2><a href="#" id="wa">💬 WhatsApp — +244 926 163 681</a></section>
 </main>
 
 <footer><img src="logo.jpg" alt="Al.just"><p>© <span id="year"></span> Al.just. Todos os direitos reservados.</p></footer>
 
-<aside id="drawer" class="drawer">
+<!-- CARRINHO -->
+<aside id="drawer" class="drawer" aria-hidden="true">
   <div class="drawerhead"><h3>Seu carrinho</h3><button id="closeCart">✕</button></div>
   <div id="cartItems"></div>
   <div class="total"><span>Total</span><b id="total">0 Kz</b></div>
-  <button class="btn red full" id="checkout">Finalizar pelo WhatsApp</button>
+  <button class="btn red full" id="checkoutBtn">Finalizar compra</button>
 </aside>
 <div id="overlay" class="overlay"></div>
+
+<!-- PAGAMENTO -->
+<div id="paymentOverlay" class="payment-overlay" aria-hidden="true">
+  <div class="payment-modal">
+    <div class="modal-head">
+      <div><span class="eyebrow">CHECKOUT</span><h2>Finalizar compra</h2></div>
+      <button id="closePayment" class="close">✕</button>
+    </div>
+
+    <div class="order-summary">
+      <h3>Resumo do pedido</h3>
+      <div id="checkoutSummary"></div>
+      <div class="summary-total"><span>Total</span><strong id="checkoutTotal">0 Kz</strong></div>
+    </div>
+
+    <div class="customer-form">
+      <h3>Dados do cliente</h3>
+      <div class="two-col">
+        <div><label for="customerName">Nome completo</label><input id="customerName" placeholder="Ex.: Alberto Orlando"></div>
+        <div><label for="customerPhone">Telefone</label><input id="customerPhone" placeholder="+244 ..."></div>
+      </div>
+      <label for="customerAddress">Local de entrega</label>
+      <input id="customerAddress" placeholder="Província / município / bairro">
+    </div>
+
+    <div class="payment-methods">
+      <h3>Escolha o método de pagamento</h3>
+
+      <label class="payment-option">
+        <input type="radio" name="paymentMethod" value="BAI">
+        <span class="pay-icon">🏦</span>
+        <span><strong>Transferência Banco BAI</strong><small>Transferência bancária</small></span>
+      </label>
+
+      <label class="payment-option">
+        <input type="radio" name="paymentMethod" value="BFA">
+        <span class="pay-icon">🏦</span>
+        <span><strong>Transferência Banco BFA</strong><small>Transferência bancária</small></span>
+      </label>
+
+      <label class="payment-option">
+        <input type="radio" name="paymentMethod" value="MULTICAIXA_EXPRESS">
+        <span class="pay-icon">📱</span>
+        <span><strong>Multicaixa Express</strong><small>Pagamento por Multicaixa Express</small></span>
+      </label>
+    </div>
+
+    <div id="paymentInstructions" class="payment-instructions" hidden></div>
+
+    <div id="checkoutError" class="checkout-error" hidden></div>
+
+    <div class="modal-actions">
+      <button class="btn ghost" id="backToCart">Voltar ao carrinho</button>
+      <button class="btn red" id="confirmOrder">Continuar</button>
+    </div>
+  </div>
+</div>
 
 <script>
 const SUPABASE_URL="https://myzlvhpvolpekesibvjz.supabase.co";
@@ -75,12 +155,11 @@ function renderProducts(){
 function addToCart(id){
   const p=products.find(x=>String(x.id)===String(id));if(!p)return;
   const i=cart.find(x=>String(x.id)===String(id));
-  if(i){if(i.qty<Number(p.stock))i.qty++}
-  else cart.push({id:p.id,qty:1});
+  if(i){if(i.qty<Number(p.stock))i.qty++} else cart.push({id:p.id,qty:1});
   saveCart();openCart();
 }
 function changeQty(id,delta){
-  const i=cart.find(x=>String(x.id)===String(id));const p=products.find(x=>String(x.id)===String(id));if(!i||!p)return;
+  const i=cart.find(x=>String(x.id)===String(id)),p=products.find(x=>String(x.id)===String(id));if(!i||!p)return;
   i.qty=Math.max(1,Math.min(Number(p.stock),i.qty+delta));saveCart();
 }
 function removeItem(id){cart=cart.filter(i=>String(i.id)!==String(id));saveCart()}
@@ -89,28 +168,96 @@ function renderCart(){
   cart=cart.filter(i=>products.some(p=>String(p.id)===String(i.id)));
   let total=0,count=0;
   $("cartItems").innerHTML=cart.length?cart.map(i=>{
-    const p=products.find(x=>String(x.id)===String(i.id));const subtotal=Number(p.price)*i.qty;total+=subtotal;count+=i.qty;
-    return `<div class="line">
-      <div class="lineInfo">${p.image_url?`<img src="${esc(p.image_url)}" alt="">`:"📦"}<div><strong>${esc(p.name)}</strong><span>${money(p.price)} cada</span></div></div>
+    const p=products.find(x=>String(x.id)===String(i.id)),subtotal=Number(p.price)*i.qty;
+    total+=subtotal;count+=i.qty;
+    return `<div class="line"><div class="lineInfo">${p.image_url?`<img src="${esc(p.image_url)}" alt="">`:"📦"}<div><strong>${esc(p.name)}</strong><span>${money(p.price)} cada</span></div></div>
       <div class="qty"><button onclick="changeQty('${p.id}',-1)">−</button><b>${i.qty}</b><button onclick="changeQty('${p.id}',1)">+</button><button class="remove" onclick="removeItem('${p.id}')">🗑️</button></div>
-      <strong>${money(subtotal)}</strong>
-    </div>`
+      <strong>${money(subtotal)}</strong></div>`
   }).join(""):"<p class='muted'>O carrinho está vazio.</p>";
   $("cartCount").textContent=count;$("total").textContent=money(total);
 }
 function openCart(){$("drawer").classList.add("show");$("overlay").classList.add("show")}
 function closeCart(){$("drawer").classList.remove("show");$("overlay").classList.remove("show")}
-function wa(msg){window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`,"_blank")}
+
+function openPayment(){
+  if(!cart.length){alert("O carrinho está vazio.");return}
+  renderCheckoutSummary();
+  $("paymentOverlay").classList.add("show");
+  $("paymentOverlay").setAttribute("aria-hidden","false");
+}
+function closePayment(){
+  $("paymentOverlay").classList.remove("show");
+  $("paymentOverlay").setAttribute("aria-hidden","true");
+}
+function renderCheckoutSummary(){
+  $("checkoutSummary").innerHTML=cart.map(i=>{
+    const p=products.find(x=>String(x.id)===String(i.id));
+    return `<div class="summary-line"><span>${esc(p.name)} × ${i.qty}</span><strong>${money(Number(p.price)*i.qty)}</strong></div>`;
+  }).join("");
+  const total=cart.reduce((sum,i)=>{const p=products.find(x=>String(x.id)===String(i.id));return sum+Number(p.price)*i.qty},0);
+  $("checkoutTotal").textContent=money(total);
+}
+function selectedPayment(){
+  return document.querySelector('input[name="paymentMethod"]:checked')?.value || "";
+}
+function showPaymentInstructions(method){
+  const box=$("paymentInstructions");
+  if(!method){box.hidden=true;box.innerHTML="";return}
+  const details={
+    BAI:{
+      label:"Transferência Banco BAI",
+      value:"AO06.0040.0000.2250.3712.10.14.2",
+      title:"IBAN BAI"
+    },
+    BFA:{
+      label:"Transferência Banco BFA",
+      value:"AO06.0006.0000.1556.7326.3016.1",
+      title:"IBAN BFA"
+    },
+    MULTICAIXA_EXPRESS:{
+      label:"Multicaixa Express",
+      value:"926163681",
+      title:"Número Multicaixa Express"
+    }
+  };
+  const d=details[method];
+  box.hidden=false;
+  box.innerHTML=`<strong>${d.label}</strong>
+    <p><span class="muted">${d.title}</span><br><code>${d.value}</code>
+    <button type="button" class="copy-pay" onclick="copyPayment('${d.value}')">Copiar</button></p>
+    <p class="muted">Depois de efetuar o pagamento, guarde o comprovativo para enviar à Al.just.</p>`;
+}
+async function copyPayment(value){
+  try{
+    await navigator.clipboard.writeText(value);
+    const box=$("paymentInstructions");
+    const note=document.createElement("div");
+    note.className="copy-note";
+    note.textContent="Copiado.";
+    box.appendChild(note);
+    setTimeout(()=>note.remove(),1800);
+  }catch(e){}
+}
+function continueCheckout(){
+  const method=selectedPayment();
+  const name=$("customerName").value.trim(),phone=$("customerPhone").value.trim(),address=$("customerAddress").value.trim();
+  $("checkoutError").hidden=true;
+  if(!method){$("checkoutError").textContent="Selecione um método de pagamento.";$("checkoutError").hidden=false;return}
+  if(!name||!phone||!address){$("checkoutError").textContent="Preencha o nome, telefone e local de entrega.";$("checkoutError").hidden=false;return}
+  const map={BAI:"Transferência Banco BAI",BFA:"Transferência Banco BFA",MULTICAIXA_EXPRESS:"Multicaixa Express"};
+  const lines=cart.map(i=>{const p=products.find(x=>String(x.id)===String(i.id));return `• ${p.name} x${i.qty} — ${money(Number(p.price)*i.qty)}`});
+  const msg=`Olá, Al.just! Quero finalizar uma compra.%0A%0A${encodeURIComponent(lines.join("\n"))}%0A%0ATotal: ${encodeURIComponent($("checkoutTotal").textContent)}%0AMétodo: ${encodeURIComponent(map[method])}%0ANome: ${encodeURIComponent(name)}%0ATelefone: ${encodeURIComponent(phone)}%0ALocal de entrega: ${encodeURIComponent(address)}`;
+  window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,"_blank");
+}
 $("search").oninput=renderProducts;$("searchBtn").onclick=renderProducts;$("filter").onchange=renderProducts;
 $("openCart").onclick=openCart;$("closeCart").onclick=closeCart;$("overlay").onclick=closeCart;
-$("wa").onclick=e=>{e.preventDefault();wa("Olá, Al.just! Vim pelo site e gostaria de saber mais sobre os produtos.")};
-$("checkout").onclick=()=>{
- if(!cart.length)return alert("O carrinho está vazio.");
- const lines=cart.map(i=>{const p=products.find(x=>String(x.id)===String(i.id));return `• ${p.name} x${i.qty} — ${money(Number(p.price)*i.qty)}`});
- wa(`Olá, Al.just! Quero fazer este pedido:\n${lines.join("\n")}\n\nTotal: ${$("total").textContent}\n\nNome:\nLocal de entrega:`);
-};
+$("checkoutBtn").onclick=openPayment;$("closePayment").onclick=closePayment;$("backToCart").onclick=()=>{closePayment();openCart()};
+document.querySelectorAll('input[name="paymentMethod"]').forEach(r=>r.addEventListener("change",e=>showPaymentInstructions(e.target.value)));
+$("confirmOrder").onclick=continueCheckout;
+$("wa").onclick=e=>{e.preventDefault();window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Olá, Al.just! Vim pelo site e gostaria de saber mais sobre os produtos.")}`,"_blank")};
 document.querySelectorAll(".cats button").forEach(b=>b.onclick=()=>{$("filter").value=b.dataset.cat;renderProducts();$("produtos").scrollIntoView({behavior:"smooth"})});
 $("year").textContent=new Date().getFullYear();
 loadProducts();
 </script>
-</body></html>
+</body>
+</html>
