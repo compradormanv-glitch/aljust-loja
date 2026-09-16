@@ -1,180 +1,47 @@
-<!doctype html>
-<html lang="pt-AO">
+<!DOCTYPE html>
+<html lang="pt">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Al.just — Administração</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f9;color:#18283b}
-header{background:#08233f;color:#fff;padding:15px 28px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:25px;font-weight:800}.logo span{color:#e21b23}.wrap{max-width:1200px;margin:25px auto;padding:0 16px}
-.panel{background:#fff;border:1px solid #dde4ec;border-radius:14px;padding:20px;margin-bottom:20px}
-h1{margin:0 0 6px}.muted{color:#68788a}.toolbar{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin:15px 0}
-input,select,textarea{width:100%;padding:11px;border:1px solid #ccd6e0;border-radius:9px;font:inherit}textarea{min-height:90px;resize:vertical}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}
-label{display:block;font-size:13px;font-weight:700;margin:0 0 6px}
-button{border:0;border-radius:9px;padding:10px 14px;font-weight:700;cursor:pointer}.primary{background:#08233f;color:#fff}.red{background:#e21b23;color:#fff}.gray{background:#edf2f7;color:#1f2937}.danger{background:#fee2e2;color:#991b1b}
-.status{padding:10px 12px;border-radius:9px;background:#eef6ff;color:#164e7a;margin-bottom:15px}.error{background:#fff0f0;color:#8b1a1a}
-table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid #edf0f3;font-size:13px;vertical-align:middle}th{color:#637386;font-size:12px}
-.thumb{width:54px;height:54px;object-fit:contain;border-radius:7px;background:#f3f5f7}
-.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}
-.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700}.ok{background:#dcfce7;color:#166534}.low{background:#fef3c7;color:#92400e}
-@media(max-width:700px){.grid{grid-template-columns:1fr}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AL.JUST - Painel Administrativo</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header><div class="logo">AL<span>.just</span></div><div>Admin — Produtos</div></header>
-<div class="wrap">
-<section class="panel">
-<h1>Produtos</h1>
-<p class="muted">Os produtos cadastrados aqui são gravados no Supabase e podem aparecer na loja pública.</p>
-<div id="status" class="status">A ligar ao banco de dados...</div>
-<div class="toolbar">
-<input id="search" placeholder="Pesquisar produto..." oninput="renderProducts()" style="max-width:420px">
-<button class="primary" onclick="openForm()">+ Adicionar produto</button>
-</div>
-<div id="table"></div>
-</section>
+  <header><h1>AL.JUST</h1><p>Painel Administrativo</p></header>
+  <main>
+    <section class="panel">
+      <h2 id="formTitle">Cadastrar produto</h2>
+      <form id="productForm">
+        <input type="hidden" id="productId">
+        <label>Nome do produto</label>
+        <input id="name" required placeholder="Ex.: Computador HP">
+        <label>Categoria</label>
+        <select id="category" required>
+          <option value="">Selecionar</option>
+          <option>Informática</option>
+          <option>Material escolar</option>
+          <option>Material de escritório</option>
+          <option>Outros</option>
+        </select>
+        <label>Preço (Kz)</label>
+        <input id="price" type="number" min="0" required>
+        <label>Descrição</label>
+        <textarea id="description" placeholder="Descrição do produto"></textarea>
+        <label>Imagem do computador</label>
+        <input id="image" type="file" accept="image/*">
+        <img id="preview" class="preview" alt="Pré-visualização">
+        <div class="buttons">
+          <button type="submit">Guardar produto</button>
+          <button type="button" id="cancelEdit" class="secondary">Cancelar edição</button>
+        </div>
+      </form>
+    </section>
 
-<section class="panel" id="formPanel" hidden>
-<h2 id="formTitle">Adicionar produto</h2>
-<div class="grid">
-<div><label>Nome *</label><input id="name"></div>
-<div><label>Categoria *</label><select id="category"><option>Informática</option><option>Escritório</option><option>Escolar</option></select></div>
-<div><label>Preço (Kz) *</label><input id="price" type="number" min="0" step="0.01"></div>
-<div><label>Stock *</label><input id="stock" type="number" min="0" step="1"></div>
-<div class="full"><label>Imagem (URL)</label><input id="image_url" placeholder="https://..."></div>
-<div class="full"><label>Descrição</label><textarea id="description"></textarea></div>
-</div>
-<div class="actions">
-<button class="primary" onclick="saveProduct()">Guardar produto</button>
-<button class="gray" onclick="closeForm()">Cancelar</button>
-</div>
-</section>
-</div>
-
-<script>
-const SUPABASE_URL="https://myzlvhpvolpekesibvjz.supabase.co";
-const SUPABASE_KEY="sb_publishable_INVV9XjLZN9HAeReMGV-5g_OFjXoB0b";
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let products=[], editingId=null;
-
-const $=id=>document.getElementById(id);
-const money=n=>new Intl.NumberFormat("pt-AO").format(Number(n||0))+" Kz";
-const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
-
-function setStatus(msg,error=false){$("status").textContent=msg;$("status").className=error?"status error":"status"}
-
-async function loadProducts(){
-  setStatus("A carregar produtos...");
-  const {data,error}=await db.from("produtos")
-    .select("id,created_at,name,category,price,stock,image_url,description")
-    .order("created_at",{ascending:false});
-  if(error){
-    console.error(error);
-    setStatus("Erro ao carregar produtos: "+error.message,true);
-    $("table").innerHTML="";
-    return;
-  }
-  products=data||[];
-  setStatus(products.length+" produto(s) no banco de dados.");
-  renderProducts();
-}
-
-function renderProducts(){
-  const q=$("search").value.trim().toLowerCase();
-  const list=products.filter(p=>(p.name+" "+(p.category||"")+" "+(p.description||"")).toLowerCase().includes(q));
-  if(!list.length){$("table").innerHTML="<p class='muted'>Nenhum produto encontrado.</p>";return}
-  $("table").innerHTML=`<div style="overflow:auto"><table>
-  <thead><tr><th>Imagem</th><th>Produto</th><th>Categoria</th><th>Preço</th><th>Stock</th><th>Ações</th></tr></thead>
-  <tbody>${list.map(p=>`<tr>
-    <td>${p.image_url?`<img class="thumb" src="${esc(p.image_url)}" alt="">`:"📦"}</td>
-    <td><strong>${esc(p.name)}</strong><br><small>${esc(p.description||"")}</small></td>
-    <td>${esc(p.category||"—")}</td>
-    <td>${money(p.price)}</td>
-    <td>${Number(p.stock||0)} ${Number(p.stock||0)<=3?'<span class="badge low">Baixo</span>':'<span class="badge ok">Normal</span>'}</td>
-    <td><button class="gray" onclick="editProduct('${p.id}')">Editar</button> <button class="danger" onclick="deleteProduct('${p.id}')">Apagar</button></td>
-  </tr>`).join("")}</tbody></table></div>`;
-}
-
-function openForm(){
-  editingId=null;
-  $("formTitle").textContent="Adicionar produto";
-  ["name","price","stock","image_url","description"].forEach(id=>$(id).value="");
-  $("category").value="Informática";
-  $("formPanel").hidden=false;
-  $("name").focus();
-  window.scrollTo({top:document.getElementById("formPanel").offsetTop-15,behavior:"smooth"});
-}
-
-function closeForm(){$("formPanel").hidden=true;editingId=null}
-
-function editProduct(id){
-  const p=products.find(x=>String(x.id)===String(id)); if(!p)return;
-  editingId=p.id;
-  $("formTitle").textContent="Editar produto";
-  $("name").value=p.name||"";
-  $("category").value=p.category||"Informática";
-  $("price").value=p.price??"";
-  $("stock").value=p.stock??0;
-  $("image_url").value=p.image_url||"";
-  $("description").value=p.description||"";
-  $("formPanel").hidden=false;
-  window.scrollTo({top:document.getElementById("formPanel").offsetTop-15,behavior:"smooth"});
-}
-
-async function saveProduct(){
-  const name=$("name").value.trim();
-  const category=$("category").value;
-  const price=Number($("price").value);
-  const stock=Number($("stock").value);
-  const image_url=$("image_url").value.trim();
-  const description=$("description").value.trim();
-
-  if(!name)return alert("Digite o nome do produto.");
-  if(!Number.isFinite(price)||price<0)return alert("Digite um preço válido.");
-  if(!Number.isInteger(stock)||stock<0)return alert("Digite um stock válido.");
-
-  const payload={name,category,price,stock,image_url,description};
-
-  setStatus("A guardar produto...");
-  let result;
-  if(editingId){
-    result=await db.from("produtos").update(payload).eq("id",editingId);
-  }else{
-    result=await db.from("produtos").insert(payload);
-  }
-
-  if(result.error){
-    console.error(result.error);
-    setStatus("Não foi possível guardar: "+result.error.message,true);
-    alert("Erro ao guardar no Supabase:\\n\\n"+result.error.message);
-    return;
-  }
-
-  closeForm();
-  await loadProducts();
-  setStatus(editingId?"Produto atualizado com sucesso.":"Produto adicionado com sucesso.");
-  editingId=null;
-}
-
-async function deleteProduct(id){
-  const p=products.find(x=>String(x.id)===String(id));
-  if(!p||!confirm('Apagar "'+p.name+'"?'))return;
-  setStatus("A apagar produto...");
-  const {error}=await db.from("produtos").delete().eq("id",id);
-  if(error){
-    console.error(error);
-    setStatus("Não foi possível apagar: "+error.message,true);
-    alert("Erro ao apagar no Supabase:\\n\\n"+error.message);
-    return;
-  }
-  await loadProducts();
-  setStatus("Produto apagado com sucesso.");
-}
-
-loadProducts();
-</script>
+    <section>
+      <h2>Produtos cadastrados</h2>
+      <div id="adminProducts" class="grid"></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
 </body>
 </html>
