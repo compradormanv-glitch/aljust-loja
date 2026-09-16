@@ -1,17 +1,108 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AL.JUST - Loja</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#102a56">
+  <title>Al.just | Loja Online</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header><h1>AL.JUST</h1><p>Conectando pessoas e sonhos</p></header>
+  <header class="top">
+    <div class="topbar">
+      <button class="menuBtn" id="menuBtn" aria-label="Abrir menu">☰</button>
+      <a class="logo" href="#">
+        <span class="logoAl">AL</span><span class="logoJust">.just</span>
+        <small>INFORMÁTICA • ESCRITÓRIO • ESCOLAR</small>
+      </a>
+      <div class="searchWrap">
+        <input id="search" type="search" placeholder="O que procuras?">
+        <button aria-label="Pesquisar">⌕</button>
+      </div>
+      <div class="headActions">
+        <button class="location">⌖ <span>Luanda</span></button>
+        <button>♙ <span class="hideMobile">Entrar</span></button>
+        <button>♡</button>
+        <button id="cartBtn" class="cart">🛒 <b id="cartCount">0</b></button>
+      </div>
+    </div>
+
+    <nav id="nav">
+      <a href="#produtos">Todos os produtos</a>
+      <a href="#informatica">Informática</a>
+      <a href="#escritorio">Escritório e Papelaria</a>
+      <a href="#escolar">Material Escolar</a>
+      <a href="#ofertas">Ofertas</a>
+      <a href="#empresa">Empresas</a>
+    </nav>
+  </header>
+
   <main>
-    <h2>Produtos disponíveis</h2>
-    <div id="siteProducts" class="grid"></div>
+    <section class="hero">
+      <div class="heroText">
+        <p class="eyebrow">AL.JUST • SOLUÇÕES PARA EMPRESAS</p>
+        <h1>TECNOLOGIA QUE<br><span>TRABALHA</span> COM VOCÊ</h1>
+        <p class="heroDesc">Material informático, escritório e escolar com compra simples para empresas.</p>
+        <div class="heroButtons">
+          <a href="#produtos" class="btn primary">Comprar agora</a>
+          <a href="#empresa" class="btn outline">Comprar como empresa</a>
+        </div>
+      </div>
+      <div class="heroVisual">
+        <div class="orb orb1"></div><div class="orb orb2"></div>
+        <div class="device monitor"><div class="screen">AL<br><small>just</small></div></div>
+        <div class="device laptop"><div class="screen">ALIUST</div></div>
+        <div class="device box">📦</div>
+        <div class="priceBubble"><s>Preço especial</s><strong>Em destaque</strong><small>Consulte o preço</small></div>
+      </div>
+    </section>
+
+    <section class="quick">
+      <div>🚚 <b>Entrega</b><span>para empresas</span></div>
+      <div>💳 <b>Pagamento</b><span>Transferência / Express</span></div>
+      <div>🏢 <b>Compra empresarial</b><span>com NIF</span></div>
+      <div>🛡️ <b>Atendimento</b><span>por WhatsApp</span></div>
+    </section>
+
+    <section class="section" id="produtos">
+      <div class="sectionHead">
+        <div><p class="eyebrow">AL.JUST</p><h2>Produtos em destaque</h2></div>
+        <a href="#" class="see">Ver todos →</a>
+      </div>
+      <div id="products" class="products"></div>
+    </section>
+
+    <section class="section split" id="empresa">
+      <div class="companyCard">
+        <p class="eyebrow">PARA EMPRESAS</p>
+        <h2>Compra empresarial com NIF</h2>
+        <p>Preencha os dados da empresa no checkout para emitir o pedido com nome e NIF.</p>
+        <a class="btn primary" href="#produtos">Ver produtos</a>
+      </div>
+      <div class="companyMini">
+        <div class="miniIcon">🏢</div><h3>Nome da empresa</h3><p>Campo para NIF, telefone e contacto.</p>
+      </div>
+    </section>
+
+    <section class="section categories">
+      <div class="sectionHead"><div><p class="eyebrow">CATEGORIAS</p><h2>Encontre o que precisa</h2></div></div>
+      <div class="catGrid">
+        <a href="#informatica" class="cat"><span>💻</span><b>Informática</b><small>Cabos, ratos, teclados...</small></a>
+        <a href="#escritorio" class="cat"><span>📁</span><b>Escritório</b><small>Papelaria e organização</small></a>
+        <a href="#escolar" class="cat"><span>📚</span><b>Escolar</b><small>Material para escolas</small></a>
+        <a href="#ofertas" class="cat"><span>🔥</span><b>Ofertas</b><small>Produtos em destaque</small></a>
+      </div>
+    </section>
   </main>
-  <script src="app.js"></script>
+
+  <a class="whatsapp" href="https://wa.me/244926163681" target="_blank" rel="noopener">☏</a>
+
+  <footer>
+    <div class="footerBrand"><span class="logoAl">AL</span><span class="logoJust">.just</span></div>
+    <p>Material informático • escritório • escolar</p>
+    <p>© 2026 Al.just</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
