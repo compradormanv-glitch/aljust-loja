@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Al.just — Painel de Administração</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#152436}
+header{background:#08233f;color:#fff;padding:16px 5%;display:flex;justify-content:space-between;align-items:center}
+.wrap{max-width:1100px;margin:28px auto;padding:0 18px}.panel{background:#fff;border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 10px 30px #0001}.hidden{display:none}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{font-weight:700;font-size:14px;display:block;margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #d8e0e8;border-radius:9px}textarea{min-height:90px}
+button{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer}.primary{background:#e21b23;color:#fff}.dark{background:#08233f;color:#fff}.ghost{background:#eef3f7}.danger{background:#b51218;color:#fff}
+.actions{display:flex;gap:10px;flex-wrap:wrap}.msg{margin-top:10px;padding:10px;border-radius:8px;background:#eef7ee;color:#185b22}.err{background:#fff0f0;color:#8b1a1a}
+table{width:100%;border-collapse:collapse;margin-top:12px}th,td{padding:10px;border-bottom:1px solid #e5e9ee;text-align:left;vertical-align:middle}th{background:#f7f9fb}.thumb{width:60px;height:50px;object-fit:contain;background:#f2f4f7;border-radius:7px}
+.muted{color:#657588}
+@media(max-width:750px){.grid{grid-template-columns:1fr}table{display:block;overflow:auto;white-space:nowrap}}
+</style>
+</head>
+<body>
+<header><strong>AL.JUST — Painel de Administração</strong><button id="logout" class="ghost">Sair</button></header>
+<div class="wrap">
+<section id="loginPanel" class="panel">
+<h2>Entrar</h2><p class="muted">Use o utilizador administrador criado no Supabase.</p>
+<div class="grid"><div><label>E-mail</label><input id="email" type="email"></div><div><label>Palavra-passe</label><input id="password" type="password"></div></div>
+<div class="actions" style="margin-top:14px"><button id="loginBtn" class="primary">Entrar</button></div><div id="loginMsg"></div>
+</section>
+
+<section id="appPanel" class="hidden">
+<div class="panel">
+<div class="actions" style="justify-content:space-between;align-items:center"><div><h2 id="formTitle">Adicionar produto</h2><p class="muted">Adiciona o produto e ele aparecerá na loja.</p></div><button id="cancelEdit" class="ghost hidden">Cancelar</button></div>
+<form id="productForm">
+<input id="productId" type="hidden">
+<div class="grid">
+<div><label>Nome</label><input id="name" required></div>
+<div><label>Categoria</label><select id="category"><option>Informática</option><option>Escritório</option><option>Escolar</option></select></div>
+<div><label>Preço (Kz)</label><input id="price" type="number" min="0" required></div>
+<div><label>Stock</label><input id="stock" type="number" min="0" required></div>
+<div><label>Imagem</label><input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp"></div>
+<div><label>Descrição</label><textarea id="description"></textarea></div>
+</div>
+<div id="currentImage" class="muted" style="margin-top:8px"></div>
+<div class="actions" style="margin-top:15px"><button class="primary" id="saveBtn" type="submit">Publicar produto</button></div><div id="formMsg"></div>
+</form></div>
+
+<div class="panel"><div class="actions" style="justify-content:space-between"><h2>Produtos</h2><button id="refreshBtn" class="ghost">Atualizar</button></div>
+<div id="tableMsg"></div><table><thead><tr><th>Imagem</th><th>Produto</th><th>Categoria</th><th>Preço</th><th>Stock</th><th>Ações</th></tr></thead><tbody id="productsBody"></tbody></table></div>
+</section>
+</div>
+
+<script>
+const SUPABASE_URL="https://myzlvhpvolpekesibvjz.supabase.co";
+const SUPABASE_KEY="sb_publishable_INVV9XjLZN9HAeReMGV-5g_OFjXoB0b";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY), BUCKET="produtos";
+let products=[], editingId=null;
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat("pt-AO").format(Number(n||0))+" Kz";
+const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+function show(el,msg,err=false){el.innerHTML=`<div class="msg ${err?"err":""}">${esc(msg)}</div>`;setTimeout(()=>el.innerHTML="",4500)}
+async function refreshSession(){const {data:{session}}=await db.auth.getSession();$("loginPanel").classList.toggle("hidden",!!session);$("appPanel").classList.toggle("hidden",!session);$("logout").style.display=session?"block":"none";if(session)loadProducts()}
+async function loadProducts(){const {data,error}=await db.from("produtos").select("*").order("created_at",{ascending:false});if(error){show($("tableMsg"),error.message,true);return}products=data||[];render()}
+function render(){$("productsBody").innerHTML=products.map(p=>`<tr><td>${p.image_url?`<img class="thumb" src="${esc(p.image_url)}" alt="">`:"—"}</td><td><strong>${esc(p.name)}</strong><br><span class="muted">${esc(p.description||"")}</span></td><td>${esc(p.category||"")}</td><td>${money(p.price)}</td><td>${Number(p.stock||0)}</td><td><button class="dark" onclick="editProduct('${p.id}')">Editar</button> <button class="danger" onclick="deleteProduct('${p.id}')">Eliminar</button></td></tr>`).join("")}
+async function login(){const {error}=await db.auth.signInWithPassword({email:$("email").value,password:$("password").value});if(error){show($("loginMsg"),error.message,true);return}refreshSession()}
+async function upload(file){const ext=(file.name.split(".").pop()||"jpg").toLowerCase(),path=`product-${Date.now()}.${ext}`;const {error}=await db.storage.from(BUCKET).upload(path,file,{contentType:file.type,upsert:false});if(error)throw error;return db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl}
+async function removeImage(url){try{const marker="/storage/v1/object/public/"+BUCKET+"/";const i=String(url||"").indexOf(marker);if(i>=0){await db.storage.from(BUCKET).remove([String(url).slice(i+marker.length)])}}catch(e){console.warn(e)}}
+$("productForm").onsubmit=async e=>{e.preventDefault();$("saveBtn").disabled=true;try{const file=$("imageFile").files[0],pOld=products.find(p=>String(p.id)===String(editingId));let payload={name:$("name").value.trim(),category:$("category").value,price:Number($("price").value),stock:Number($("stock").value),description:$("description").value.trim()};if(file)payload.image_url=await upload(file);
+if(editingId){const {error}=await db.from("produtos").update(payload).eq("id",editingId);if(error)throw error;if(file&&pOld?.image_url)await removeImage(pOld.image_url);show($("formMsg"),"Produto atualizado com sucesso.")}else{const {error}=await db.from("produtos").insert(payload);if(error)throw error;show($("formMsg"),"Produto publicado com sucesso.")}resetForm();await loadProducts()}catch(err){show($("formMsg"),err.message||String(err),true)}finally{$("saveBtn").disabled=false}}
+function editProduct(id){const p=products.find(x=>String(x.id)===String(id));if(!p)return;editingId=p.id;$("formTitle").textContent="Editar produto";$("saveBtn").textContent="Guardar alterações";$("cancelEdit").classList.remove("hidden");$("name").value=p.name||"";$("category").value=p.category||"Informática";$("price").value=p.price??"";$("stock").value=p.stock??0;$("description").value=p.description||"";$("currentImage").innerHTML=p.image_url?`Imagem atual: <a target="_blank" href="${esc(p.image_url)}">abrir</a>`:"Sem imagem";scrollTo({top:0,behavior:"smooth"})}
+async function deleteProduct(id){const p=products.find(x=>String(x.id)===String(id));if(!p||!confirm(`Eliminar "${p.name}"?`))return;const {error}=await db.from("produtos").delete().eq("id",id);if(error){show($("tableMsg"),error.message,true);return}if(p.image_url)await removeImage(p.image_url);loadProducts()}
+function resetForm(){editingId=null;$("productForm").reset();$("category").value="Informática";$("formTitle").textContent="Adicionar produto";$("saveBtn").textContent="Publicar produto";$("cancelEdit").classList.add("hidden");$("currentImage").textContent=""}
+$("loginBtn").onclick=login;$("logout").onclick=async()=>{await db.auth.signOut();refreshSession()};$("refreshBtn").onclick=loadProducts;$("cancelEdit").onclick=resetForm;refreshSession();
+</script>
+</body></html>
