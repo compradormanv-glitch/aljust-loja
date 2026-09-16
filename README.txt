@@ -1,9 +1,36 @@
-AL.just — PAINEL ADMINISTRATIVO COMPLETO
+# Al.just — Painel Administrativo
 
-Inclui: escolher imagem do computador, cadastrar, publicar/ocultar, editar, eliminar, visualizar e guardar produtos; layout PC/telemóvel; identidade AL.just.
+## O que esta versão tem
+- Pesquisa de produtos
+- Escolha de imagem diretamente do PC/telemóvel
+- Cadastrar produto
+- Publicar/guardar no Supabase
+- Editar produtos
+- Eliminar produtos
+- Visualizar todos os produtos
+- Stock
+- Interface responsiva
+- Área informativa para clientes/empresas com NIF
+- Identidade visual AL vermelho + .just azul-escuro
 
-INSTALAÇÃO: extraia o ZIP > GitHub > Add file > Upload files > envie os 4 ficheiros > Commit changes.
+## Antes de publicar
+Abra `admin.html` e substitua:
+SUPABASE_URL = "COLOQUE_AQUI_A_URL_DO_SEU_SUPABASE";
+SUPABASE_ANON_KEY = "COLOQUE_AQUI_A_CHAVE_ANON_DO_SEU_SUPABASE";
 
-PAINEL: https://compradormanv-glitch.github.io/aljust-loja/admin.html
+Use a URL e a chave `anon` do seu projeto Supabase.
 
-NOTA: esta versão usa localStorage do navegador. GitHub Pages é estático; para produtos publicados aparecerem em TODOS os aparelhos/clientes será necessário um banco de dados online. A parte de empresas/NIF deve permanecer nos ficheiros atuais da loja; não substituir a loja inteira por estes ficheiros.
+## Observação importante sobre imagens
+Esta versão guarda a imagem como dados no campo `imagem` da tabela `produtos`. Se a sua tabela atual usar outro nome de coluna ou se preferir Supabase Storage, o código precisa ser ajustado para os nomes exatos da sua tabela/bucket.
+
+## Tabela esperada
+O painel espera, no mínimo:
+- id
+- nome
+- preco
+- stock
+- categoria
+- descricao
+- imagem
+
+Se os seus nomes forem diferentes, adapte no bloco `normalize()` e no `payload` do `admin.html`.

@@ -1,1 +1,176 @@
-<!doctype html><html lang="pt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AL.just Admin</title><link rel="stylesheet" href="admin.css"></head><body><header><div class="logo"><i>AL</i><b>.just</b></div><a href="index.html">Ver loja</a></header><main><section class="card"><h1>Painel Administrativo</h1><p>Cadastre e gerencie os produtos da AL.just.</p><form id="form"><input id="id" type="hidden"><div class="grid"><label>Nome<input id="name" required></label><label>Preço (Kz)<input id="price" type="number" min="0" required></label><label>Categoria<input id="cat"></label><label>Contacto/WhatsApp<input id="contact"></label></div><label>Descrição<textarea id="desc"></textarea></label><label class="upload">🖼️ Escolher imagem do computador<input id="img" type="file" accept="image/*"><small id="imgname">Nenhuma imagem</small></label><img id="preview" hidden><div><button class="primary">💾 Guardar produto</button><button type="button" id="cancel" hidden>Cancelar</button></div></form></section><section class="card"><h2>Produtos cadastrados <span id="count">0</span></h2><div id="list" class="products"></div></section></main><script src="admin.js"></script></body></html>
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Al.just — Painel Administrativo</title>
+<style>
+:root{--red:#d71920;--blue:#102a56;--bg:#f5f7fb;--card:#fff;--text:#182033;--muted:#697386;--line:#e2e7ef}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+header{background:#fff;border-bottom:1px solid var(--line);padding:16px 20px;position:sticky;top:0;z-index:5}
+.brand{font-size:28px;font-weight:900}.brand b{color:var(--red)}.brand span{color:var(--blue)}
+.wrap{max-width:1100px;margin:auto;padding:20px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.search{flex:1;min-width:220px;padding:13px 15px;border:1px solid var(--line);border-radius:10px;font-size:16px}
+button{border:0;border-radius:10px;padding:12px 16px;font-weight:700;cursor:pointer;font-size:15px}
+.primary{background:var(--blue);color:#fff}.danger{background:#fff0f0;color:#b40000;border:1px solid #ffcaca}.ghost{background:#fff;border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:1fr 1.2fr;gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+h2{margin:0 0 14px;font-size:20px}label{display:block;font-weight:700;margin:12px 0 6px}
+input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;font-size:16px;background:#fff}
+textarea{min-height:90px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.preview{width:100%;height:180px;object-fit:contain;background:#f2f4f8;border-radius:10px;margin-top:10px;display:none}
+.status{padding:10px;border-radius:9px;background:#eef4ff;color:#183b73;margin-bottom:14px;display:none}
+.products{display:grid;gap:10px}.product{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:11px;padding:10px;background:#fff}
+.thumb{width:70px;height:70px;object-fit:contain;background:#f5f6f8;border-radius:8px}.pname{font-weight:800}.meta{color:var(--muted);font-size:14px;margin-top:4px}.actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+small{color:var(--muted)}.hidden{display:none!important}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr}.product{grid-template-columns:58px 1fr}.actions{grid-column:1/-1;justify-content:stretch}.actions button{flex:1}.thumb{width:58px;height:58px}}
+</style>
+</head>
+<body>
+<header><div class="wrap" style="padding:0"><div class="brand"><b>AL</b><span>.just</span></div><small>Painel de gestão de produtos — vendas para empresas</small></div></header>
+
+<main class="wrap">
+<div id="status" class="status" aria-live="polite"></div>
+<div class="toolbar">
+<input id="search" class="search" type="search" placeholder="🔎 Pesquisar produtos...">
+<button id="newBtn" class="ghost" type="button">＋ Novo produto</button>
+<button id="reloadBtn" class="ghost" type="button">↻ Atualizar</button>
+</div>
+
+<div class="grid">
+<section class="card">
+<h2 id="formTitle">Cadastrar produto</h2>
+<form id="productForm">
+<input id="productId" type="hidden">
+<label>Nome do produto</label><input id="name" required maxlength="150">
+<div class="row">
+<div><label>Preço (Kz)</label><input id="price" type="number" min="0" step="1" required></div>
+<div><label>Stock</label><input id="stock" type="number" min="0" step="1" required></div>
+</div>
+<label>Categoria</label>
+<select id="category"><option>Informática</option><option>Escritório</option><option>Escolar</option><option>Outros</option></select>
+<label>Descrição</label><textarea id="description" maxlength="1000"></textarea>
+<label>Imagem do produto</label>
+<input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp">
+<img id="preview" class="preview" alt="Pré-visualização do produto">
+<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+<button class="primary" type="submit">💾 Guardar e publicar</button>
+<button id="cancelBtn" class="ghost hidden" type="button">Cancelar edição</button>
+</div>
+</form>
+</section>
+
+<section class="card">
+<h2>Produtos cadastrados</h2>
+<div id="count" style="margin-bottom:12px"><small>A carregar...</small></div>
+<div id="products" class="products"></div>
+</section>
+</div>
+
+<section class="card" style="margin-top:18px">
+<h2>🏢 Dados das empresas</h2>
+<p style="margin:0;color:var(--muted)">A loja continua preparada para clientes empresariais com <b>NIF</b>, nome da empresa e dados de contacto no checkout.</p>
+</section>
+</main>
+
+<script>
+/*
+ Al.just admin
+ Requer a tabela public.produtos no Supabase.
+ Configure as três constantes abaixo com os dados do seu projeto.
+*/
+const SUPABASE_URL = "COLOQUE_AQUI_A_URL_DO_SEU_SUPABASE";
+const SUPABASE_ANON_KEY = "COLOQUE_AQUI_A_CHAVE_ANON_DO_SEU_SUPABASE";
+
+const $ = id => document.getElementById(id);
+const state = { products: [], imageData: "", editingOldImage: "" };
+
+function msg(text, error=false){
+  const el=$("status"); el.textContent=text; el.style.display="block";
+  el.style.background=error?"#fff0f0":"#eef4ff"; el.style.color=error?"#9b0000":"#183b73";
+}
+function headers(){return {"apikey":SUPABASE_ANON_KEY,"Authorization":"Bearer "+SUPABASE_ANON_KEY,"Content-Type":"application/json","Prefer":"return=representation"}}
+function configured(){return SUPABASE_URL.startsWith("http") && !SUPABASE_URL.includes("COLOQUE_AQUI") && !SUPABASE_ANON_KEY.includes("COLOQUE_AQUI")}
+async function api(path, opts={}){
+  if(!configured()) throw new Error("Configure SUPABASE_URL e SUPABASE_ANON_KEY no admin.html.");
+  const r=await fetch(SUPABASE_URL+"/rest/v1/"+path,{...opts,headers:{...headers(),...(opts.headers||{})}});
+  const text=await r.text(); let data=null; try{data=text?JSON.parse(text):null}catch{}
+  if(!r.ok) throw new Error(data?.message || data?.hint || text || "Erro na API");
+  return data;
+}
+function normalize(p){return {...p, id:p.id ?? p.uuid ?? p.codigo, nome:p.nome ?? p.name ?? "", preco:Number(p.preco ?? p.price ?? 0), stock:Number(p.stock ?? p.estoque ?? 0), categoria:p.categoria ?? p.category ?? "Outros", descricao:p.descricao ?? p.description ?? "", imagem:p.imagem ?? p.image_url ?? p.image ?? ""};}
+
+async function load(){
+  $("products").innerHTML="<small>A carregar produtos...</small>";
+  try{
+    const data=await api("produtos?select=*&order=id.desc");
+    state.products=(data||[]).map(normalize);
+    render();
+    msg("Produtos atualizados.");
+  }catch(e){
+    $("products").innerHTML="";
+    msg(e.message,true);
+    render();
+  }
+}
+function render(){
+  const q=$("search").value.trim().toLowerCase();
+  const list=state.products.filter(p=>[p.nome,p.categoria,p.descricao].join(" ").toLowerCase().includes(q));
+  $("count").innerHTML="<small>"+list.length+" produto(s) apresentado(s)</small>";
+  if(!list.length){$("products").innerHTML="<small>Nenhum produto encontrado.</small>";return}
+  $("products").innerHTML=list.map(p=>`
+    <article class="product">
+      <img class="thumb" src="${escapeAttr(p.imagem||"")}" alt="">
+      <div><div class="pname">${escapeHtml(p.nome)}</div><div class="meta">${money(p.preco)} · Stock: ${p.stock} · ${escapeHtml(p.categoria)}</div></div>
+      <div class="actions">
+        <button class="ghost edit" data-id="${escapeAttr(String(p.id))}" type="button">✏️ Editar</button>
+        <button class="danger del" data-id="${escapeAttr(String(p.id))}" type="button">🗑️ Eliminar</button>
+      </div>
+    </article>`).join("");
+  document.querySelectorAll(".edit").forEach(b=>b.addEventListener("click",()=>edit(b.dataset.id)));
+  document.querySelectorAll(".del").forEach(b=>b.addEventListener("click",()=>removeProduct(b.dataset.id)));
+}
+function money(n){return new Intl.NumberFormat("pt-AO",{style:"currency",currency:"AOA",maximumFractionDigits:0}).format(Number(n)||0)}
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function escapeAttr(s){return escapeHtml(s)}
+function resetForm(){
+ $("productForm").reset(); $("productId").value=""; state.imageData=""; state.editingOldImage="";
+ $("preview").style.display="none"; $("preview").removeAttribute("src");
+ $("formTitle").textContent="Cadastrar produto"; $("cancelBtn").classList.add("hidden");
+}
+function edit(id){
+ const p=state.products.find(x=>String(x.id)===String(id)); if(!p)return;
+ $("productId").value=p.id; $("name").value=p.nome; $("price").value=p.preco; $("stock").value=p.stock;
+ $("category").value=p.categoria; $("description").value=p.descricao; state.editingOldImage=p.imagem||"";
+ if(p.imagem){$("preview").src=p.imagem;$("preview").style.display="block"}
+ $("formTitle").textContent="Editar produto"; $("cancelBtn").classList.remove("hidden"); window.scrollTo({top:0,behavior:"smooth"});
+}
+async function removeProduct(id){
+ const p=state.products.find(x=>String(x.id)===String(id)); if(!p)return;
+ if(!confirm("Eliminar o produto “"+p.nome+"”?"))return;
+ try{await api("produtos?id=eq."+encodeURIComponent(id),{method:"DELETE"});msg("Produto eliminado.");await load()}catch(e){msg(e.message,true)}
+}
+$("imageFile").addEventListener("change",()=>{
+ const f=$("imageFile").files[0]; if(!f)return;
+ if(f.size>3*1024*1024){msg("A imagem deve ter no máximo 3 MB.",true);$("imageFile").value="";return}
+ const r=new FileReader(); r.onload=()=>{state.imageData=r.result;$("preview").src=r.result;$("preview").style.display="block"}; r.readAsDataURL(f);
+});
+$("productForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const nome=$("name").value.trim(), preco=Number($("price").value), stock=Number($("stock").value);
+ if(!nome||!Number.isFinite(preco)||preco<0||!Number.isInteger(stock)||stock<0){msg("Preencha corretamente nome, preço e stock.",true);return}
+ const payload={nome,preco,stock,categoria:$("category").value,descricao:$("description").value.trim()};
+ if(state.imageData) payload.imagem=state.imageData; else if(state.editingOldImage) payload.imagem=state.editingOldImage;
+ try{
+   const id=$("productId").value;
+   if(id) await api("produtos?id=eq."+encodeURIComponent(id),{method:"PATCH",body:JSON.stringify(payload)});
+   else await api("produtos",{method:"POST",body:JSON.stringify(payload)});
+   msg(id?"Produto atualizado e publicado.":"Produto cadastrado e publicado.");
+   resetForm(); await load();
+ }catch(e){msg(e.message,true)}
+});
+$("search").addEventListener("input",render);$("reloadBtn").addEventListener("click",load);$("newBtn").addEventListener("click",resetForm);$("cancelBtn").addEventListener("click",resetForm);
+load();
+</script>
+</body>
+</html>
