@@ -1,0 +1,19 @@
+AL.just — Atualização do Admin
+
+Este pacote atualiza a área de produtos para usar a mesma tabela Supabase usada pela loja pública.
+
+Arquivo principal:
+- admin.html
+
+Como instalar:
+1. Extraia o ZIP.
+2. No GitHub abra o repositório aljust-loja.
+3. Add file -> Upload files.
+4. Envie o admin.html extraído.
+5. Substitua o arquivo existente e faça Commit changes.
+
+Importante:
+A tabela Supabase usada pela loja deve ser "produtos" com os campos:
+id, created_at, name, category, price, stock, image_url, description.
+
+A loja pública atual já consulta essa tabela.
