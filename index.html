@@ -1,116 +1,116 @@
 <!doctype html>
 <html lang="pt">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Al.just | Material Informático, Escritório e Escolar</title>
-<meta name="description" content="Al.just Angola — material informático, de escritório e escolar.">
-<link rel="icon" href="assets/logo.jpg">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Al.just | Loja Online</title>
+<link rel="icon" href="logo.jpg">
 <link rel="stylesheet" href="style.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <div class="topbar"><span>Entrega em Angola • Atendimento rápido</span><span>WhatsApp: +244 926 163 681</span></div>
-
-<header class="header">
-  <a href="#inicio" class="brand"><img src="assets/logo.jpg" alt="Al.just"></a>
+<header>
+  <a href="#inicio" class="brand"><img src="logo.jpg" alt="Al.just"></a>
   <div class="search"><input id="search" placeholder="Pesquisar produtos..."><button id="searchBtn">🔎</button></div>
-  <button class="cart" id="openCart">🛒 <span id="cartCount">0</span></button>
+  <button class="cart" id="openCart">🛒 Carrinho <b id="cartCount">0</b></button>
 </header>
-
-<nav><a href="#inicio">Início</a><a href="#categorias">Categorias</a><a href="#produtos">Produtos</a><a href="#sobre">Sobre</a><a href="#contacto">Contacto</a></nav>
+<nav><a href="#inicio">Início</a><a href="#categorias">Categorias</a><a href="#produtos">Produtos</a><a href="#sobre">Sobre Nós</a><a href="#contacto">Contacto</a></nav>
 
 <main>
-<section class="hero" id="inicio">
-  <div>
-    <span class="eyebrow">LOJA ONLINE AL.JUST</span>
-    <h1>Tecnologia, escritório e educação num só lugar.</h1>
-    <p>Produtos para estudar, trabalhar e equipar o seu negócio.</p>
-    <a class="btn red" href="#produtos">Ver produtos</a>
-    <button class="btn blue" id="heroWhatsApp">Comprar pelo WhatsApp</button>
-  </div>
-  <div class="hero-art"><span>💻</span><span>🖨️</span><span>📚</span></div>
-</section>
+<section class="hero" id="inicio"><div><span class="eyebrow">LOJA ONLINE AL.JUST</span><h1>Tecnologia, escritório e educação num só lugar.</h1><p>Escolha os produtos e defina a quantidade no carrinho.</p><a class="btn red" href="#produtos">Ver produtos</a></div><div class="hero-art">💻 🖨️ 📚</div></section>
 
-<section class="section" id="categorias">
-  <span class="eyebrow">CATEGORIAS</span><h2>O que procura?</h2>
-  <div class="cats">
-    <button data-cat="Informática">💻 <b>Material Informático</b><small>Computadores, impressoras e acessórios.</small></button>
-    <button data-cat="Escritório">🖨️ <b>Material de Escritório</b><small>Papel, canetas, pastas e mais.</small></button>
-    <button data-cat="Escolar">🎒 <b>Material Escolar</b><small>Cadernos, mochilas, lápis e mais.</small></button>
-  </div>
-</section>
+<section class="section" id="categorias"><span class="eyebrow">CATEGORIAS</span><h2>O que procura?</h2>
+<div class="cats">
+<button data-cat="Informática">💻 <b>Material Informático</b><small>Computadores, impressoras e acessórios.</small></button>
+<button data-cat="Escritório">🖨️ <b>Material de Escritório</b><small>Papel, canetas, pastas e mais.</small></button>
+<button data-cat="Escolar">🎒 <b>Material Escolar</b><small>Cadernos, mochilas, lápis e mais.</small></button>
+</div></section>
 
-<section class="section" id="produtos">
-  <div class="headrow"><div><span class="eyebrow">CATÁLOGO</span><h2>Produtos</h2><p id="status">A carregar...</p></div>
-  <select id="filter"><option>Todos</option><option>Informática</option><option>Escritório</option><option>Escolar</option></select></div>
-  <div id="grid" class="grid"></div>
-  <p id="empty" class="empty" hidden>Nenhum produto encontrado.</p>
-  <p id="error" class="error" hidden>Não foi possível carregar os produtos. Tente novamente.</p>
-</section>
+<section class="section" id="produtos"><div class="headrow"><div><span class="eyebrow">CATÁLOGO</span><h2>Produtos</h2><p id="status">A carregar...</p></div><select id="filter"><option>Todos</option><option>Informática</option><option>Escritório</option><option>Escolar</option></select></div>
+<div id="grid" class="grid"></div><p id="empty" class="empty" hidden>Nenhum produto encontrado.</p><p id="error" class="error" hidden>Não foi possível carregar os produtos.</p></section>
 
 <section class="benefits"><div>🛡️ <b>Compra segura</b></div><div>🚚 <b>Entrega em Angola</b></div><div>💬 <b>Atendimento WhatsApp</b></div><div>✅ <b>Qualidade</b></div></section>
-
 <section class="section" id="sobre"><span class="eyebrow">SOBRE</span><h2>Al.just</h2><p>Loja de material informático, de escritório e escolar.</p></section>
-
-<section class="section" id="contacto"><span class="eyebrow">CONTACTO</span><h2>Fale connosco</h2>
-<div class="contacts"><a href="#" id="wa">💬 WhatsApp<br><small>+244 926 163 681</small></a><a href="https://www.instagram.com/al.just/" target="_blank">📸 Instagram<br><small>@Al.just</small></a></div>
-</section>
+<section class="section" id="contacto"><span class="eyebrow">CONTACTO</span><h2>Fale connosco</h2><a href="#" id="wa">💬 WhatsApp — +244 926 163 681</a></section>
 </main>
 
-<footer><img src="assets/logo.jpg" alt="Al.just"><p>© <span id="year"></span> Al.just. Todos os direitos reservados.</p></footer>
+<footer><img src="logo.jpg" alt="Al.just"><p>© <span id="year"></span> Al.just. Todos os direitos reservados.</p></footer>
 
-<aside id="drawer" class="drawer"><div class="drawerhead"><b>Seu carrinho</b><button id="closeCart">✕</button></div><div id="cartItems"></div><div class="total">Total <b id="total">0 Kz</b></div><button class="btn red full" id="checkout">Finalizar pelo WhatsApp</button></aside>
+<aside id="drawer" class="drawer">
+  <div class="drawerhead"><h3>Seu carrinho</h3><button id="closeCart">✕</button></div>
+  <div id="cartItems"></div>
+  <div class="total"><span>Total</span><b id="total">0 Kz</b></div>
+  <button class="btn red full" id="checkout">Finalizar pelo WhatsApp</button>
+</aside>
 <div id="overlay" class="overlay"></div>
 
 <script>
-const SUPABASE_URL = "https://myzlvhpvolpekesibvjz.supabase.co";
-const SUPABASE_KEY = "sb_publishable_INVV9XjLZN9HAeReMGV-5g_OFjXoB0b";
-const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-const WHATSAPP = "244926163681";
-let products=[], cart=JSON.parse(localStorage.getItem("aljust_cart")||"[]");
+const SUPABASE_URL="https://myzlvhpvolpekesibvjz.supabase.co";
+const SUPABASE_KEY="sb_publishable_INVV9XjLZN9HAeReMGV-5g_OFjXoB0b";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const WHATSAPP="244926163681";
+let products=[],cart=JSON.parse(localStorage.getItem("aljust_cart")||"[]");
 
-const $=s=>document.querySelector(s);
-const money=v=>new Intl.NumberFormat("pt-AO").format(Number(v||0))+" Kz";
-const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat("pt-AO").format(Number(n||0))+" Kz";
+const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
 
 async function loadProducts(){
-  $("#status").textContent="A carregar produtos...";
   const {data,error}=await db.from("produtos").select("id,created_at,name,category,price,stock,image_url,description").order("created_at",{ascending:false});
-  if(error){console.error(error);$("#status").textContent="Erro ao carregar produtos.";$("#error").hidden=false;return;}
+  if(error){console.error(error);$("status").textContent="Erro ao carregar produtos.";return}
   products=(data||[]).filter(p=>Number(p.stock||0)>0);
-  $("#status").textContent=products.length?products.length+" produto(s) disponíveis":"Ainda não há produtos.";
-  render();
+  $("status").textContent=products.length?products.length+" produto(s) disponíveis":"Ainda não há produtos.";
+  renderProducts();renderCart();
 }
-function render(){
-  const q=$("#search").value.toLowerCase().trim(), cat=$("#filter").value;
-  const list=products.filter(p=>(cat==="Todos"||p.category===cat)&&(!q||`${p.name} ${p.category} ${p.description||""}`.toLowerCase().includes(q)));
-  $("#grid").innerHTML=list.map(p=>`
-    <article class="card">
-      <div class="media">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.name)}">`:"📦"}</div>
-      <div class="body"><small>${esc(p.category||"Produto")}</small><h3>${esc(p.name)}</h3>${p.description?`<p>${esc(p.description)}</p>`:""}<strong class="price">${money(p.price)}</strong><span class="stock">${Number(p.stock)} unidade(s)</span><button class="add" onclick="add('${p.id}')">Adicionar ao carrinho</button></div>
-    </article>`).join("");
-  $("#empty").hidden=list.length!==0;
-  renderCart();
+function renderProducts(){
+  const q=$("search").value.trim().toLowerCase(),cat=$("filter").value;
+  const list=products.filter(p=>(cat==="Todos"||p.category===cat)&&(!q||`${p.name} ${p.category||""} ${p.description||""}`.toLowerCase().includes(q)));
+  $("grid").innerHTML=list.map(p=>`<article class="card">
+    <div class="media">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.name)}">`:"📦"}</div>
+    <div class="body"><small>${esc(p.category||"Produto")}</small><h3>${esc(p.name)}</h3>${p.description?`<p>${esc(p.description)}</p>`:""}
+    <strong class="price">${money(p.price)}</strong><span class="stock">${Number(p.stock)} unidade(s) disponíveis</span>
+    <button class="add" onclick="addToCart('${p.id}')">Adicionar 1 ao carrinho</button></div></article>`).join("");
+  $("empty").hidden=list.length!==0;
 }
-function add(id){const p=products.find(x=>String(x.id)===String(id));if(!p)return;const i=cart.find(x=>String(x.id)===String(id));if(i){if(i.qty<p.stock)i.qty++;}else cart.push({id,qty:1});save();openCart();}
-function save(){localStorage.setItem("aljust_cart",JSON.stringify(cart));renderCart();}
+function addToCart(id){
+  const p=products.find(x=>String(x.id)===String(id));if(!p)return;
+  const i=cart.find(x=>String(x.id)===String(id));
+  if(i){if(i.qty<Number(p.stock))i.qty++}
+  else cart.push({id:p.id,qty:1});
+  saveCart();openCart();
+}
+function changeQty(id,delta){
+  const i=cart.find(x=>String(x.id)===String(id));const p=products.find(x=>String(x.id)===String(id));if(!i||!p)return;
+  i.qty=Math.max(1,Math.min(Number(p.stock),i.qty+delta));saveCart();
+}
+function removeItem(id){cart=cart.filter(i=>String(i.id)!==String(id));saveCart()}
+function saveCart(){localStorage.setItem("aljust_cart",JSON.stringify(cart));renderCart()}
 function renderCart(){
   cart=cart.filter(i=>products.some(p=>String(p.id)===String(i.id)));
   let total=0,count=0;
-  $("#cartItems").innerHTML=cart.length?cart.map(i=>{const p=products.find(x=>String(x.id)===String(i.id));total+=Number(p.price)*i.qty;count+=i.qty;return `<div class="line"><span>${esc(p.name)} x${i.qty}</span><b>${money(Number(p.price)*i.qty)}</b></div>`}).join(""):"<p>O carrinho está vazio.</p>";
-  $("#cartCount").textContent=count;$("#total").textContent=money(total);
+  $("cartItems").innerHTML=cart.length?cart.map(i=>{
+    const p=products.find(x=>String(x.id)===String(i.id));const subtotal=Number(p.price)*i.qty;total+=subtotal;count+=i.qty;
+    return `<div class="line">
+      <div class="lineInfo">${p.image_url?`<img src="${esc(p.image_url)}" alt="">`:"📦"}<div><strong>${esc(p.name)}</strong><span>${money(p.price)} cada</span></div></div>
+      <div class="qty"><button onclick="changeQty('${p.id}',-1)">−</button><b>${i.qty}</b><button onclick="changeQty('${p.id}',1)">+</button><button class="remove" onclick="removeItem('${p.id}')">🗑️</button></div>
+      <strong>${money(subtotal)}</strong>
+    </div>`
+  }).join(""):"<p class='muted'>O carrinho está vazio.</p>";
+  $("cartCount").textContent=count;$("total").textContent=money(total);
 }
-function openCart(){$("#drawer").classList.add("show");$("#overlay").classList.add("show")}
-function closeCart(){$("#drawer").classList.remove("show");$("#overlay").classList.remove("show")}
+function openCart(){$("drawer").classList.add("show");$("overlay").classList.add("show")}
+function closeCart(){$("drawer").classList.remove("show");$("overlay").classList.remove("show")}
 function wa(msg){window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`,"_blank")}
-$("#search").oninput=render;$("#searchBtn").onclick=render;$("#filter").onchange=render;$("#openCart").onclick=openCart;$("#closeCart").onclick=closeCart;$("#overlay").onclick=closeCart;
-$("#heroWhatsApp").onclick=()=>wa("Olá, Al.just! Vim pelo site e gostaria de saber mais sobre os produtos.");
-$("#wa").onclick=e=>{e.preventDefault();wa("Olá, Al.just! Vim pelo site.");};
-$("#checkout").onclick=()=>{if(!cart.length)return alert("O carrinho está vazio.");let t=cart.map(i=>{let p=products.find(x=>String(x.id)===String(i.id));return `• ${p.name} x${i.qty} — ${money(Number(p.price)*i.qty)}`}).join("\n");wa(`Olá, Al.just! Quero fazer este pedido:\n${t}\n\nTotal: ${$("#total").textContent}\n\nNome:\nLocal de entrega:`);};
-document.querySelectorAll(".cats button").forEach(b=>b.onclick=()=>{$("#filter").value=b.dataset.cat;render();$("#produtos").scrollIntoView({behavior:"smooth"});});
-$("#year").textContent=new Date().getFullYear();
+$("search").oninput=renderProducts;$("searchBtn").onclick=renderProducts;$("filter").onchange=renderProducts;
+$("openCart").onclick=openCart;$("closeCart").onclick=closeCart;$("overlay").onclick=closeCart;
+$("wa").onclick=e=>{e.preventDefault();wa("Olá, Al.just! Vim pelo site e gostaria de saber mais sobre os produtos.")};
+$("checkout").onclick=()=>{
+ if(!cart.length)return alert("O carrinho está vazio.");
+ const lines=cart.map(i=>{const p=products.find(x=>String(x.id)===String(i.id));return `• ${p.name} x${i.qty} — ${money(Number(p.price)*i.qty)}`});
+ wa(`Olá, Al.just! Quero fazer este pedido:\n${lines.join("\n")}\n\nTotal: ${$("total").textContent}\n\nNome:\nLocal de entrega:`);
+};
+document.querySelectorAll(".cats button").forEach(b=>b.onclick=()=>{$("filter").value=b.dataset.cat;renderProducts();$("produtos").scrollIntoView({behavior:"smooth"})});
+$("year").textContent=new Date().getFullYear();
 loadProducts();
 </script>
-</body>
-</html>
+</body></html>
