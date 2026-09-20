@@ -1,14 +1,33 @@
-AL.JUST — versão corrigida
+Al.just — Catálogo com página de produto
 
-1. Extraia o ZIP.
-2. Coloque estes ficheiros no repositório GitHub:
-   index.html
-   admin.html
-   logo.jpg
-   bai.png
-   bfa.png
-   express.png
-3. No site, clique 5 vezes rapidamente no logotipo Al.just.
-4. Será aberta a página admin.html.
+Esta atualização deixa a página inicial mais limpa, inspirada no formato mostrado da NCR Angola.
 
-Correção desta versão: o index.html agora carrega o Supabase JS antes de iniciar o código, permitindo que o clique de 5 vezes funcione.
+Na página principal:
+- aparece a imagem do produto;
+- categoria;
+- nome;
+- preço;
+- stock;
+- botão para adicionar ao carrinho.
+
+A descrição detalhada não fica mais visível no cartão.
+Ao clicar no cartão do produto, abre a página/modal de detalhe com:
+- galeria de imagens;
+- imagem principal maior;
+- nome, referência e preço;
+- stock e quantidade;
+- adicionar ao carrinho;
+- finalizar compra;
+- descrição completa;
+- ficha informativa;
+- produtos relacionados.
+
+A atualização mantém o Supabase, carrinho, checkout e fatura existentes.
+
+Como atualizar no GitHub:
+1. Extraia este ZIP.
+2. Entre no repositório aljust-loja.
+3. Add file > Upload files.
+4. Envie os arquivos extraídos e substitua os atuais.
+5. Faça Commit changes.
+6. Aguarde o GitHub Pages atualizar e recarregue o site com Ctrl+F5.
