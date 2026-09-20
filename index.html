@@ -98,10 +98,24 @@
     }catch(_){ }
     return raw;
   }
+  function getProductData(v){
+    if(v===null||v===undefined) return {text:'',ficha:{}};
+    if(typeof v==='object') return {text:typeof v.text==='string'?v.text:'',ficha:(v.ficha&&typeof v.ficha==='object')?v.ficha:{}};
+    const raw=String(v).trim(); if(!raw) return {text:'',ficha:{}};
+    try{const o=JSON.parse(raw);if(o&&typeof o==='object') return {text:typeof o.text==='string'?o.text:'',ficha:(o.ficha&&typeof o.ficha==='object')?o.ficha:{}};}catch(_){}
+    return {text:raw,ficha:{}};
+  }
   function getReference(p){
+    const pd=getProductData(p.description);
+    if(pd.ficha?.referencia) return String(pd.ficha.referencia);
     const d=decodeDescription(p.description);
-    const m=d.match(/(?:refer[êe]ncia|ref\.?|sku)\s*[:#-]?\s*([A-Za-z0-9._/-]+)/i);
+    const m=d.match(/(?:refer[êe]ncia|ref\.?|sku)\s*[:#-]?\s*([A-Za-z0-9._\/-]+)/i);
     return m?m[1]:'';
+  }
+  function getFichaRows(p){
+    const pd=getProductData(p.description), f=pd.ficha||{};
+    const rows=[['Marca',f.marca],['Modelo',f.modelo],['Referência',f.referencia],['Categoria',p.category],['Subcategoria',f.subcategoria],['Cor',f.cor],['Garantia',f.garantia],['Dimensões',f.dimensoes],['Peso',f.peso],['Material',f.material],['Stock',`${Number(p.stock)||0} unidade(s)`],['Preço',money(p.price)],['Especificações',f.especificacoes]];
+    return rows.filter(r=>String(r[1]??'').trim()!=='');
   }
   function displayName(p){return p?.name||'Produto'}
   function renderProducts(){
@@ -128,8 +142,8 @@
   }
 
   function renderProductDetail(p){
-    const imgs=parseImages(p.image_url); const desc=decodeDescription(p.description)||'Não foi adicionada uma descrição para este produto.'; const ref=getReference(p);
-    const specRows=[['Categoria',p.category||'—'],['Referência',ref||'—'],['Stock',`${Number(p.stock)||0} unidade(s)`],['Preço',money(p.price)]];
+    const imgs=parseImages(p.image_url); const pd=getProductData(p.description); const desc=pd.text||decodeDescription(p.description)||'Não foi adicionada uma descrição para este produto.'; const ref=getReference(p);
+    const specRows=getFichaRows(p);
     const others=products.filter(x=>String(x.id)!==String(p.id) && Number(x.stock)>0).slice(0,4);
     const main=imgs[0]||'';
     $('productDetailContent').innerHTML=`
