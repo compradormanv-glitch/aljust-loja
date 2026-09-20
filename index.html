@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Al.just | Loja Online</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <meta name="description" content="Al.just - material informático, de escritório e escolar.">
 <link rel="icon" href="logo.jpg">
 <style>
@@ -70,7 +71,8 @@ function openCart(){$('drawer').classList.add('show');$('overlay').classList.add
 function closeCart(){$('drawer').classList.remove('show');$('overlay').classList.remove('show')}
 $('search').oninput=renderProducts;$('searchBtn').onclick=renderProducts;$('filter').onchange=renderProducts;$('openCart').onclick=openCart;$('closeCart').onclick=closeCart;$('overlay').onclick=closeCart;
 document.querySelectorAll('.cats button').forEach(b=>b.onclick=()=>{$('filter').value=b.dataset.cat;renderProducts();$('produtos').scrollIntoView({behavior:'smooth'})});
-let clicks=0,timer=null;$('ownerLogo').addEventListener('click',e=>{e.preventDefault();clicks++;clearTimeout(timer);timer=setTimeout(()=>{clicks=0},1800);if(clicks===5){clicks=0;location.href='admin.html'}});
+let clicks=0,timer=null;
+$('ownerLogo').addEventListener('click',function(e){e.preventDefault();clicks++;this.style.transform='scale(.96)';setTimeout(()=>this.style.transform='',90);clearTimeout(timer);timer=setTimeout(()=>{clicks=0},2500);if(clicks===5){clicks=0;location.href='admin.html'}});
 
 let paymentMethod='BFA';
 function openCheckout(){

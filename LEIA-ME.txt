@@ -1,12 +1,14 @@
-AL.JUST — VERSAO SUPABASE
+AL.JUST — versão corrigida
 
-Esta versao guarda os produtos na tabela public.produtos do Supabase.
+1. Extraia o ZIP.
+2. Coloque estes ficheiros no repositório GitHub:
+   index.html
+   admin.html
+   logo.jpg
+   bai.png
+   bfa.png
+   express.png
+3. No site, clique 5 vezes rapidamente no logotipo Al.just.
+4. Será aberta a página admin.html.
 
-1. O site consulta public.produtos, por isso os produtos aparecem em qualquer dispositivo.
-2. O acesso do proprietario continua oculto: clique 5 vezes no logotipo.
-3. O painel exige login Supabase (email e palavra-passe) para cadastrar, editar, eliminar e alterar stock.
-4. Cria o utilizador do proprietario em Supabase > Authentication > Users.
-5. As politicas RLS existentes devem permitir SELECT publico e INSERT/UPDATE/DELETE para authenticated.
-6. A chave usada no frontend e uma publishable key, adequada para browser; nunca coloque uma secret/service_role key no site.
-
-Importante: as imagens de produtos sao guardadas como Data URL na coluna image_url para funcionar sem depender de um nome especifico de bucket. Para muitas imagens grandes, recomenda-se depois migrar para Supabase Storage.
+Correção desta versão: o index.html agora carrega o Supabase JS antes de iniciar o código, permitindo que o clique de 5 vezes funcione.
