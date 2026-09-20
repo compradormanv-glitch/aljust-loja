@@ -17,9 +17,9 @@
 <body>
 <div class="topbar"><span>Entrega em Angola • Atendimento rápido</span><span>WhatsApp: +244 926 163 681</span></div>
 <header class="header">
-<a href="#inicio" class="brand" id="ownerLogo" title="Al.just"><img src="logo.jpg" alt="Al.just"></a>
+<a href="#inicio" class="brand" id="ownerLogo" title="Al.just" onclick="handleOwnerLogo(event)"><img src="logo.jpg" alt="Al.just"></a>
 <div class="search"><input id="search" placeholder="Pesquisar produtos..."><button id="searchBtn">🔎</button></div>
-<button class="cart" id="openCart">🛒 Carrinho <b id="cartCount">0</b></button>
+<button class="cart" id="openCart" type="button" onclick="openCart()">🛒 Carrinho <b id="cartCount">0</b></button>
 </header>
 <nav><a href="#inicio">Início</a><a href="#categorias">Categorias</a><a href="#produtos">Produtos</a><a href="#sobre">Sobre Nós</a><a href="#contacto">Contacto</a></nav>
 <main>
@@ -31,115 +31,153 @@
 <section class="section" id="contacto"><span class="eyebrow">CONTACTO</span><h2>Fale connosco</h2><a href="https://wa.me/244926163681" target="_blank" rel="noopener">💬 WhatsApp — +244 926 163 681</a></section>
 </main>
 <footer><img src="logo.jpg" alt="Al.just"><p>© <span id="year"></span> Al.just. Todos os direitos reservados.</p></footer>
-<aside id="drawer" class="drawer"><div class="drawerhead"><h3>Seu carrinho</h3><button id="closeCart">✕</button></div><div id="cartItems"></div><div class="total"><span>Total</span><b id="total">0 Kz</b></div><button class="btn red full" id="checkoutBtn" type="button">Finalizar compra</button></aside><div id="checkoutModal" class="modal"><div class="modalbox"><div class="modalhead"><div><h2 style="margin:0">Finalizar compra</h2><p class="muted" style="margin:5px 0 0">Preencha os seus dados e escolha a forma de pagamento.</p></div><button type="button" id="closeCheckout">✕</button></div><div class="formgrid"><div><label>Nome *</label><input id="buyerName" placeholder="Nome da pessoa ou responsável"></div><div><label>NIF <span class="nifhint">(para empresas)</span></label><input id="buyerNif" placeholder="NIF da empresa"></div></div><div class="paytitle">Forma de pagamento *</div><div class="paymethods"><button type="button" class="paymethod active" data-method="BFA"><img src="bfa.png" alt="BFA"><span>Transferência BFA</span></button><button type="button" class="paymethod" data-method="BAI"><img src="bai.png" alt="BAI"><span>Transferência BAI</span></button><button type="button" class="paymethod" data-method="Express"><img src="express.png" alt="Multicaixa Express"><span>Multicaixa Express</span></button></div><div id="payDetails" class="paydetails"></div><div id="orderSummary" class="orderlines"></div><p class="note">Depois de confirmar, o pedido será preparado e o comprovativo pode ser enviado pelo WhatsApp Al.just.</p><div class="checkoutactions"><button type="button" class="btn red" id="confirmCheckout">Confirmar pedido</button><button type="button" class="btn ghost" id="cancelCheckout">Cancelar</button></div></div></div><div id="overlay" class="overlay"></div>
+<aside id="drawer" class="drawer"><div class="drawerhead"><h3>Seu carrinho</h3><button id="closeCart">✕</button></div><div id="cartItems"></div><div class="total"><span>Total</span><b id="total">0 Kz</b></div><button class="btn red full" id="checkoutBtn" type="button" onclick="openCheckout()">Finalizar compra</button></aside><div id="checkoutModal" class="modal"><div class="modalbox"><div class="modalhead"><div><h2 style="margin:0">Finalizar compra</h2><p class="muted" style="margin:5px 0 0">Preencha os seus dados e escolha a forma de pagamento.</p></div><button type="button" id="closeCheckout">✕</button></div><div class="formgrid"><div><label>Nome *</label><input id="buyerName" placeholder="Nome da pessoa ou responsável"></div><div><label>NIF <span class="nifhint">(para empresas)</span></label><input id="buyerNif" placeholder="NIF da empresa"></div></div><div class="paytitle">Forma de pagamento *</div><div class="paymethods"><button type="button" class="paymethod active" data-method="BFA"><img src="bfa.png" alt="BFA"><span>Transferência BFA</span></button><button type="button" class="paymethod" data-method="BAI"><img src="bai.png" alt="BAI"><span>Transferência BAI</span></button><button type="button" class="paymethod" data-method="Express"><img src="express.png" alt="Multicaixa Express"><span>Multicaixa Express</span></button></div><div id="payDetails" class="paydetails"></div><div id="orderSummary" class="orderlines"></div><p class="note">Depois de confirmar, o pedido será preparado e o comprovativo pode ser enviado pelo WhatsApp Al.just.</p><div class="checkoutactions"><button type="button" class="btn red" id="confirmCheckout" onclick="confirmCheckout()">Confirmar pedido</button><button type="button" class="btn ghost" id="cancelCheckout" onclick="closeCheckout()">Cancelar</button></div></div></div><div id="overlay" class="overlay"></div>
 <div id="invoiceModal" class="invoice-modal"><div class="invoice-box" id="invoiceBox"><div class="invoice-head"><div class="invoice-brand"><img src="logo.jpg" alt="Al.just"></div><div class="invoice-title"><h2>Fatura do pedido</h2><div class="invoice-no" id="invoiceNumber"></div><div class="invoice-no" id="invoiceDate"></div></div></div><div class="invoice-meta"><div><small>Cliente</small><strong id="invoiceName"></strong></div><div><small>NIF</small><strong id="invoiceNif"></strong></div><div><small>Pagamento</small><strong id="invoicePayment"></strong></div><div><small>Total</small><strong id="invoiceTotalSmall"></strong></div></div><div id="invoiceItems"></div><div class="invoice-total">Total: <strong id="invoiceTotal"></strong></div><div class="invoice-note">Documento gerado automaticamente pela Al.just como confirmação/resumo do pedido. Guarde-o para referência e, quando necessário, envie o comprovativo de pagamento.</div><div class="invoice-actions"><button type="button" class="btn ghost" id="closeInvoice">Fechar</button><button type="button" class="btn ghost" id="downloadInvoice">Baixar fatura</button><button type="button" class="btn red" id="printInvoice">Imprimir / Guardar PDF</button><a class="btn red" id="invoiceWhatsApp" target="_blank" rel="noopener">Enviar pelo WhatsApp</a></div></div></div>
 <script>
-const SUPABASE_URL = "https://myzlvhpvolpekesibvjz.supabase.co";
-const SUPABASE_KEY = "sb_publishable_INVV9XjLZN9HAeReMGV-5g_OFjXoB0b";
-const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-const CART='aljust_cart_v3';
-let products=[]; let cart=JSON.parse(localStorage.getItem(CART)||'[]');
-const $=id=>document.getElementById(id);
-const money=n=>new Intl.NumberFormat('pt-AO').format(Number(n||0))+' Kz';
-const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
+(function(){
+  'use strict';
+  const SUPABASE_URL = 'https://myzlvhpvolpekesibvjz.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_INVV9XjLZN9HAeReMGV-5g_OFjXoB0b';
+  const CART='aljust_cart_v4';
+  let products=[];
+  let cart=[];
+  let paymentMethod='BFA';
+  let ownerClicks=0, ownerTimer=null;
+  const $=id=>document.getElementById(id);
+  const money=n=>new Intl.NumberFormat('pt-AO').format(Number(n||0))+' Kz';
+  const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
 
-async function loadProducts(){
-  $('status').textContent='A carregar produtos...';
-  const {data,error}=await db.from('produtos').select('id,created_at,name,category,price,stock,image_url,description').order('created_at',{ascending:false});
-  if(error){console.error(error);products=[];$('status').textContent='Não foi possível carregar os produtos.';$('empty').hidden=false;return;}
-  products=(data||[]).filter(p=>Number(p.stock)>0);
-  $('status').textContent=products.length?products.length+' produto(s) disponíveis':'Ainda não há produtos publicados.';
-  renderProducts(); renderCart();
-}
-function renderProducts(){
-  const q=$('search').value.trim().toLowerCase(),cat=$('filter').value;
-  const list=products.filter(p=>Number(p.stock)>0&&(cat==='Todos'||p.category===cat)&&(!q||`${p.name} ${p.category||''} ${p.description||''}`.toLowerCase().includes(q)));
-  $('grid').innerHTML=list.map(p=>`<article class="card"><div class="media">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.name)}">`:'📦'}</div><div class="body"><small>${esc(p.category||'Produto')}</small><h3>${esc(p.name)}</h3>${p.description?`<p>${esc(p.description)}</p>`:''}<strong class="price">${money(p.price)}</strong><span class="stock">${Number(p.stock)} unidade(s) disponíveis</span><button class="add" onclick="addToCart('${p.id}')">Adicionar ao carrinho</button></div></article>`).join('');
-  $('empty').hidden=!!list.length;
-}
-function addToCart(id){const p=products.find(x=>String(x.id)===String(id));if(!p)return;const i=cart.find(x=>String(x.id)===String(id));if(i){if(i.qty<Number(p.stock))i.qty++;}else cart.push({id,qty:1});saveCart();openCart()}
-function changeQty(id,d){const i=cart.find(x=>String(x.id)===String(id)),p=products.find(x=>String(x.id)===String(id));if(!i||!p)return;i.qty=Math.max(1,Math.min(Number(p.stock),i.qty+d));saveCart()}
-function removeItem(id){cart=cart.filter(i=>String(i.id)!==String(id));saveCart()}
-function saveCart(){localStorage.setItem(CART,JSON.stringify(cart));renderCart()}
-function renderCart(){
-  cart=cart.filter(i=>products.some(p=>String(p.id)===String(i.id)));
-  let total=0,count=0;
-  $('cartItems').innerHTML=cart.length?cart.map(i=>{const p=products.find(x=>String(x.id)===String(i.id)),sub=Number(p.price)*i.qty;total+=sub;count+=i.qty;return `<div class="line"><div class="lineInfo">${p.image_url?`<img src="${esc(p.image_url)}" alt="">`:'📦'}<div><strong>${esc(p.name)}</strong><span>${money(p.price)} cada</span></div></div><div class="qty"><button onclick="changeQty('${p.id}',-1)">−</button><b>${i.qty}</b><button onclick="changeQty('${p.id}',1)">+</button><button class="remove" onclick="removeItem('${p.id}')">🗑️</button></div><strong>${money(sub)}</strong></div>`}).join(''):'<p class="muted">O carrinho está vazio.</p>';
-  $('cartCount').textContent=count;$('total').textContent=money(total);
-}
-function openCart(){$('drawer').classList.add('show');$('overlay').classList.add('show')}
-function closeCart(){$('drawer').classList.remove('show');$('overlay').classList.remove('show')}
-$('search').oninput=renderProducts;$('searchBtn').onclick=renderProducts;$('filter').onchange=renderProducts;$('openCart').onclick=openCart;$('closeCart').onclick=closeCart;$('overlay').onclick=closeCart;
-document.querySelectorAll('.cats button').forEach(b=>b.onclick=()=>{$('filter').value=b.dataset.cat;renderProducts();$('produtos').scrollIntoView({behavior:'smooth'})});
-let clicks=0,timer=null;
-$('ownerLogo').addEventListener('click',function(e){e.preventDefault();clicks++;this.style.transform='scale(.96)';setTimeout(()=>this.style.transform='',90);clearTimeout(timer);timer=setTimeout(()=>{clicks=0},2500);if(clicks===5){clicks=0;location.href='admin.html'}});
+  function safeCartLoad(){
+    try{ const raw=localStorage.getItem(CART); cart=raw?JSON.parse(raw):[]; if(!Array.isArray(cart)) cart=[]; }
+    catch(_){ cart=[]; }
+  }
+  function saveCart(){ try{localStorage.setItem(CART,JSON.stringify(cart));}catch(_){} renderCart(); }
 
-let paymentMethod='BFA';
-function openCheckout(){
-  if(!cart.length){alert('O carrinho está vazio.');return}
-  renderCheckoutSummary();$('checkoutModal').classList.add('show');updatePayDetails();
-}
-function closeCheckout(){$('checkoutModal').classList.remove('show')}
-function renderCheckoutSummary(){
-  let total=0;const lines=cart.map(i=>{const p=products.find(x=>x.id===i.id);const sub=Number(p.price)*i.qty;total+=sub;return `${p.name} x${i.qty} — ${money(sub)}`}).join('<br>');
-  $('orderSummary').innerHTML=`<strong>Resumo do pedido</strong><br>${lines}<br><strong>Total: ${money(total)}</strong>`;
-}
-function updatePayDetails(){
-  const details={BFA:`<strong>BFA</strong><br>IBAN: AO06.0000.1556.73.26.3016.1`,BAI:`<strong>BAI</strong><br>IBAN: AO06.0040.0000.2250.3712.1014.2`,Express:`<strong>Multicaixa Express</strong><br>Número: 926 163 681`};
-  $('payDetails').innerHTML=details[paymentMethod];
-  document.querySelectorAll('.paymethod').forEach(b=>b.classList.toggle('active',b.dataset.method===paymentMethod));
-}
-function makeInvoiceId(){
-  const d=new Date();
-  const stamp=d.getFullYear().toString()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
-  const seq=String(Date.now()).slice(-5);
-  return `ALJ-${stamp}-${seq}`;
-}
-function paymentLabel(){
-  return paymentMethod==='BFA'?'Transferência BFA':paymentMethod==='BAI'?'Transferência BAI':'Multicaixa Express';
-}
-function paymentDetailsText(){
-  return paymentMethod==='BFA'?'BFA — AO06.0000.1556.73.26.3016.1':paymentMethod==='BAI'?'BAI — AO06.0040.0000.2250.3712.1014.2':'Multicaixa Express — 926 163 681';
-}
-function buildInvoiceData(){
-  const name=$('buyerName').value.trim(), nif=$('buyerNif').value.trim();
-  let total=0;
-  const items=cart.map(i=>{const p=products.find(x=>x.id===i.id);const sub=Number(p.price)*i.qty;total+=sub;return {name:p.name,qty:i.qty,unit:p.price,sub}});
-  return {number:makeInvoiceId(),date:new Date(),name,nif:nif||'Não informado',payment:paymentLabel(),paymentDetails:paymentDetailsText(),items,total};
-}
-function showInvoice(inv){
-  $('invoiceNumber').textContent='Nº '+inv.number;
-  $('invoiceDate').textContent=inv.date.toLocaleString('pt-AO');
-  $('invoiceName').textContent=inv.name;
-  $('invoiceNif').textContent=inv.nif;
-  $('invoicePayment').textContent=inv.payment+' — '+inv.paymentDetails;
-  $('invoiceTotalSmall').textContent=money(inv.total);
-  $('invoiceItems').innerHTML=`<table class="invoice-table"><thead><tr><th>Produto</th><th>Qtd.</th><th>Preço unit.</th><th>Subtotal</th></tr></thead><tbody>${inv.items.map(x=>`<tr><td>${esc(x.name)}</td><td>${x.qty}</td><td>${money(x.unit)}</td><td>${money(x.sub)}</td></tr>`).join('')}</tbody></table>`;
-  $('invoiceTotal').textContent=money(inv.total);
-  const lines=inv.items.map(x=>`• ${x.name} x${x.qty} = ${money(x.sub)}`).join('\n');
-  const msg=`Olá, Al.just!\n\nPedido ${inv.number}\nNome: ${inv.name}\nNIF: ${inv.nif}\nPagamento: ${inv.payment} — ${inv.paymentDetails}\n\n${lines}\n\nTotal: ${money(inv.total)}`;
-  $('invoiceWhatsApp').href=`https://wa.me/244926163681?text=${encodeURIComponent(msg)}`;
-  $('invoiceModal').classList.add('show');
-}
-function confirmCheckout(){
-  const name=$('buyerName').value.trim();
-  if(!name){alert('Digite o nome.');$('buyerName').focus();return}
-  if(!paymentMethod){alert('Escolha uma forma de pagamento.');return}
-  const inv=buildInvoiceData();
-  const msg=`Olá, Al.just!\n\nQuero finalizar uma compra.\n\nPedido: ${inv.number}\nNome: ${inv.name}\nNIF: ${inv.nif}\nForma de pagamento: ${inv.payment} — ${inv.paymentDetails}\n\n${inv.items.map(x=>`• ${x.name} x${x.qty} = ${money(x.sub)}`).join('\n')}\n\nTotal: ${money(inv.total)}`;
-  closeCheckout();
-  showInvoice(inv);
-  cart=[];saveCart();
-  setTimeout(()=>window.open(`https://wa.me/244926163681?text=${encodeURIComponent(msg)}`,'_blank'),150);
-}
-function downloadInvoice(){
-  const html=`<!doctype html><html lang="pt"><head><meta charset="utf-8"><title>Fatura Al.just</title><style>body{font-family:Arial,sans-serif;margin:40px;color:#142234}h1{color:#08233f}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}th:last-child,td:last-child{text-align:right}.total{text-align:right;font-size:22px;color:#e21b23;margin-top:20px}</style></head><body>${$('invoiceBox').innerHTML.replace(/<div class="invoice-actions">[\s\S]*?<\/div>/,'')}</body></html>`;
-  const blob=new Blob([html],{type:'text/html'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=($('invoiceNumber').textContent||'Fatura-Aljust').replace(/[^A-Za-z0-9_-]/g,'-')+'.html';a.click();URL.revokeObjectURL(url);
-}
-$('checkoutBtn').onclick=openCheckout;$('closeCheckout').onclick=closeCheckout;$('cancelCheckout').onclick=closeCheckout;$('confirmCheckout').onclick=confirmCheckout;
-document.querySelectorAll('.paymethod').forEach(b=>b.onclick=()=>{paymentMethod=b.dataset.method;updatePayDetails()});
-document.getElementById('checkoutModal').addEventListener('click',e=>{if(e.target.id==='checkoutModal')closeCheckout()});
-$('closeInvoice').onclick=()=>$('invoiceModal').classList.remove('show');$('printInvoice').onclick=()=>window.print();$('downloadInvoice').onclick=downloadInvoice;document.getElementById('invoiceModal').addEventListener('click',e=>{if(e.target.id==='invoiceModal')$('invoiceModal').classList.remove('show')});
+  window.handleOwnerLogo=function(e){
+    if(e) e.preventDefault();
+    ownerClicks++;
+    const el=$('ownerLogo');
+    if(el){el.style.transform='scale(.96)';setTimeout(()=>el.style.transform='',90)}
+    clearTimeout(ownerTimer);
+    ownerTimer=setTimeout(()=>ownerClicks=0,2500);
+    if(ownerClicks===5){ownerClicks=0;location.href='admin.html';}
+  };
 
-$('year').textContent=new Date().getFullYear();loadProducts();
+  function renderProducts(){
+    const grid=$('grid'), empty=$('empty');
+    if(!grid) return;
+    const q=($('search')?.value||'').trim().toLowerCase();
+    const cat=$('filter')?.value||'Todos';
+    const list=products.filter(p=>Number(p.stock)>0 && (cat==='Todos'||p.category===cat) && (!q||`${p.name} ${p.category||''} ${p.description||''}`.toLowerCase().includes(q)));
+    grid.innerHTML=list.map(p=>`<article class="card"><div class="media">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.name)}">`:'📦'}</div><div class="body"><small>${esc(p.category||'Produto')}</small><h3>${esc(p.name)}</h3>${p.description?`<p>${esc(p.description)}</p>`:''}<strong class="price">${money(p.price)}</strong><span class="stock">${Number(p.stock)} unidade(s) disponíveis</span><button class="add" type="button" onclick="addToCart('${String(p.id)}')">Adicionar ao carrinho</button></div></article>`).join('');
+    if(empty) empty.hidden=!!list.length;
+  }
+
+  window.addToCart=function(id){
+    const p=products.find(x=>String(x.id)===String(id)); if(!p) return;
+    const i=cart.find(x=>String(x.id)===String(id));
+    if(i){ if(i.qty<Number(p.stock)) i.qty++; }
+    else cart.push({id,qty:1});
+    saveCart(); openCart();
+  };
+  window.changeQty=function(id,d){
+    const i=cart.find(x=>String(x.id)===String(id)), p=products.find(x=>String(x.id)===String(id));
+    if(!i||!p)return; i.qty=Math.max(1,Math.min(Number(p.stock),i.qty+d)); saveCart();
+  };
+  window.removeItem=function(id){cart=cart.filter(i=>String(i.id)!==String(id));saveCart();};
+  function renderCart(){
+    const box=$('cartItems'); if(!box)return;
+    cart=cart.filter(i=>products.some(p=>String(p.id)===String(i.id)));
+    let total=0,count=0;
+    box.innerHTML=cart.length?cart.map(i=>{const p=products.find(x=>String(x.id)===String(i.id));const sub=Number(p.price)*i.qty;total+=sub;count+=i.qty;return `<div class="line"><div class="lineInfo">${p.image_url?`<img src="${esc(p.image_url)}" alt="">`:'📦'}<div><strong>${esc(p.name)}</strong><span>${money(p.price)} cada</span></div></div><div class="qty"><button type="button" onclick="changeQty('${p.id}',-1)">−</button><b>${i.qty}</b><button type="button" onclick="changeQty('${p.id}',1)">+</button><button class="remove" type="button" onclick="removeItem('${p.id}')">🗑️</button></div><strong>${money(sub)}</strong></div>`}).join(''):'<p class="muted">O carrinho está vazio.</p>';
+    if($('cartCount'))$('cartCount').textContent=count;
+    if($('total'))$('total').textContent=money(total);
+  }
+  window.openCart=function(){if($('drawer'))$('drawer').classList.add('show');if($('overlay'))$('overlay').classList.add('show');};
+  window.closeCart=function(){if($('drawer'))$('drawer').classList.remove('show');if($('overlay'))$('overlay').classList.remove('show');};
+
+  window.openCheckout=function(){
+    if(!cart.length){alert('O carrinho está vazio.');return;}
+    renderCheckoutSummary();
+    if($('checkoutModal'))$('checkoutModal').classList.add('show');
+    updatePayDetails();
+  };
+  window.closeCheckout=function(){if($('checkoutModal'))$('checkoutModal').classList.remove('show');};
+  function renderCheckoutSummary(){
+    let total=0;
+    const lines=cart.map(i=>{const p=products.find(x=>String(x.id)===String(i.id)); if(!p)return ''; const sub=Number(p.price)*i.qty; total+=sub; return `${esc(p.name)} x${i.qty} — ${money(sub)}`;}).filter(Boolean).join('<br>');
+    if($('orderSummary'))$('orderSummary').innerHTML=`<strong>Resumo do pedido</strong><br>${lines}<br><strong>Total: ${money(total)}</strong>`;
+  }
+  function updatePayDetails(){
+    const details={BFA:`<strong>BFA</strong><br>IBAN: AO06.0000.1556.73.26.3016.1`,BAI:`<strong>BAI</strong><br>IBAN: AO06.0040.0000.2250.3712.1014.2`,Express:`<strong>Multicaixa Express</strong><br>Número: 926 163 681`};
+    if($('payDetails'))$('payDetails').innerHTML=details[paymentMethod]||details.BFA;
+    document.querySelectorAll('.paymethod').forEach(b=>b.classList.toggle('active',b.dataset.method===paymentMethod));
+  }
+  function makeInvoiceId(){const d=new Date();const stamp=d.getFullYear().toString()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');return `ALJ-${stamp}-${String(Date.now()).slice(-5)}`;}
+  function paymentLabel(){return paymentMethod==='BFA'?'Transferência BFA':paymentMethod==='BAI'?'Transferência BAI':'Multicaixa Express';}
+  function paymentDetailsText(){return paymentMethod==='BFA'?'BFA — AO06.0000.1556.73.26.3016.1':paymentMethod==='BAI'?'BAI — AO06.0040.0000.2250.3712.1014.2':'Multicaixa Express — 926 163 681';}
+  function buildInvoiceData(){
+    const name=($('buyerName')?.value||'').trim(), nif=($('buyerNif')?.value||'').trim(); let total=0;
+    const items=cart.map(i=>{const p=products.find(x=>String(x.id)===String(i.id));if(!p)return null;const sub=Number(p.price)*i.qty;total+=sub;return{name:p.name,qty:i.qty,unit:p.price,sub};}).filter(Boolean);
+    return {number:makeInvoiceId(),date:new Date(),name,nif:nif||'Não informado',payment:paymentLabel(),paymentDetails:paymentDetailsText(),items,total};
+  }
+  function showInvoice(inv){
+    const map={invoiceNumber:'Nº '+inv.number,invoiceDate:inv.date.toLocaleString('pt-AO'),invoiceName:inv.name,invoiceNif:inv.nif,invoicePayment:inv.payment+' — '+inv.paymentDetails,invoiceTotalSmall:money(inv.total),invoiceTotal:money(inv.total)};
+    Object.entries(map).forEach(([id,val])=>{if($(id))$(id).textContent=val;});
+    if($('invoiceItems'))$('invoiceItems').innerHTML=`<table class="invoice-table"><thead><tr><th>Produto</th><th>Qtd.</th><th>Preço unit.</th><th>Subtotal</th></tr></thead><tbody>${inv.items.map(x=>`<tr><td>${esc(x.name)}</td><td>${x.qty}</td><td>${money(x.unit)}</td><td>${money(x.sub)}</td></tr>`).join('')}</tbody></table>`;
+    const lines=inv.items.map(x=>`• ${x.name} x${x.qty} = ${money(x.sub)}`).join('\n');
+    const msg=`Olá, Al.just!\n\nPedido ${inv.number}\nNome: ${inv.name}\nNIF: ${inv.nif}\nPagamento: ${inv.payment} — ${inv.paymentDetails}\n\n${lines}\n\nTotal: ${money(inv.total)}`;
+    if($('invoiceWhatsApp'))$('invoiceWhatsApp').href=`https://wa.me/244926163681?text=${encodeURIComponent(msg)}`;
+    if($('invoiceModal'))$('invoiceModal').classList.add('show');
+  }
+  window.confirmCheckout=function(){
+    const name=($('buyerName')?.value||'').trim();
+    if(!name){alert('Digite o nome.');$('buyerName')?.focus();return;}
+    if(!cart.length){alert('O carrinho está vazio.');closeCheckout();return;}
+    const inv=buildInvoiceData();
+    closeCheckout();showInvoice(inv);
+    cart=[];saveCart();
+    // A fatura fica aberta; o cliente pode clicar em “Enviar pelo WhatsApp”.
+  };
+  window.downloadInvoice=function(){
+    if(!$('invoiceBox'))return;
+    const clone=$('invoiceBox').cloneNode(true);
+    const actions=clone.querySelector('.invoice-actions'); if(actions)actions.remove();
+    const html=`<!doctype html><html lang="pt"><head><meta charset="utf-8"><title>Fatura Al.just</title><style>body{font-family:Arial,sans-serif;margin:40px;color:#142234}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}th:last-child,td:last-child{text-align:right}</style></head><body>${clone.innerHTML}</body></html>`;
+    const blob=new Blob([html],{type:'text/html'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=(($('invoiceNumber')?.textContent||'Fatura-Aljust').replace(/[^A-Za-z0-9_-]/g,'-'))+'.html';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+  };
+
+  async function loadProducts(){
+    if($('status'))$('status').textContent='A carregar produtos...';
+    try{
+      if(typeof supabase==='undefined')throw new Error('Biblioteca Supabase não carregada.');
+      const client=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+      const {data,error}=await client.from('produtos').select('id,created_at,name,category,price,stock,image_url,description').order('created_at',{ascending:false});
+      if(error)throw error;
+      products=(data||[]).filter(p=>Number(p.stock)>0);
+      if($('status'))$('status').textContent=products.length?`${products.length} produto(s) disponíveis`:'Ainda não há produtos publicados.';
+    }catch(err){console.error(err);products=[];if($('status'))$('status').textContent='Não foi possível carregar os produtos agora.';}
+    renderProducts();renderCart();
+  }
+
+  function init(){
+    safeCartLoad();
+    $('year') && ($('year').textContent=new Date().getFullYear());
+    $('search')?.addEventListener('input',renderProducts);
+    $('searchBtn')?.addEventListener('click',renderProducts);
+    $('filter')?.addEventListener('change',renderProducts);
+    $('closeCart')?.addEventListener('click',closeCart);
+    $('overlay')?.addEventListener('click',()=>{closeCart();closeCheckout();});
+    $('closeCheckout')?.addEventListener('click',closeCheckout);
+    document.querySelectorAll('.cats button').forEach(b=>b.addEventListener('click',()=>{$('filter').value=b.dataset.cat;renderProducts();$('produtos')?.scrollIntoView({behavior:'smooth'});}));
+    document.querySelectorAll('.paymethod').forEach(b=>b.addEventListener('click',()=>{paymentMethod=b.dataset.method||'BFA';updatePayDetails();}));
+    $('closeInvoice')?.addEventListener('click',()=>$('invoiceModal')?.classList.remove('show'));
+    $('printInvoice')?.addEventListener('click',()=>window.print());
+    $('downloadInvoice')?.addEventListener('click',window.downloadInvoice);
+    $('invoiceModal')?.addEventListener('click',e=>{if(e.target.id==='invoiceModal')$('invoiceModal').classList.remove('show');});
+    updatePayDetails();
+    loadProducts();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
 </script></body></html>
