@@ -1,13 +1,15 @@
-Al.just — recuperação e alteração da palavra-passe
+AL.JUST - LOGIN DO ADMINISTRADOR CORRIGIDO
+
+O admin agora exige e-mail e palavra-passe sempre que admin.html é aberto, mesmo que exista uma sessão anterior no navegador.
 
 Fluxo:
-1. 5 cliques rápidos no logotipo -> admin.html.
-2. Entrada com e-mail e palavra-passe do administrador no Supabase.
-3. Botão "Esqueci a palavra-passe" -> envia link de recuperação por e-mail.
-4. O link abre a área para definir uma nova palavra-passe.
-5. Depois de entrar, o botão "Alterar palavra-passe" permite trocar a palavra-passe.
+5 cliques no logotipo -> admin.html -> e-mail + palavra-passe -> painel.
 
-No Supabase, em Authentication > URL Configuration > Redirect URLs, adicione a URL do admin.html no GitHub Pages. Exemplo:
-https://SEU_USUARIO.github.io/aljust-loja/admin.html#reset
+Recuperação de palavra-passe:
+Clique em "Esqueci a palavra-passe" e use o e-mail do administrador. O Supabase enviará o link de recuperação.
 
-Use apenas a publishable/anon key no frontend. Nunca coloque service_role/secret key no site.
+Importante:
+No Supabase, em Authentication > URL Configuration, adicione a URL publicada de admin.html em Redirect URLs. Exemplo:
+https://SEU-USUARIO.github.io/aljust-loja/admin.html
+
+Não use a service_role/secret key no navegador.
