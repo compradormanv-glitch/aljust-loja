@@ -1,176 +1,164 @@
-<!doctype html>
-<html lang="pt">
+<!DOCTYPE html>
+<html lang="pt-AO">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Al.just — Painel Administrativo</title>
-<style>
-:root{--red:#d71920;--blue:#102a56;--bg:#f5f7fb;--card:#fff;--text:#182033;--muted:#697386;--line:#e2e7ef}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-header{background:#fff;border-bottom:1px solid var(--line);padding:16px 20px;position:sticky;top:0;z-index:5}
-.brand{font-size:28px;font-weight:900}.brand b{color:var(--red)}.brand span{color:var(--blue)}
-.wrap{max-width:1100px;margin:auto;padding:20px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
-.search{flex:1;min-width:220px;padding:13px 15px;border:1px solid var(--line);border-radius:10px;font-size:16px}
-button{border:0;border-radius:10px;padding:12px 16px;font-weight:700;cursor:pointer;font-size:15px}
-.primary{background:var(--blue);color:#fff}.danger{background:#fff0f0;color:#b40000;border:1px solid #ffcaca}.ghost{background:#fff;border:1px solid var(--line)}
-.grid{display:grid;grid-template-columns:1fr 1.2fr;gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
-h2{margin:0 0 14px;font-size:20px}label{display:block;font-weight:700;margin:12px 0 6px}
-input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;font-size:16px;background:#fff}
-textarea{min-height:90px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.preview{width:100%;height:180px;object-fit:contain;background:#f2f4f8;border-radius:10px;margin-top:10px;display:none}
-.status{padding:10px;border-radius:9px;background:#eef4ff;color:#183b73;margin-bottom:14px;display:none}
-.products{display:grid;gap:10px}.product{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:11px;padding:10px;background:#fff}
-.thumb{width:70px;height:70px;object-fit:contain;background:#f5f6f8;border-radius:8px}.pname{font-weight:800}.meta{color:var(--muted);font-size:14px;margin-top:4px}.actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-small{color:var(--muted)}.hidden{display:none!important}
-@media(max-width:760px){.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr}.product{grid-template-columns:58px 1fr}.actions{grid-column:1/-1;justify-content:stretch}.actions button{flex:1}.thumb{width:58px;height:58px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Painel administrativo da loja Al.just">
+  <title>Al.just — Admin</title>
+  <style>
+    :root{--navy:#12233f;--red:#d71920;--bg:#f4f6f9;--white:#fff;--text:#1f2937;--muted:#667085;--line:#e5e7eb;--green:#15803d;--yellow:#b45309}
+    *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+    .topbar{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:20}
+    .logo{font-size:25px;font-weight:800;letter-spacing:-1px}.logo .al{color:var(--red)}.logo .just{color:var(--navy)}
+    .admin-user{font-size:14px;color:var(--muted)}
+    .layout{display:flex;min-height:calc(100vh - 68px)}
+    .sidebar{width:245px;background:var(--navy);padding:20px 14px;color:#fff}
+    .nav-title{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#aebbd0;margin:8px 12px}
+    .nav button{width:100%;border:0;background:transparent;color:#e4ebf5;text-align:left;padding:12px 13px;border-radius:9px;margin:3px 0;cursor:pointer;font-size:14px}
+    .nav button:hover,.nav button.active{background:#243957;color:#fff}.nav button .ico{width:25px;display:inline-block}
+    main{flex:1;padding:28px;max-width:1550px;width:100%;margin:0 auto}.page{display:none}.page.active{display:block}
+    h1{font-size:29px;margin:0 0 5px}.subtitle{color:var(--muted);margin:0 0 22px}
+    .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:22px}.stat{background:#fff;border:1px solid var(--line);border-radius:13px;padding:17px}.stat .label{font-size:12px;color:var(--muted)}.stat .num{font-size:24px;font-weight:800;margin-top:7px}
+    .panel{background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px;overflow:auto}.panel h3{margin:0 0 15px}
+    .toolbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap}.search{min-width:260px;flex:1;max-width:450px}
+    input,select,textarea{width:100%;padding:11px 12px;border:1px solid #d3d9e3;border-radius:8px;background:#fff;font:inherit;color:var(--text)}textarea{min-height:90px;resize:vertical}
+    label{display:block;font-size:12px;font-weight:700;margin:11px 0 6px}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 16px}.full{grid-column:1/-1}
+    .btn{border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}.primary{background:var(--navy);color:#fff}.red{background:var(--red);color:#fff}.light{background:#eef2f7;color:var(--text)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.small{padding:7px 9px;font-size:12px}
+    table{width:100%;border-collapse:collapse;min-width:860px}th,td{text-align:left;padding:12px 9px;border-bottom:1px solid #edf0f3;font-size:13px;vertical-align:top}th{font-size:12px;color:var(--muted);background:#fafbfc}
+    .badge{display:inline-block;border-radius:999px;padding:5px 8px;font-size:11px;font-weight:700}.paid{background:#dcfce7;color:#166534}.pending{background:#fef3c7;color:#92400e}.process{background:#dbeafe;color:#1d4ed8}.cancel{background:#fee2e2;color:#991b1b}.done{background:#e0f2fe;color:#075985}
+    .empty{padding:25px;text-align:center;color:var(--muted)}.note{padding:11px 13px;background:#f8fafc;border:1px solid var(--line);border-radius:8px;color:#526071;font-size:13px;margin-bottom:15px}
+    .modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.52);z-index:50;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modal-box{background:#fff;max-width:720px;width:100%;max-height:90vh;overflow:auto;border-radius:14px;padding:22px}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.x{background:#eef2f7;border:0;border-radius:7px;padding:8px;cursor:pointer}
+    .toast{position:fixed;right:20px;bottom:20px;background:#111827;color:#fff;padding:12px 14px;border-radius:9px;display:none;z-index:80;font-size:13px}
+    @media(max-width:1100px){.stats{grid-template-columns:repeat(3,1fr)}}@media(max-width:800px){.sidebar{width:195px}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}}@media(max-width:620px){.layout{display:block}.sidebar{width:100%;padding:10px}.nav{display:grid;grid-template-columns:repeat(2,1fr);gap:3px}.nav-title{display:none}main{padding:16px}.stats{grid-template-columns:1fr 1fr}.topbar{padding:0 14px}}
+  </style>
 </head>
 <body>
-<header><div class="wrap" style="padding:0"><div class="brand"><b>AL</b><span>.just</span></div><small>Painel de gestão de produtos — vendas para empresas</small></div></header>
+  <header class="topbar">
+    <div class="logo"><span class="al">AL</span><span class="just">.just</span></div>
+    <div class="admin-user">Painel Administrativo</div>
+  </header>
 
-<main class="wrap">
-<div id="status" class="status" aria-live="polite"></div>
-<div class="toolbar">
-<input id="search" class="search" type="search" placeholder="🔎 Pesquisar produtos...">
-<button id="newBtn" class="ghost" type="button">＋ Novo produto</button>
-<button id="reloadBtn" class="ghost" type="button">↻ Atualizar</button>
-</div>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="nav-title">Gestão</div>
+      <nav class="nav">
+        <button class="active" data-page="dashboard"><span class="ico">📊</span>Visão geral</button>
+        <button data-page="orders"><span class="ico">🛒</span>Pedidos</button>
+        <button data-page="companies"><span class="ico">🏢</span>Empresas</button>
+        <button data-page="products"><span class="ico">📦</span>Produtos</button>
+        <button data-page="payments"><span class="ico">💳</span>Pagamentos</button>
+        <button data-page="deliveries"><span class="ico">🚚</span>Entregas</button>
+        <button data-page="stock"><span class="ico">📋</span>Stock</button>
+        <button data-page="settings"><span class="ico">⚙️</span>Definições</button>
+      </nav>
+    </aside>
 
-<div class="grid">
-<section class="card">
-<h2 id="formTitle">Cadastrar produto</h2>
-<form id="productForm">
-<input id="productId" type="hidden">
-<label>Nome do produto</label><input id="name" required maxlength="150">
-<div class="row">
-<div><label>Preço (Kz)</label><input id="price" type="number" min="0" step="1" required></div>
-<div><label>Stock</label><input id="stock" type="number" min="0" step="1" required></div>
-</div>
-<label>Categoria</label>
-<select id="category"><option>Informática</option><option>Escritório</option><option>Escolar</option><option>Outros</option></select>
-<label>Descrição</label><textarea id="description" maxlength="1000"></textarea>
-<label>Imagem do produto</label>
-<input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp">
-<img id="preview" class="preview" alt="Pré-visualização do produto">
-<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
-<button class="primary" type="submit">💾 Guardar e publicar</button>
-<button id="cancelBtn" class="ghost hidden" type="button">Cancelar edição</button>
-</div>
-</form>
-</section>
+    <main>
+      <section id="dashboard" class="page active">
+        <h1>Visão geral</h1><p class="subtitle">Administração da loja Al.just — vendas exclusivamente para empresas.</p>
+        <div class="stats">
+          <div class="stat"><div class="label">Pedidos</div><div class="num" id="sOrders">0</div></div>
+          <div class="stat"><div class="label">Empresas</div><div class="num" id="sCompanies">0</div></div>
+          <div class="stat"><div class="label">Produtos</div><div class="num" id="sProducts">0</div></div>
+          <div class="stat"><div class="label">Pagos</div><div class="num" id="sPaid">0 Kz</div></div>
+          <div class="stat"><div class="label">Stock baixo</div><div class="num" id="sLow">0</div></div>
+        </div>
+        <div class="panel"><h3>Últimos pedidos</h3><div id="recentOrders" class="empty">Ainda não existem pedidos.</div></div>
+      </section>
 
-<section class="card">
-<h2>Produtos cadastrados</h2>
-<div id="count" style="margin-bottom:12px"><small>A carregar...</small></div>
-<div id="products" class="products"></div>
-</section>
-</div>
+      <section id="orders" class="page">
+        <h1>Pedidos</h1><p class="subtitle">Pedidos feitos por empresas.</p>
+        <div class="panel"><div class="toolbar"><input id="orderSearch" class="search" placeholder="Pesquisar por pedido, empresa ou NIF..." oninput="renderOrders()"><button class="btn red" onclick="openOrderModal()">+ Novo pedido</button></div><div id="ordersTable"></div></div>
+      </section>
 
-<section class="card" style="margin-top:18px">
-<h2>🏢 Dados das empresas</h2>
-<p style="margin:0;color:var(--muted)">A loja continua preparada para clientes empresariais com <b>NIF</b>, nome da empresa e dados de contacto no checkout.</p>
-</section>
-</main>
+      <section id="companies" class="page">
+        <h1>Empresas</h1><p class="subtitle">Cadastro empresarial com nome, NIF e contactos.</p>
+        <div class="panel"><div class="toolbar"><input id="companySearch" class="search" placeholder="Pesquisar empresa ou NIF..." oninput="renderCompanies()"><button class="btn primary" onclick="openCompanyModal()">+ Adicionar empresa</button></div><div id="companiesTable"></div></div>
+      </section>
+
+      <section id="products" class="page">
+        <h1>Produtos</h1><p class="subtitle">Gerir catálogo, preços e disponibilidade.</p>
+        <div class="panel"><div class="toolbar"><input id="productSearch" class="search" placeholder="Pesquisar produto..." oninput="renderProducts()"><button class="btn primary" onclick="openProductModal()">+ Adicionar produto</button></div><div id="productsTable"></div></div>
+      </section>
+
+      <section id="payments" class="page">
+        <h1>Pagamentos</h1><p class="subtitle">Acompanhar estado dos pagamentos.</p>
+        <div class="panel"><div id="paymentsTable"></div></div>
+      </section>
+
+      <section id="deliveries" class="page">
+        <h1>Entregas</h1><p class="subtitle">Organizar moradas e estado da entrega.</p>
+        <div class="panel"><div id="deliveriesTable"></div></div>
+      </section>
+
+      <section id="stock" class="page">
+        <h1>Stock</h1><p class="subtitle">Controle de quantidade disponível.</p>
+        <div class="panel"><div id="stockTable"></div></div>
+      </section>
+
+      <section id="settings" class="page">
+        <h1>Definições</h1><p class="subtitle">Configurações gerais da loja.</p>
+        <div class="panel">
+          <div class="note">Esta versão guarda os dados localmente no navegador. Para produção, o Admin deverá ser ligado ao banco de dados e ao sistema de autenticação do teu site.</div>
+          <div class="formgrid">
+            <div><label>Nome da loja</label><input id="storeName" value="Al.just"></div>
+            <div><label>Moeda</label><select id="currency"><option>Kz — Kwanza</option></select></div>
+            <div><label>E-mail administrativo</label><input id="adminEmail" type="email" placeholder="admin@aljust.com"></div>
+            <div><label>WhatsApp</label><input id="adminPhone" placeholder="+244 ..."></div>
+          </div>
+          <div class="actions"><button class="btn primary" onclick="saveSettings()">Guardar definições</button><button class="btn light" onclick="exportData()">Exportar dados</button></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modal" class="modal"><div class="modal-box"><div class="modal-head"><h2 id="modalTitle" style="margin:0">Novo</h2><button class="x" onclick="closeModal()">✕</button></div><div id="modalBody"></div></div></div>
+  <div id="toast" class="toast"></div>
 
 <script>
-/*
- Al.just admin
- Requer a tabela public.produtos no Supabase.
- Configure as três constantes abaixo com os dados do seu projeto.
-*/
-const SUPABASE_URL = "COLOQUE_AQUI_A_URL_DO_SEU_SUPABASE";
-const SUPABASE_ANON_KEY = "COLOQUE_AQUI_A_CHAVE_ANON_DO_SEU_SUPABASE";
+const KEY='aljust_admin_v1';
+let db=loadDB();
+function loadDB(){try{return JSON.parse(localStorage.getItem(KEY))||{companies:[],products:[],orders:[],settings:{}}}catch(e){return {companies:[],products:[],orders:[],settings:{}}}}
+function saveDB(){localStorage.setItem(KEY,JSON.stringify(db));updateAll()}
+function money(n){return (Number(n)||0).toLocaleString('pt-AO')+' Kz'}
+function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function uid(prefix){return prefix+'-'+Date.now().toString(36).toUpperCase()}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2200)}
+function nav(){document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.page).classList.add('active');updateAll()})}
+nav();
+function openModal(title,html){document.getElementById('modalTitle').textContent=title;document.getElementById('modalBody').innerHTML=html;document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+window.onclick=e=>{if(e.target.id==='modal')closeModal()}
 
-const $ = id => document.getElementById(id);
-const state = { products: [], imageData: "", editingOldImage: "" };
+function openCompanyModal(){openModal('Adicionar empresa',`<div class="formgrid"><div><label>Nome da empresa *</label><input id="c_name"></div><div><label>NIF *</label><input id="c_nif"></div><div><label>Telefone/WhatsApp *</label><input id="c_phone"></div><div><label>E-mail</label><input id="c_email" type="email"></div><div class="full"><label>Morada *</label><input id="c_address"></div></div><div class="actions"><button class="btn primary" onclick="addCompany()">Guardar empresa</button><button class="btn light" onclick="closeModal()">Cancelar</button></div>`) }
+function addCompany(){const name=c_name.value.trim(),nif=c_nif.value.trim(),phone=c_phone.value.trim(),email=c_email.value.trim(),address=c_address.value.trim();if(!name||!nif||!phone||!address)return alert('Preencha nome, NIF, telefone e morada.');if(db.companies.some(c=>c.nif===nif))return alert('Este NIF já está cadastrado.');db.companies.push({id:uid('EMP'),name,nif,phone,email,address,created:new Date().toISOString()});saveDB();closeModal();toast('Empresa adicionada.')}
+function renderCompanies(){const q=(document.getElementById('companySearch')?.value||'').toLowerCase();const rows=db.companies.filter(c=>`${c.name} ${c.nif}`.toLowerCase().includes(q));if(!rows.length){companiesTable.innerHTML='<div class="empty">Nenhuma empresa cadastrada.</div>';return}companiesTable.innerHTML=`<table><thead><tr><th>Empresa</th><th>NIF</th><th>Contacto</th><th>E-mail</th><th>Morada</th><th>Ações</th></tr></thead><tbody>${rows.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.nif)}</td><td>${esc(c.phone)}</td><td>${esc(c.email||'—')}</td><td>${esc(c.address)}</td><td><button class="btn small light" onclick="deleteCompany('${c.id}')">Apagar</button></td></tr>`).join('')}</tbody></table>`}
+function deleteCompany(id){if(confirm('Apagar esta empresa?')){db.companies=db.companies.filter(x=>x.id!==id);saveDB();toast('Empresa apagada.')}}
 
-function msg(text, error=false){
-  const el=$("status"); el.textContent=text; el.style.display="block";
-  el.style.background=error?"#fff0f0":"#eef4ff"; el.style.color=error?"#9b0000":"#183b73";
-}
-function headers(){return {"apikey":SUPABASE_ANON_KEY,"Authorization":"Bearer "+SUPABASE_ANON_KEY,"Content-Type":"application/json","Prefer":"return=representation"}}
-function configured(){return SUPABASE_URL.startsWith("http") && !SUPABASE_URL.includes("COLOQUE_AQUI") && !SUPABASE_ANON_KEY.includes("COLOQUE_AQUI")}
-async function api(path, opts={}){
-  if(!configured()) throw new Error("Configure SUPABASE_URL e SUPABASE_ANON_KEY no admin.html.");
-  const r=await fetch(SUPABASE_URL+"/rest/v1/"+path,{...opts,headers:{...headers(),...(opts.headers||{})}});
-  const text=await r.text(); let data=null; try{data=text?JSON.parse(text):null}catch{}
-  if(!r.ok) throw new Error(data?.message || data?.hint || text || "Erro na API");
-  return data;
-}
-function normalize(p){return {...p, id:p.id ?? p.uuid ?? p.codigo, nome:p.nome ?? p.name ?? "", preco:Number(p.preco ?? p.price ?? 0), stock:Number(p.stock ?? p.estoque ?? 0), categoria:p.categoria ?? p.category ?? "Outros", descricao:p.descricao ?? p.description ?? "", imagem:p.imagem ?? p.image_url ?? p.image ?? ""};}
+function openProductModal(){openModal('Adicionar produto',`<div class="formgrid"><div><label>Nome do produto *</label><input id="p_name"></div><div><label>Categoria</label><input id="p_cat"></div><div><label>Preço (Kz) *</label><input id="p_price" type="number" min="0"></div><div><label>Stock *</label><input id="p_stock" type="number" min="0"></div><div class="full"><label>Imagem (URL)</label><input id="p_image" type="url" placeholder="https://..."></div><div class="full"><label>Descrição</label><textarea id="p_desc"></textarea></div></div><div class="actions"><button class="btn primary" onclick="addProduct()">Guardar produto</button><button class="btn light" onclick="closeModal()">Cancelar</button></div>`)}
+function addProduct(){const name=p_name.value.trim(),cat=p_cat.value.trim(),price=Number(p_price.value),stock=Number(p_stock.value),image=p_image.value.trim(),desc=p_desc.value.trim();if(!name||price<0||stock<0)return alert('Preencha nome, preço e stock corretamente.');db.products.push({id:uid('PROD'),name,cat,price,stock,image,desc});saveDB();closeModal();toast('Produto adicionado.')}
+function renderProducts(){const q=(document.getElementById('productSearch')?.value||'').toLowerCase();const rows=db.products.filter(p=>`${p.name} ${p.cat}`.toLowerCase().includes(q));if(!rows.length){productsTable.innerHTML='<div class="empty">Nenhum produto cadastrado.</div>';return}productsTable.innerHTML=`<table><thead><tr><th>Produto</th><th>Categoria</th><th>Preço</th><th>Stock</th><th>Estado</th><th>Ações</th></tr></thead><tbody>${rows.map(p=>`<tr><td>${esc(p.name)}</td><td>${esc(p.cat||'—')}</td><td>${money(p.price)}</td><td>${p.stock}</td><td>${p.stock<=3?'<span class="badge pending">Stock baixo</span>':'<span class="badge paid">Disponível</span>'}</td><td><button class="btn small light" onclick="deleteProduct('${p.id}')">Apagar</button></td></tr>`).join('')}</tbody></table>`}
+function deleteProduct(id){if(confirm('Apagar este produto?')){db.products=db.products.filter(x=>x.id!==id);saveDB();toast('Produto apagado.')}}
 
-async function load(){
-  $("products").innerHTML="<small>A carregar produtos...</small>";
-  try{
-    const data=await api("produtos?select=*&order=id.desc");
-    state.products=(data||[]).map(normalize);
-    render();
-    msg("Produtos atualizados.");
-  }catch(e){
-    $("products").innerHTML="";
-    msg(e.message,true);
-    render();
-  }
-}
-function render(){
-  const q=$("search").value.trim().toLowerCase();
-  const list=state.products.filter(p=>[p.nome,p.categoria,p.descricao].join(" ").toLowerCase().includes(q));
-  $("count").innerHTML="<small>"+list.length+" produto(s) apresentado(s)</small>";
-  if(!list.length){$("products").innerHTML="<small>Nenhum produto encontrado.</small>";return}
-  $("products").innerHTML=list.map(p=>`
-    <article class="product">
-      <img class="thumb" src="${escapeAttr(p.imagem||"")}" alt="">
-      <div><div class="pname">${escapeHtml(p.nome)}</div><div class="meta">${money(p.preco)} · Stock: ${p.stock} · ${escapeHtml(p.categoria)}</div></div>
-      <div class="actions">
-        <button class="ghost edit" data-id="${escapeAttr(String(p.id))}" type="button">✏️ Editar</button>
-        <button class="danger del" data-id="${escapeAttr(String(p.id))}" type="button">🗑️ Eliminar</button>
-      </div>
-    </article>`).join("");
-  document.querySelectorAll(".edit").forEach(b=>b.addEventListener("click",()=>edit(b.dataset.id)));
-  document.querySelectorAll(".del").forEach(b=>b.addEventListener("click",()=>removeProduct(b.dataset.id)));
-}
-function money(n){return new Intl.NumberFormat("pt-AO",{style:"currency",currency:"AOA",maximumFractionDigits:0}).format(Number(n)||0)}
-function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function escapeAttr(s){return escapeHtml(s)}
-function resetForm(){
- $("productForm").reset(); $("productId").value=""; state.imageData=""; state.editingOldImage="";
- $("preview").style.display="none"; $("preview").removeAttribute("src");
- $("formTitle").textContent="Cadastrar produto"; $("cancelBtn").classList.add("hidden");
-}
-function edit(id){
- const p=state.products.find(x=>String(x.id)===String(id)); if(!p)return;
- $("productId").value=p.id; $("name").value=p.nome; $("price").value=p.preco; $("stock").value=p.stock;
- $("category").value=p.categoria; $("description").value=p.descricao; state.editingOldImage=p.imagem||"";
- if(p.imagem){$("preview").src=p.imagem;$("preview").style.display="block"}
- $("formTitle").textContent="Editar produto"; $("cancelBtn").classList.remove("hidden"); window.scrollTo({top:0,behavior:"smooth"});
-}
-async function removeProduct(id){
- const p=state.products.find(x=>String(x.id)===String(id)); if(!p)return;
- if(!confirm("Eliminar o produto “"+p.nome+"”?"))return;
- try{await api("produtos?id=eq."+encodeURIComponent(id),{method:"DELETE"});msg("Produto eliminado.");await load()}catch(e){msg(e.message,true)}
-}
-$("imageFile").addEventListener("change",()=>{
- const f=$("imageFile").files[0]; if(!f)return;
- if(f.size>3*1024*1024){msg("A imagem deve ter no máximo 3 MB.",true);$("imageFile").value="";return}
- const r=new FileReader(); r.onload=()=>{state.imageData=r.result;$("preview").src=r.result;$("preview").style.display="block"}; r.readAsDataURL(f);
-});
-$("productForm").addEventListener("submit",async e=>{
- e.preventDefault();
- const nome=$("name").value.trim(), preco=Number($("price").value), stock=Number($("stock").value);
- if(!nome||!Number.isFinite(preco)||preco<0||!Number.isInteger(stock)||stock<0){msg("Preencha corretamente nome, preço e stock.",true);return}
- const payload={nome,preco,stock,categoria:$("category").value,descricao:$("description").value.trim()};
- if(state.imageData) payload.imagem=state.imageData; else if(state.editingOldImage) payload.imagem=state.editingOldImage;
- try{
-   const id=$("productId").value;
-   if(id) await api("produtos?id=eq."+encodeURIComponent(id),{method:"PATCH",body:JSON.stringify(payload)});
-   else await api("produtos",{method:"POST",body:JSON.stringify(payload)});
-   msg(id?"Produto atualizado e publicado.":"Produto cadastrado e publicado.");
-   resetForm(); await load();
- }catch(e){msg(e.message,true)}
-});
-$("search").addEventListener("input",render);$("reloadBtn").addEventListener("click",load);$("newBtn").addEventListener("click",resetForm);$("cancelBtn").addEventListener("click",resetForm);
-load();
+function openOrderModal(){if(!db.companies.length||!db.products.length)return alert('Adicione pelo menos uma empresa e um produto antes de criar um pedido.');openModal('Novo pedido empresarial',`<div class="formgrid"><div><label>Empresa *</label><select id="o_company">${db.companies.map(c=>`<option value="${c.id}">${esc(c.name)} — NIF ${esc(c.nif)}</option>`).join('')}</select></div><div><label>Produto *</label><select id="o_product" onchange="calcOrder()">${db.products.map(p=>`<option value="${p.id}">${esc(p.name)} — ${money(p.price)}</option>`).join('')}</select></div><div><label>Quantidade *</label><input id="o_qty" type="number" min="1" value="1" oninput="calcOrder()"></div><div><label>Total</label><input id="o_total" readonly></div><div><label>Pagamento</label><select id="o_payment"><option>Multicaixa Express</option><option>Transferência bancária</option><option>Pagamento por referência</option></select></div><div><label>Estado do pagamento</label><select id="o_paystatus"><option>Pendente</option><option>Pago</option></select></div><div class="full"><label>Morada de entrega *</label><input id="o_address"></div><div class="full"><label>Observações</label><textarea id="o_notes"></textarea></div></div><div class="actions"><button class="btn primary" onclick="addOrder()">Criar pedido</button><button class="btn light" onclick="closeModal()">Cancelar</button></div>`);calcOrder()}
+function calcOrder(){const p=db.products.find(x=>x.id===o_product.value);const q=Math.max(1,Number(o_qty.value)||1);o_total.value=p?money(p.price*q):money(0)}
+function addOrder(){const company=db.companies.find(c=>c.id===o_company.value),p=db.products.find(x=>x.id===o_product.value),qty=Math.max(1,Number(o_qty.value)||1);if(!company||!p||!o_address.value.trim())return alert('Preencha empresa, produto, quantidade e morada.');if(p.stock<qty)return alert('Stock insuficiente.');const order={id:uid('ALJ'),date:new Date().toISOString(),companyId:company.id,company:company.name,nif:company.nif,productId:p.id,product:p.name,qty,unitPrice:p.price,total:p.price*qty,payment:o_payment.value,payStatus:o_paystatus.value,deliveryAddress:o_address.value.trim(),notes:o_notes.value.trim(),deliveryStatus:'Preparação'};db.orders.unshift(order);p.stock-=qty;saveDB();closeModal();toast('Pedido criado.')}
+function renderOrders(){const q=(document.getElementById('orderSearch')?.value||'').toLowerCase();const rows=db.orders.filter(o=>`${o.id} ${o.company} ${o.nif}`.toLowerCase().includes(q));if(!rows.length){ordersTable.innerHTML='<div class="empty">Nenhum pedido encontrado.</div>';return}ordersTable.innerHTML=`<table><thead><tr><th>Pedido</th><th>Empresa / NIF</th><th>Produto</th><th>Total</th><th>Pagamento</th><th>Entrega</th><th>Ações</th></tr></thead><tbody>${rows.map(o=>`<tr><td><strong>${esc(o.id)}</strong><br><small>${new Date(o.date).toLocaleString('pt-AO')}</small></td><td>${esc(o.company)}<br><small>NIF: ${esc(o.nif)}</small></td><td>${esc(o.product)} x ${o.qty}</td><td>${money(o.total)}</td><td>${esc(o.payment)}<br>${o.payStatus==='Pago'?'<span class="badge paid">Pago</span>':'<span class="badge pending">Pendente</span>'}</td><td>${esc(o.deliveryStatus)}</td><td><button class="btn small light" onclick="advanceOrder('${o.id}')">Avançar</button> <button class="btn small" style="background:#fee2e2;color:#991b1b" onclick="deleteOrder('${o.id}')">Apagar</button></td></tr>`).join('')}</tbody></table>`}
+function advanceOrder(id){const o=db.orders.find(x=>x.id===id);if(!o)return;const states=['Preparação','Enviado','Entregue','Concluído'];let i=states.indexOf(o.deliveryStatus);o.deliveryStatus=states[Math.min(i+1,states.length-1)];saveDB();toast('Estado atualizado.')}
+function deleteOrder(id){if(confirm('Apagar este pedido?')){db.orders=db.orders.filter(x=>x.id!==id);saveDB();toast('Pedido apagado.')}}
+
+function renderPayments(){if(!db.orders.length){paymentsTable.innerHTML='<div class="empty">Nenhum pagamento registado.</div>';return}paymentsTable.innerHTML=`<table><thead><tr><th>Pedido</th><th>Empresa</th><th>Método</th><th>Valor</th><th>Estado</th><th>Ação</th></tr></thead><tbody>${db.orders.map(o=>`<tr><td>${esc(o.id)}</td><td>${esc(o.company)}</td><td>${esc(o.payment)}</td><td>${money(o.total)}</td><td>${o.payStatus==='Pago'?'<span class="badge paid">Pago</span>':'<span class="badge pending">Pendente</span>'}</td><td>${o.payStatus==='Pago'?'—':`<button class="btn small primary" onclick="markPaid('${o.id}')">Marcar pago</button>`}</td></tr>`).join('')}</tbody></table>`}
+function markPaid(id){const o=db.orders.find(x=>x.id===id);if(o){o.payStatus='Pago';saveDB();toast('Pagamento marcado como pago.')}}
+function renderDeliveries(){if(!db.orders.length){deliveriesTable.innerHTML='<div class="empty">Nenhuma entrega registada.</div>';return}deliveriesTable.innerHTML=`<table><thead><tr><th>Pedido</th><th>Empresa</th><th>Morada</th><th>Estado</th><th>Ação</th></tr></thead><tbody>${db.orders.map(o=>`<tr><td>${esc(o.id)}</td><td>${esc(o.company)}</td><td>${esc(o.deliveryAddress)}</td><td>${esc(o.deliveryStatus)}</td><td><button class="btn small light" onclick="advanceOrder('${o.id}')">Atualizar</button></td></tr>`).join('')}</tbody></table>`}
+function renderStock(){if(!db.products.length){stockTable.innerHTML='<div class="empty">Nenhum produto cadastrado.</div>';return}stockTable.innerHTML=`<table><thead><tr><th>Produto</th><th>Stock atual</th><th>Estado</th><th>Ação</th></tr></thead><tbody>${db.products.map(p=>`<tr><td>${esc(p.name)}</td><td>${p.stock}</td><td>${p.stock<=3?'<span class="badge pending">Stock baixo</span>':'<span class="badge paid">Normal</span>'}</td><td><button class="btn small light" onclick="changeStock('${p.id}')">Alterar</button></td></tr>`).join('')}</tbody></table>`}
+function changeStock(id){const p=db.products.find(x=>x.id===id);if(!p)return;const n=prompt('Novo stock para '+p.name,p.stock);if(n!==null&&Number.isInteger(Number(n))&&Number(n)>=0){p.stock=Number(n);saveDB();toast('Stock atualizado.')}}
+function saveSettings(){db.settings={storeName:storeName.value.trim()||'Al.just',currency:currency.value,adminEmail:adminEmail.value.trim(),adminPhone:adminPhone.value.trim()};saveDB();toast('Definições guardadas.')}
+function exportData(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='aljust-admin-dados.json';a.click();URL.revokeObjectURL(url)}
+function updateDashboard(){sOrders.textContent=db.orders.length;sCompanies.textContent=db.companies.length;sProducts.textContent=db.products.length;sPaid.textContent=money(db.orders.filter(o=>o.payStatus==='Pago').reduce((a,o)=>a+o.total,0));sLow.textContent=db.products.filter(p=>p.stock<=3).length;if(!db.orders.length){recentOrders.innerHTML='<div class="empty">Ainda não existem pedidos.</div>'}else{recentOrders.innerHTML='<table><thead><tr><th>Pedido</th><th>Empresa</th><th>Total</th><th>Estado</th></tr></thead><tbody>'+db.orders.slice(0,6).map(o=>`<tr><td>${esc(o.id)}</td><td>${esc(o.company)}</td><td>${money(o.total)}</td><td>${o.deliveryStatus}</td></tr>`).join('')+'</tbody></table>'}}
+function updateAll(){renderCompanies();renderProducts();renderOrders();renderPayments();renderDeliveries();renderStock();updateDashboard()}
+updateAll();
+if(db.settings.storeName)storeName.value=db.settings.storeName;if(db.settings.adminEmail)adminEmail.value=db.settings.adminEmail;if(db.settings.adminPhone)adminPhone.value=db.settings.adminPhone;
 </script>
 </body>
 </html>

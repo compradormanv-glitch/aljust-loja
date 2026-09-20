@@ -1,36 +1,17 @@
-# Al.just — Painel Administrativo
+AL.JUST — ATUALIZAÇÃO DO LOGOTIPO + ACESSO DE 5 CLIQUES
 
-## O que esta versão tem
-- Pesquisa de produtos
-- Escolha de imagem diretamente do PC/telemóvel
-- Cadastrar produto
-- Publicar/guardar no Supabase
-- Editar produtos
-- Eliminar produtos
-- Visualizar todos os produtos
-- Stock
-- Interface responsiva
-- Área informativa para clientes/empresas com NIF
-- Identidade visual AL vermelho + .just azul-escuro
+Arquivos principais:
+- index.html = site da loja
+- admin.html = área administrativa
+- logo.jpg = novo logotipo enviado
 
-## Antes de publicar
-Abra `admin.html` e substitua:
-SUPABASE_URL = "COLOQUE_AQUI_A_URL_DO_SEU_SUPABASE";
-SUPABASE_ANON_KEY = "COLOQUE_AQUI_A_CHAVE_ANON_DO_SEU_SUPABASE";
+COMO USAR NO GITHUB PAGES:
+1. Extraia o ZIP.
+2. No GitHub, abra o repositório aljust-loja.
+3. Substitua o index.html e o admin.html pelos arquivos desta pasta.
+4. Adicione também o logo.jpg.
+5. Faça Commit changes.
+6. Abra o site e clique 5 vezes rapidamente no logotipo Al.just.
+7. O site abrirá admin.html.
 
-Use a URL e a chave `anon` do seu projeto Supabase.
-
-## Observação importante sobre imagens
-Esta versão guarda a imagem como dados no campo `imagem` da tabela `produtos`. Se a sua tabela atual usar outro nome de coluna ou se preferir Supabase Storage, o código precisa ser ajustado para os nomes exatos da sua tabela/bucket.
-
-## Tabela esperada
-O painel espera, no mínimo:
-- id
-- nome
-- preco
-- stock
-- categoria
-- descricao
-- imagem
-
-Se os seus nomes forem diferentes, adapte no bloco `normalize()` e no `payload` do `admin.html`.
+Nota: o admin.html é o painel administrativo atual. Os dados desse painel continuam a usar o armazenamento local do navegador nesta versão.
