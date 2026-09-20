@@ -33,17 +33,41 @@
 <aside id="drawer" class="drawer"><div class="drawerhead"><h3>Seu carrinho</h3><button id="closeCart">✕</button></div><div id="cartItems"></div><div class="total"><span>Total</span><b id="total">0 Kz</b></div><button class="btn red full" id="checkoutBtn" type="button">Finalizar compra</button></aside><div id="checkoutModal" class="modal"><div class="modalbox"><div class="modalhead"><div><h2 style="margin:0">Finalizar compra</h2><p class="muted" style="margin:5px 0 0">Preencha os seus dados e escolha a forma de pagamento.</p></div><button type="button" id="closeCheckout">✕</button></div><div class="formgrid"><div><label>Nome *</label><input id="buyerName" placeholder="Nome da pessoa ou responsável"></div><div><label>NIF <span class="nifhint">(para empresas)</span></label><input id="buyerNif" placeholder="NIF da empresa"></div></div><div class="paytitle">Forma de pagamento *</div><div class="paymethods"><button type="button" class="paymethod active" data-method="BFA"><img src="bfa.png" alt="BFA"><span>Transferência BFA</span></button><button type="button" class="paymethod" data-method="BAI"><img src="bai.png" alt="BAI"><span>Transferência BAI</span></button><button type="button" class="paymethod" data-method="Express"><img src="express.png" alt="Multicaixa Express"><span>Multicaixa Express</span></button></div><div id="payDetails" class="paydetails"></div><div id="orderSummary" class="orderlines"></div><p class="note">Depois de confirmar, o pedido será preparado e o comprovativo pode ser enviado pelo WhatsApp Al.just.</p><div class="checkoutactions"><button type="button" class="btn red" id="confirmCheckout">Confirmar pedido</button><button type="button" class="btn ghost" id="cancelCheckout">Cancelar</button></div></div></div><div id="overlay" class="overlay"></div>
 <div id="invoiceModal" class="invoice-modal"><div class="invoice-box" id="invoiceBox"><div class="invoice-head"><div class="invoice-brand"><img src="logo.jpg" alt="Al.just"></div><div class="invoice-title"><h2>Fatura do pedido</h2><div class="invoice-no" id="invoiceNumber"></div><div class="invoice-no" id="invoiceDate"></div></div></div><div class="invoice-meta"><div><small>Cliente</small><strong id="invoiceName"></strong></div><div><small>NIF</small><strong id="invoiceNif"></strong></div><div><small>Pagamento</small><strong id="invoicePayment"></strong></div><div><small>Total</small><strong id="invoiceTotalSmall"></strong></div></div><div id="invoiceItems"></div><div class="invoice-total">Total: <strong id="invoiceTotal"></strong></div><div class="invoice-note">Documento gerado automaticamente pela Al.just como confirmação/resumo do pedido. Guarde-o para referência e, quando necessário, envie o comprovativo de pagamento.</div><div class="invoice-actions"><button type="button" class="btn ghost" id="closeInvoice">Fechar</button><button type="button" class="btn ghost" id="downloadInvoice">Baixar fatura</button><button type="button" class="btn red" id="printInvoice">Imprimir / Guardar PDF</button><a class="btn red" id="invoiceWhatsApp" target="_blank" rel="noopener">Enviar pelo WhatsApp</a></div></div></div>
 <script>
-const KEY='aljust_products_v2', CART='aljust_cart_v2';
-let products=[]; let cart=JSON.parse(localStorage.getItem(CART)||'[]'); const $=id=>document.getElementById(id); const money=n=>new Intl.NumberFormat('pt-AO').format(Number(n||0))+' Kz';
+const SUPABASE_URL = "https://myzlvhpvolpekesibvjz.supabase.co";
+const SUPABASE_KEY = "sb_publishable_INVV9XjLZN9HAeReMGV-5g_OFjXoB0b";
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const CART='aljust_cart_v3';
+let products=[]; let cart=JSON.parse(localStorage.getItem(CART)||'[]');
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('pt-AO').format(Number(n||0))+' Kz';
 const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
-function loadProducts(){try{products=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){products=[]} $('status').textContent=products.length?products.length+' produto(s) disponíveis':'Ainda não há produtos publicados.';renderProducts();renderCart()}
-function renderProducts(){const q=$('search').value.trim().toLowerCase(),cat=$('filter').value;const list=products.filter(p=>Number(p.stock)>0&&(cat==='Todos'||p.category===cat)&&(!q||`${p.name} ${p.category||''} ${p.description||''}`.toLowerCase().includes(q)));$('grid').innerHTML=list.map(p=>`<article class="card"><div class="media">${p.image?`<img src="${esc(p.image)}" alt="${esc(p.name)}">`:'📦'}</div><div class="body"><small>${esc(p.category||'Produto')}</small><h3>${esc(p.name)}</h3>${p.description?`<p>${esc(p.description)}</p>`:''}<strong class="price">${money(p.price)}</strong><span class="stock">${Number(p.stock)} unidade(s) disponíveis</span><button class="add" onclick="addToCart('${p.id}')">Adicionar ao carrinho</button></div></article>`).join('');$('empty').hidden=!!list.length}
-function addToCart(id){const p=products.find(x=>x.id===id);if(!p)return;const i=cart.find(x=>x.id===id);if(i){if(i.qty<Number(p.stock))i.qty++}else cart.push({id,qty:1});saveCart();openCart()}
-function changeQty(id,d){const i=cart.find(x=>x.id===id),p=products.find(x=>x.id===id);if(!i||!p)return;i.qty=Math.max(1,Math.min(Number(p.stock),i.qty+d));saveCart()}
-function removeItem(id){cart=cart.filter(i=>i.id!==id);saveCart()}
+
+async function loadProducts(){
+  $('status').textContent='A carregar produtos...';
+  const {data,error}=await db.from('produtos').select('id,created_at,name,category,price,stock,image_url,description').order('created_at',{ascending:false});
+  if(error){console.error(error);products=[];$('status').textContent='Não foi possível carregar os produtos.';$('empty').hidden=false;return;}
+  products=(data||[]).filter(p=>Number(p.stock)>0);
+  $('status').textContent=products.length?products.length+' produto(s) disponíveis':'Ainda não há produtos publicados.';
+  renderProducts(); renderCart();
+}
+function renderProducts(){
+  const q=$('search').value.trim().toLowerCase(),cat=$('filter').value;
+  const list=products.filter(p=>Number(p.stock)>0&&(cat==='Todos'||p.category===cat)&&(!q||`${p.name} ${p.category||''} ${p.description||''}`.toLowerCase().includes(q)));
+  $('grid').innerHTML=list.map(p=>`<article class="card"><div class="media">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.name)}">`:'📦'}</div><div class="body"><small>${esc(p.category||'Produto')}</small><h3>${esc(p.name)}</h3>${p.description?`<p>${esc(p.description)}</p>`:''}<strong class="price">${money(p.price)}</strong><span class="stock">${Number(p.stock)} unidade(s) disponíveis</span><button class="add" onclick="addToCart('${p.id}')">Adicionar ao carrinho</button></div></article>`).join('');
+  $('empty').hidden=!!list.length;
+}
+function addToCart(id){const p=products.find(x=>String(x.id)===String(id));if(!p)return;const i=cart.find(x=>String(x.id)===String(id));if(i){if(i.qty<Number(p.stock))i.qty++;}else cart.push({id,qty:1});saveCart();openCart()}
+function changeQty(id,d){const i=cart.find(x=>String(x.id)===String(id)),p=products.find(x=>String(x.id)===String(id));if(!i||!p)return;i.qty=Math.max(1,Math.min(Number(p.stock),i.qty+d));saveCart()}
+function removeItem(id){cart=cart.filter(i=>String(i.id)!==String(id));saveCart()}
 function saveCart(){localStorage.setItem(CART,JSON.stringify(cart));renderCart()}
-function renderCart(){cart=cart.filter(i=>products.some(p=>p.id===i.id));let total=0,count=0;$('cartItems').innerHTML=cart.length?cart.map(i=>{const p=products.find(x=>x.id===i.id),sub=Number(p.price)*i.qty;total+=sub;count+=i.qty;return `<div class="line"><div class="lineInfo">${p.image?`<img src="${esc(p.image)}" alt="">`:'📦'}<div><strong>${esc(p.name)}</strong><span>${money(p.price)} cada</span></div></div><div class="qty"><button onclick="changeQty('${p.id}',-1)">−</button><b>${i.qty}</b><button onclick="changeQty('${p.id}',1)">+</button><button class="remove" onclick="removeItem('${p.id}')">🗑️</button></div><strong>${money(sub)}</strong></div>`}).join(''):`<p class="muted">O carrinho está vazio.</p>`;$('cartCount').textContent=count;$('total').textContent=money(total)}
-function openCart(){$('drawer').classList.add('show');$('overlay').classList.add('show')}function closeCart(){$('drawer').classList.remove('show');$('overlay').classList.remove('show')}
+function renderCart(){
+  cart=cart.filter(i=>products.some(p=>String(p.id)===String(i.id)));
+  let total=0,count=0;
+  $('cartItems').innerHTML=cart.length?cart.map(i=>{const p=products.find(x=>String(x.id)===String(i.id)),sub=Number(p.price)*i.qty;total+=sub;count+=i.qty;return `<div class="line"><div class="lineInfo">${p.image_url?`<img src="${esc(p.image_url)}" alt="">`:'📦'}<div><strong>${esc(p.name)}</strong><span>${money(p.price)} cada</span></div></div><div class="qty"><button onclick="changeQty('${p.id}',-1)">−</button><b>${i.qty}</b><button onclick="changeQty('${p.id}',1)">+</button><button class="remove" onclick="removeItem('${p.id}')">🗑️</button></div><strong>${money(sub)}</strong></div>`}).join(''):'<p class="muted">O carrinho está vazio.</p>';
+  $('cartCount').textContent=count;$('total').textContent=money(total);
+}
+function openCart(){$('drawer').classList.add('show');$('overlay').classList.add('show')}
+function closeCart(){$('drawer').classList.remove('show');$('overlay').classList.remove('show')}
 $('search').oninput=renderProducts;$('searchBtn').onclick=renderProducts;$('filter').onchange=renderProducts;$('openCart').onclick=openCart;$('closeCart').onclick=closeCart;$('overlay').onclick=closeCart;
 document.querySelectorAll('.cats button').forEach(b=>b.onclick=()=>{$('filter').value=b.dataset.cat;renderProducts();$('produtos').scrollIntoView({behavior:'smooth'})});
 let clicks=0,timer=null;$('ownerLogo').addEventListener('click',e=>{e.preventDefault();clicks++;clearTimeout(timer);timer=setTimeout(()=>{clicks=0},1800);if(clicks===5){clicks=0;location.href='admin.html'}});
