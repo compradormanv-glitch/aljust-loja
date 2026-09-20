@@ -1,28 +1,27 @@
-AL.JUST — Categorias e Subcategorias V5
+Al.just — Categorias fechadas + Stock do proprietário + Conta do cliente (V7)
 
-Esta versão acrescenta um menu profissional de “Todas as categorias”, com categorias e subcategorias e filtragem do catálogo.
+1. Página pública
+- "Todas as categorias" abre o menu de categorias/subcategorias.
+- As categorias não ficam expostas permanentemente na página inicial.
+- A quantidade exata de stock não aparece para clientes; o público vê apenas "Disponível"/"Esgotado" conforme o produto.
 
-Categorias principais:
-- Informática
-- Escritório e Papelaria
-- Material Escolar
-- Electrodomésticos
-- Segurança Electrónica
-- Smartphones e Tablets
-- Energia
-- Imagem e Som
-- Jogos, Consolas e Desportos
-- Beleza e Saúde
-- Impressão e Consumíveis
-- Redes e Telecomunicações
+2. Conta do cliente
+- Botão "Entrar" no cabeçalho.
+- Entrar com e-mail e palavra-passe via Supabase Auth.
+- Criar conta.
+- Recuperar palavra-passe por e-mail.
+- Nome da conta guardado como metadata do utilizador.
+- O checkout exige sessão iniciada antes de continuar.
 
-No painel admin.html, ao cadastrar/editar produto, a Categoria e a Subcategoria são selecionadas em listas. A subcategoria é guardada dentro da ficha informativa do produto.
+3. Proprietário
+- Acesso ao admin continua pelos 5 cliques no logotipo.
+- O admin pede login e reautenticação nas ações protegidas.
+- Stock, alertas de stock baixo e histórico continuam no admin.
 
-A página pública permite clicar numa categoria ou subcategoria e filtrar os produtos. O restante checkout, morada, pagamentos, carrinho, ficha do produto e fatura/PDF permanece nesta versão.
+4. Nota Supabase Auth
+Para recuperação de palavra-passe, o URL publicado da página precisa estar autorizado em:
+Supabase > Authentication > URL Configuration > Redirect URLs.
+Exemplo do GitHub Pages:
+https://SEU-USUARIO.github.io/aljust-loja/
 
-Instalação no GitHub Pages:
-1. Extraia o ZIP.
-2. Substitua index.html e admin.html no repositório.
-3. Mantenha os ficheiros de imagem no mesmo nível.
-4. Faça commit.
-5. Abra o site e use Ctrl+F5.
+Não coloque service_role key no frontend. O pacote usa apenas a chave publishable/anon existente no projeto.
