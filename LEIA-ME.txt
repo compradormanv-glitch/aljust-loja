@@ -1,19 +1,28 @@
-AL.JUST — Checkout com morada de entrega
+AL.JUST — HOMEPAGE PROFISSIONAL + CHECKOUT COM MORADA
 
-Esta versão mantém o catálogo e painel anteriores e acrescenta no checkout:
-- Nome da empresa e NIF
-- Telefone/WhatsApp
-- Província, município, bairro, rua e número
-- Ponto de referência e observações
-- Escolha entre entrega no endereço ou levantamento na Al.just
-- Morada, telefone e modalidade de entrega na fatura e na mensagem preparada para WhatsApp
-- PDF da fatura com dados de entrega
+Esta versão mantém o catálogo, detalhe do produto, carrinho, checkout empresarial, morada de entrega, pagamentos e fatura/PDF.
 
-Para atualizar no GitHub Pages:
+NOVA PÁGINA INICIAL:
+- Cabeçalho profissional em vermelho + azul escuro.
+- Banner principal com imagem realista.
+- Categorias com imagens de produtos.
+- Faixa de benefícios: entrega, compra segura, venda para empresas e WhatsApp.
+- Produtos em destaque.
+- Área de ofertas.
+- Catálogo completo separado do destaque.
+- Rodapé profissional.
+
+ARQUIVOS PRINCIPAIS:
+- index.html — site público
+- admin.html — painel do administrador
+- logo.jpg — logotipo
+- hero-realista.jpg — imagem usada no banner
+- bfa.png / bai.png / express.png — meios de pagamento
+
+PUBLICAÇÃO NO GITHUB PAGES:
 1. Extraia este ZIP.
-2. No repositório, substitua principalmente index.html.
-3. Mantenha admin.html, logo.jpg, bfa.png, bai.png e express.png.
-4. Faça Commit das alterações.
-5. Abra o site e faça Ctrl+F5.
+2. No repositório, substitua os arquivos pelos arquivos desta pasta.
+3. Faça Commit changes.
+4. No Chrome, use Ctrl + F5 para atualizar o site.
 
-Nota: a taxa de entrega não é calculada automaticamente nesta versão; quando aplicável, a Al.just informa o valor antes da expedição.
+Observação: o banner foi criado como imagem de apresentação e a página continua a carregar os produtos reais do Supabase.

@@ -21,25 +21,71 @@
 .product-detail-top{display:grid;grid-template-columns:1.02fr .98fr;gap:28px}.detail-gallery{min-width:0}.detail-main-image{height:470px;background:#f5f7fa;border-radius:14px;display:grid;place-items:center;overflow:hidden;border:1px solid #e5eaf0}.detail-main-image img{width:100%;height:100%;object-fit:contain;padding:18px}.detail-main-image .broken-msg{color:#7a8694;font-size:16px}.detail-thumbs{display:flex;gap:10px;overflow:auto;margin-top:12px;padding-bottom:2px}.detail-thumb{width:78px;height:68px;flex:0 0 auto;border:2px solid #dbe2ea;border-radius:9px;background:#fff;padding:4px;cursor:pointer}.detail-thumb.active{border-color:#0a2f52}.detail-thumb img{width:100%;height:100%;object-fit:contain}.detail-info .eyebrow{display:block;margin-bottom:9px}.detail-info h2{font-size:31px;line-height:1.2;margin:0 0 8px;color:#16283c}.detail-ref{font-size:13px;color:#687789;margin-bottom:18px}.detail-price{font-size:32px;font-weight:800;color:#e21b23;margin:8px 0}.detail-stock{font-size:13px;color:#526274;margin-bottom:18px}.detail-qty{display:flex;align-items:center;border:1px solid #ccd6e0;border-radius:9px;width:max-content;overflow:hidden;margin-bottom:12px}.detail-qty button{border:0;background:#fff;width:46px;height:45px;font-size:24px;color:#0a2f52;cursor:pointer}.detail-qty span{min-width:44px;text-align:center;font-weight:800}.detail-add{width:100%;height:54px;font-size:17px;font-weight:800;background:#fff;border:2px solid #0a77d5;color:#0a77d5;border-radius:10px;cursor:pointer}.detail-buy{width:100%;height:54px;margin-top:10px;font-size:17px;font-weight:800;background:#2896d8;color:#fff;border:0;border-radius:10px;cursor:pointer}.detail-section{border-top:1px solid #e7ecf1;margin-top:28px;padding-top:22px}.detail-section h3{margin:0 0 12px;font-size:22px;color:#14283d}.detail-desc{color:#526274;line-height:1.65;white-space:pre-wrap}.spec-table{width:100%;border-collapse:collapse}.spec-table td{padding:11px 10px;border-bottom:1px solid #edf0f3}.spec-table td:first-child{width:32%;font-weight:700;color:#35485b}.detail-close{position:sticky;top:0;margin-left:auto;display:block;border:0;background:#eef3f7;color:#16283c;border-radius:9px;padding:8px 12px;cursor:pointer;z-index:2}.related-title{font-size:21px;margin-top:28px}.related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.related-item{border:1px solid #e1e7ed;border-radius:12px;padding:8px;background:#fff;cursor:pointer}.related-item img{width:100%;height:130px;object-fit:contain;background:#f5f7fa;border-radius:8px}.related-item h4{font-size:13px;line-height:1.25;margin:8px 4px 4px}.related-item strong{color:#e21b23;font-size:14px;margin:0 4px 5px;display:block}
 @media(max-width:860px){.product-detail-top{grid-template-columns:1fr}.detail-main-image{height:350px}.related-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.product-detail-box{padding:14px}.detail-main-image{height:280px}.detail-info h2{font-size:25px}.detail-price{font-size:27px}.related-grid{grid-template-columns:1fr 1fr}}
+
+/* Nova página inicial inspirada na maquete aprovada */
+body{background:#fff;color:#112b47}
+.topbar{background:#082d51;padding:8px 6%;font-size:12px;align-items:center}
+.topbar strong{color:#fff}
+.header{padding:12px 6%;gap:18px;box-shadow:0 1px 0 #edf0f4;background:#fff}
+.brand img{width:185px;height:64px}
+.search{max-width:none;flex:1;margin:0 12px}
+.search input{height:44px;border:1px solid #d9e1e9;border-right:0;border-radius:22px 0 0 22px;padding-left:18px}
+.search button{width:54px;border-radius:0 22px 22px 0;background:#082d51}
+.cart{white-space:nowrap;font-size:15px}
+nav{background:#fff;color:#082d51;justify-content:flex-start;padding:11px 6%;gap:30px;border-bottom:1px solid #e8edf2}
+nav a{font-size:13px;font-weight:700}
+nav a:first-child{color:#e51d2a;border-bottom:2px solid #e51d2a;padding-bottom:10px}
+.hero{margin:0;padding:0 6%;min-height:300px;border-radius:0;background:linear-gradient(90deg,#eef7ff 0%,#f4f8fc 45%,#0a3257 45%,#0a3257 100%);display:grid;grid-template-columns:42% 58%;overflow:hidden;gap:0}
+.hero-copy{padding:48px 34px 42px 0;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{color:#e51d2a;font-weight:900;font-size:12px;letter-spacing:.09em}
+.hero h1{font-size:42px;line-height:1.05;margin:11px 0 14px;color:#082d51;max-width:560px}
+.hero p{font-size:16px;line-height:1.5;color:#55708a;margin:0 0 22px;max-width:520px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border-radius:9px;padding:12px 18px;font-weight:800}
+.hero-art{border-radius:0;background:#0a3257;display:flex;align-items:stretch;justify-content:stretch;overflow:hidden;min-height:300px}
+.hero-art img{width:100%;height:100%;object-fit:cover;object-position:center}
+.section{padding:42px 6%}
+.section h2{font-size:28px;color:#0b2d50;margin:8px 0}
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+.cats button{position:relative;overflow:hidden;min-height:140px;border-radius:16px;padding:0;text-align:left;color:#082d51;background:#fff;border:1px solid #e2e9ef;box-shadow:0 7px 18px rgba(15,45,75,.06);display:grid;grid-template-columns:38% 62%;align-items:stretch}
+.cats button:nth-child(1){background:#0d5888;color:#fff;border:0}.cats button:nth-child(2){background:#f5f7f9}.cats button:nth-child(3){background:#eef1f6}
+.cat-visual{background:#dce8f3 center/cover no-repeat;min-height:140px}
+.cats button:nth-child(1) .cat-visual{background-color:#155f8f}
+.cat-copy{padding:21px 20px;display:flex;flex-direction:column;justify-content:center}
+.cats b{font-size:18px;display:block;margin:5px 0 8px}.cats small{font-size:13px;line-height:1.45;opacity:.9}
+.benefits{margin:0 6%;padding:18px 8px;background:#f3f7fb;border:1px solid #e6edf3;border-radius:13px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;box-shadow:0 4px 16px rgba(15,45,75,.03)}
+.benefit{padding:9px 18px;display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:center;border-right:1px solid #dce5ee}.benefit:last-child{border-right:0}
+.benefit-icon{font-size:26px}.benefit b{display:block;font-size:14px;color:#0c3155}.benefit small{display:block;margin-top:3px;color:#60778d;font-size:12px;line-height:1.35}
+.feature-wrap{padding-top:34px}.feature-head{display:flex;justify-content:space-between;align-items:end}.feature-head a{font-size:12px;font-weight:800;color:#0a77d5}.feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px}
+.feature-card{border:1px solid #e3e8ee;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 5px 16px rgba(15,45,75,.05);cursor:pointer;transition:.18s}.feature-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(15,45,75,.1)}
+.feature-media{height:180px;background:#f7f9fb;display:grid;place-items:center}.feature-media img{width:100%;height:100%;object-fit:contain;padding:12px}.feature-body{padding:12px}.feature-body small{color:#0b6db4;font-size:11px;font-weight:800}.feature-body h3{font-size:15px;margin:5px 0 8px;line-height:1.25;color:#142d46}.feature-price{font-size:18px;color:#e51d2a;font-weight:900}.feature-stock{font-size:11px;color:#54805c;margin-top:6px}.feature-btn{margin-top:10px;width:100%;border:0;border-radius:7px;background:#082d51;color:#fff;padding:9px;font-weight:800;cursor:pointer}
+.promo-box{margin-top:28px;background:#082d51;color:#fff;border-radius:14px;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}.promo-box h3{margin:0 0 6px;font-size:22px}.promo-box p{margin:0;color:#d7e3ef;font-size:13px}.promo-box .btn{white-space:nowrap}
+#produtos{padding-top:34px}.headrow h2{margin-bottom:3px}.headrow select{padding:10px 12px;border:1px solid #ccd6df;border-radius:8px;background:#fff;color:#163049;font-weight:700}
+.grid{grid-template-columns:repeat(4,1fr);gap:18px}.card{border-radius:12px;box-shadow:0 5px 15px rgba(15,45,75,.05);border-color:#e3e9ef}.media{height:195px;background:#f8fafc}.body{min-height:175px;padding:14px}.body small{color:#0a6eb5;font-size:11px}.body h3{font-size:15px}.price{font-size:18px}.add{background:#082d51}.stock{color:#3f7b4d}
+footer{margin-top:42px;background:#052846;padding:38px 6%;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:30px;align-items:start}footer img{background:#fff;padding:6px}
+.footer-title{font-weight:800;margin-bottom:10px}.footer-item{font-size:12px;color:#d8e4ef;line-height:1.8}.footer-brand{color:#fff;font-size:22px;font-weight:900}
+@media(max-width:980px){.hero{grid-template-columns:1fr;background:#f2f7fc}.hero-copy{padding-right:0}.hero-art{min-height:220px}.feature-grid,.grid{grid-template-columns:repeat(2,1fr)}.benefits{grid-template-columns:repeat(2,1fr)}.benefit{border-bottom:1px solid #dce5ee}.benefit:nth-child(2){border-right:0}.benefit:nth-child(3),.benefit:nth-child(4){border-bottom:0}.cats{grid-template-columns:1fr}.cats button{min-height:125px}.cat-visual{min-height:125px}}
+@media(max-width:650px){.topbar{gap:8px;flex-wrap:wrap}.header{flex-wrap:wrap}.brand img{width:145px}.search{order:3;flex-basis:100%;margin:4px 0 0}.hero h1{font-size:34px}.hero-art{min-height:190px}.feature-grid,.grid{grid-template-columns:1fr}.benefits{grid-template-columns:1fr}.benefit{border-right:0!important;border-bottom:1px solid #dce5ee!important}.benefit:last-child{border-bottom:0!important}footer{grid-template-columns:1fr 1fr}nav{overflow:auto;white-space:nowrap}.promo-box{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
-<div class="topbar"><span>Entrega em Angola • Atendimento rápido</span><span>WhatsApp: +244 926 163 681</span></div>
+<div class="topbar"><span>📞 926 163 681 &nbsp; • &nbsp; WhatsApp &nbsp; • &nbsp; Instagram: Al.just</span><strong>🏢 Vendas exclusivamente para empresas</strong></div>
 <header class="header">
 <a href="#inicio" class="brand" id="ownerLogo" title="Al.just" onclick="handleOwnerLogo(event)"><img src="logo.jpg" alt="Al.just"></a>
 <div class="search"><input id="search" placeholder="Pesquisar produtos..."><button id="searchBtn">🔎</button></div>
-<button class="cart" id="openCart" type="button" onclick="openCart()">🛒 Carrinho <b id="cartCount">0</b></button>
+<div style="display:flex;align-items:center;gap:14px;white-space:nowrap"><span style="font-size:14px;font-weight:800;color:#16324d">👤 Entrar</span><button class="cart" id="openCart" type="button" onclick="openCart()">🛒 Carrinho <b id="cartCount">0</b></button></div>
 </header>
-<nav><a href="#inicio">Início</a><a href="#categorias">Categorias</a><a href="#produtos">Produtos</a><a href="#sobre">Sobre Nós</a><a href="#contacto">Contacto</a></nav>
+<nav><a href="#inicio">Início</a><a href="#categorias">Informática</a><a href="#categorias">Escritório</a><a href="#categorias">Material Escolar</a><a href="#produtos">Produtos</a><a href="#contacto">Contacto</a></nav>
 <main>
-<section class="hero" id="inicio"><div><span class="eyebrow">LOJA ONLINE AL.JUST</span><h1>Tecnologia, escritório e educação num só lugar.</h1><p>Escolha os produtos para estudar, trabalhar e equipar o seu negócio.</p><a class="btn red" href="#produtos">Ver produtos</a></div><div class="hero-art">💻 🖨️ 📚</div></section>
-<section class="section" id="categorias"><span class="eyebrow">CATEGORIAS</span><h2>O que procura?</h2><div class="cats"><button data-cat="Informática">💻 <b>Material Informático</b><small>Computadores, impressoras e acessórios.</small></button><button data-cat="Escritório">🖨️ <b>Material de Escritório</b><small>Papel, canetas, pastas e mais.</small></button><button data-cat="Escolar">🎒 <b>Material Escolar</b><small>Cadernos, mochilas, lápis e mais.</small></button></div></section>
-<section class="section" id="produtos"><div class="headrow"><div><span class="eyebrow">CATÁLOGO</span><h2>Produtos</h2><p id="status">A carregar...</p></div><select id="filter"><option>Todos</option><option>Informática</option><option>Escritório</option><option>Escolar</option></select></div><div id="grid" class="grid"></div><p id="empty" class="empty" hidden>Nenhum produto encontrado.</p></section>
-<section class="benefits"><div>🛡️ <b>Compra segura</b></div><div>🚚 <b>Entrega em Angola</b></div><div>💬 <b>Atendimento WhatsApp</b></div><div>✅ <b>Qualidade</b></div></section>
-<section class="section" id="sobre"><span class="eyebrow">SOBRE</span><h2>Al.just</h2><p>Loja de material informático, de escritório e escolar.</p></section>
-<section class="section" id="contacto"><span class="eyebrow">CONTACTO</span><h2>Fale connosco</h2><a href="https://wa.me/244926163681" target="_blank" rel="noopener">💬 WhatsApp — +244 926 163 681</a></section>
+<section class="hero" id="inicio"><div class="hero-copy"><span class="eyebrow">AL.JUST</span><h1>Tecnologia, escritório e material escolar para a sua empresa</h1><p>Encontre computadores, impressoras, acessórios, material de escritório e escolar num só lugar.</p><div class="hero-actions"><a class="btn red" href="#produtos">🛒 Comprar agora</a><a class="btn ghost" href="#produtos">▣ Ver catálogo</a></div></div><div class="hero-art"><img src="hero-realista.jpg" alt="Tecnologia, impressora e materiais para escritório"></div></section>
+<section class="section" id="categorias"><span class="eyebrow">CATEGORIAS</span><h2>O que procura?</h2><div class="cats"><button data-cat="Informática"><div class="cat-visual"></div><div class="cat-copy"><b>💻 Informática</b><small>Computadores, impressoras, acessórios e componentes.</small></div></button><button data-cat="Escritório"><div class="cat-visual"></div><div class="cat-copy"><b>💼 Escritório</b><small>Pastas, papel, canetas, organização e muito mais.</small></div></button><button data-cat="Escolar"><div class="cat-visual"></div><div class="cat-copy"><b>🎒 Material Escolar</b><small>Cadernos, mochilas, lápis e outros materiais.</small></div></button></div></section>
+<section class="benefits"><div class="benefit"><span class="benefit-icon">🚚</span><div><b>Entrega em Luanda</b><small>Receba os seus produtos no endereço indicado.</small></div></div><div class="benefit"><span class="benefit-icon">🛡️</span><div><b>Compra segura</b><small>Pagamento por BFA, BAI ou Multicaixa Express.</small></div></div><div class="benefit"><span class="benefit-icon">🏢</span><div><b>Venda para empresas</b><small>Compra com NIF e dados da empresa.</small></div></div><div class="benefit"><span class="benefit-icon">💬</span><div><b>Atendimento WhatsApp</b><small>Fale diretamente com a Al.just.</small></div></div></section>
+<section class="section feature-wrap"><div class="feature-head"><div><span class="eyebrow">DESTAQUES</span><h2>Produtos em destaque</h2></div><a href="#produtos">Ver todos →</a></div><div id="featuredGrid" class="feature-grid"></div><div class="promo-box"><div><h3>🔥 Ofertas da Al.just</h3><p>Consulte os produtos promocionais e equipar o seu negócio com melhores oportunidades.</p></div><a class="btn red" href="#produtos">Ver ofertas →</a></div></section>
+<section class="section" id="produtos"><div class="headrow"><div><span class="eyebrow">CATÁLOGO</span><h2>Todos os produtos</h2><p id="status">A carregar...</p></div><select id="filter"><option>Todos</option><option>Informática</option><option>Escritório</option><option>Escolar</option></select></div><div id="grid" class="grid"></div><p id="empty" class="empty" hidden>Nenhum produto encontrado.</p></section>
+<section class="section" id="sobre"><span class="eyebrow">SOBRE A AL.JUST</span><h2>Uma loja pensada para o seu negócio</h2><p>Material informático, de escritório e escolar, com atendimento para empresas e checkout com dados de entrega, NIF e opções de pagamento.</p></section>
+<section class="section" id="contacto"><span class="eyebrow">CONTACTO</span><h2>Fale connosco</h2><p>📞 926 163 681 &nbsp; • &nbsp; 📱 WhatsApp &nbsp; • &nbsp; 📷 Al.just</p><a class="btn red" href="https://wa.me/244926163681" target="_blank" rel="noopener">💬 Falar pelo WhatsApp</a></section>
 </main>
-<footer><img src="logo.jpg" alt="Al.just"><p>© <span id="year"></span> Al.just. Todos os direitos reservados.</p></footer>
+<footer><div><div class="footer-brand">AL.just</div><div class="footer-item">Material informático • Escritório • Escolar</div></div><div><div class="footer-title">Contactos</div><div class="footer-item">📞 926 163 681<br>💬 WhatsApp<br>📷 Instagram: Al.just</div></div><div><div class="footer-title">Atendimento</div><div class="footer-item">Segunda – Sábado<br>08:00 – 18:00</div></div><div><div class="footer-title">Pagamento</div><div class="footer-item">BFA • BAI • Multicaixa Express</div></div><div style="grid-column:1/-1;border-top:1px solid rgba(255,255,255,.14);padding-top:14px;color:#bcd0e2;font-size:11px">© <span id="year"></span> Al.just. Todos os direitos reservados.</div></footer>
 <aside id="drawer" class="drawer"><div class="drawerhead"><h3>Seu carrinho</h3><button id="closeCart">✕</button></div><div id="cartItems"></div><div class="total"><span>Total</span><b id="total">0 Kz</b></div><button class="btn red full" id="checkoutBtn" type="button" onclick="openCheckout()">Finalizar compra</button></aside><div id="checkoutModal" class="modal"><div class="modalbox"><div class="modalhead"><div><h2 style="margin:0">Finalizar compra</h2><p class="muted" style="margin:5px 0 0">Preencha os seus dados e escolha a forma de pagamento.</p></div><button type="button" id="closeCheckout">✕</button></div><div class="formgrid"><div><label>Nome da empresa *</label><input id="buyerName" placeholder="Nome da empresa"></div><div><label>NIF *</label><input id="buyerNif" placeholder="NIF da empresa"></div><div><label>Telefone / WhatsApp *</label><input id="buyerPhone" type="tel" placeholder="926 000 000"></div><div><label>Província *</label><select id="deliveryProvince"><option value="">Selecione a província</option><option>Luanda</option><option>Benguela</option><option>Huíla</option><option>Cabinda</option><option>Huambo</option><option>Malanje</option><option>Namibe</option><option>Bié</option><option>Cuanza Norte</option><option>Cuanza Sul</option><option>Lunda Norte</option><option>Lunda Sul</option><option>Moxico</option><option>Moxico Leste</option><option>Uíge</option><option>Zaire</option><option>Cuando Cubango</option><option>Bengo</option><option>Cunene</option><option>Icolo e Bengo</option></select></div><div><label>Município *</label><input id="deliveryMunicipality" placeholder="Ex.: Talatona"></div><div><label>Bairro *</label><input id="deliveryNeighborhood" placeholder="Nome do bairro"></div><div><label>Rua / Avenida</label><input id="deliveryStreet" placeholder="Rua ou avenida"></div><div><label>N.º da casa / edifício</label><input id="deliveryNumber" placeholder="N.º / andar / sala"></div><div class="full"><label>Ponto de referência *</label><input id="deliveryReference" placeholder="Ex.: perto de... / em frente de..."></div><div class="full"><label>Observações para entrega</label><textarea id="deliveryNotes" placeholder="Horário preferido, contacto no local, instruções de acesso, etc."></textarea></div></div><div class="paytitle">Forma de pagamento *</div><div class="paymethods"><button type="button" class="paymethod active" data-method="BFA"><img src="bfa.png" alt="BFA"><span>Transferência BFA</span></button><button type="button" class="paymethod" data-method="BAI"><img src="bai.png" alt="BAI"><span>Transferência BAI</span></button><button type="button" class="paymethod" data-method="Express"><img src="express.png" alt="Multicaixa Express"><span>Multicaixa Express</span></button></div><div id="payDetails" class="paydetails"></div><div id="orderSummary" class="orderlines"></div><div class="delivery-box"><strong>📦 Entrega</strong><div class="delivery-choice"><label><input type="radio" name="deliveryType" value="Entrega no endereço" checked> Entrega no endereço</label><label><input type="radio" name="deliveryType" value="Levantamento na Al.just"> Levantamento na Al.just</label></div><p class="note" style="margin-bottom:0">A taxa de entrega, quando aplicável, será informada pela Al.just antes da expedição.</p></div><p class="note">Depois de confirmar, o pedido será preparado e a fatura poderá ser guardada em PDF e partilhada pelo WhatsApp.</p><div class="checkoutactions"><button type="button" class="btn red" id="confirmCheckout" onclick="confirmCheckout()">Confirmar pedido</button><button type="button" class="btn ghost" id="cancelCheckout" onclick="closeCheckout()">Cancelar</button></div></div></div><div id="overlay" class="overlay"></div>
 
 <div id="productDetailModal" class="product-detail-modal" aria-hidden="true">
@@ -368,6 +414,28 @@
   }
 
 
+  function categoryMatch(p,cat){
+    const c=String(p?.category||'').toLowerCase();
+    if(cat==='Informática') return c.includes('inform');
+    if(cat==='Escritório') return c.includes('escrit');
+    if(cat==='Escolar') return c.includes('escolar')||c.includes('escol');
+    return false;
+  }
+  function renderCategoryVisuals(){
+    document.querySelectorAll('.cats button').forEach(btn=>{
+      const cat=btn.dataset.cat; const p=products.find(x=>categoryMatch(x,cat)); const el=btn.querySelector('.cat-visual');
+      if(el && p){ const im=firstImage(p.image_url); if(im) el.style.backgroundImage=`url("${String(im).replaceAll('"','%22')}")`; }
+    });
+  }
+  function renderFeatured(){
+    const host=$('featuredGrid'); if(!host) return;
+    const list=products.slice(0,4);
+    host.innerHTML=list.map(p=>{
+      const im=firstImage(p.image_url);
+      return `<article class="feature-card" onclick="openProductDetail('${String(p.id)}')"><div class="feature-media">${im?`<img src="${esc(im)}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'">`:'📦'}</div><div class="feature-body"><small>${esc(p.category||'Produto')}</small><h3>${esc(displayName(p))}</h3><div class="feature-price">${money(p.price)}</div><div class="feature-stock">● Stock: ${Number(p.stock)} unid.</div><button class="feature-btn" type="button" onclick="event.stopPropagation();openProductDetail('${String(p.id)}')">🛒 Ver produto</button></div></article>`;
+    }).join('');
+  }
+
   async function loadProducts(){
     if($('status'))$('status').textContent='A carregar produtos...';
     try{
@@ -378,7 +446,7 @@
       products=(data||[]).filter(p=>Number(p.stock)>0);
       if($('status'))$('status').textContent=products.length?`${products.length} produto(s) disponíveis`:'Ainda não há produtos publicados.';
     }catch(err){console.error(err);products=[];if($('status'))$('status').textContent='Não foi possível carregar os produtos agora.';}
-    renderProducts();renderCart();
+    renderCategoryVisuals();renderFeatured();renderProducts();renderCart();
   }
 
   function init(){
