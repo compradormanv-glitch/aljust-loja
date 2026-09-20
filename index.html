@@ -73,7 +73,7 @@ footer{margin-top:42px;background:#052846;padding:38px 6%;display:grid;grid-temp
 .categories-menu-wrap{position:relative}.categories-toggle{border:0;background:#0a2f52;color:#fff;font-weight:800;padding:13px 16px;cursor:pointer;display:flex;align-items:center;gap:8px;border-radius:0}
 .categories-toggle:hover{background:#08233f}.mega-menu{position:absolute;left:0;top:100%;width:min(980px,94vw);background:#fff;border:1px solid #dce5ee;box-shadow:0 18px 45px rgba(8,35,63,.18);border-radius:0 0 14px 14px;padding:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .mega-group{padding:5px 8px 10px;border-right:1px solid #edf1f5}.mega-group:nth-child(3n){border-right:0}.mega-group h4{margin:0 0 8px;color:#082d51;font-size:14px}.mega-group h4 button{border:0;background:none;padding:0;font-weight:800;color:inherit;cursor:pointer;text-align:left}.mega-sub{display:block;width:100%;border:0;background:none;color:#5a6d80;text-align:left;padding:4px 0;font-size:12px;cursor:pointer}.mega-sub:hover,.mega-group h4 button:hover{color:#e21b23}.menu-footer{grid-column:1/-1;border-top:1px solid #edf1f5;padding-top:12px;display:flex;gap:10px;justify-content:flex-end}.menu-footer button{border:1px solid #d8e1e9;background:#f7fafc;color:#082d51;border-radius:8px;padding:9px 13px;cursor:pointer;font-weight:700}
-.cat-visual{height:125px;border-radius:12px;background:linear-gradient(135deg,#edf4fb,#fff);background-size:cover;background-position:center;margin:-2px -2px 15px;display:block}.cats{grid-template-columns:repeat(3,1fr)}.cats button{padding:15px}.cat-copy b{font-size:17px}.cat-copy small{font-size:13px;line-height:1.45}
+#categorias{display:none!important}.cat-visual{height:125px;border-radius:12px;background:linear-gradient(135deg,#edf4fb,#fff);background-size:cover;background-position:center;margin:-2px -2px 15px;display:block}.cats{grid-template-columns:repeat(3,1fr)}.cats button{padding:15px}.cat-copy b{font-size:17px}.cat-copy small{font-size:13px;line-height:1.45}
 .category-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.category-pill{border:1px solid #d8e1e9;background:#fff;color:#36516b;border-radius:999px;padding:7px 10px;font-size:12px;cursor:pointer}.category-pill.active,.category-pill:hover{background:#0a2f52;color:#fff;border-color:#0a2f52}
 @media(max-width:900px){.mainnav{overflow:auto;justify-content:flex-start;white-space:nowrap}.mega-menu{position:fixed;left:3%;right:3%;width:auto;top:121px;max-height:75vh;overflow:auto;grid-template-columns:repeat(2,1fr)}.mega-group:nth-child(3n){border-right:1px solid #edf1f5}.mega-group:nth-child(2n){border-right:0}}
 @media(max-width:600px){.categories-toggle{padding:11px 12px}.mega-menu{top:118px;grid-template-columns:1fr}.mega-group{border-right:0!important;border-bottom:1px solid #edf1f5}.cats{grid-template-columns:1fr}}
@@ -87,13 +87,13 @@ footer{margin-top:42px;background:#052846;padding:38px 6%;display:grid;grid-temp
 <div class="search"><input id="search" placeholder="Pesquisar produtos..."><button id="searchBtn">🔎</button></div>
 <div style="display:flex;align-items:center;gap:14px;white-space:nowrap"><span style="font-size:14px;font-weight:800;color:#16324d">👤 Entrar</span><button class="cart" id="openCart" type="button" onclick="openCart()">🛒 Carrinho <b id="cartCount">0</b></button></div>
 </header>
-<nav class="mainnav"><div class="categories-menu-wrap"><button class="categories-toggle" id="categoriesToggle" type="button">☰ Todas as categorias <span>▾</span></button><div class="mega-menu" id="categoriesMenu" hidden></div></div><a href="#inicio">Início</a><a href="#produtos" data-menu-cat="Informática">Informática</a><a href="#produtos" data-menu-cat="Escritório e Papelaria">Escritório</a><a href="#produtos" data-menu-cat="Material Escolar">Material Escolar</a><a href="#produtos">Produtos</a><a href="#contacto">Contacto</a></nav>
+<nav class="mainnav"><div class="categories-menu-wrap"><button class="categories-toggle" id="categoriesToggle" type="button">☰ Todas as categorias <span>▾</span></button><div class="mega-menu" id="categoriesMenu" hidden></div></div><a href="#inicio">Início</a><a href="#produtos">Produtos</a><a href="#contacto">Contacto</a></nav>
 <main>
 <section class="hero" id="inicio"><div class="hero-copy"><span class="eyebrow">AL.JUST</span><h1>Tecnologia, escritório e material escolar para a sua empresa</h1><p>Encontre computadores, impressoras, acessórios, material de escritório e escolar num só lugar.</p><div class="hero-actions"><a class="btn red" href="#produtos">🛒 Comprar agora</a><a class="btn ghost" href="#produtos">▣ Ver catálogo</a></div></div><div class="hero-art"><img src="hero-realista.jpg" alt="Tecnologia, impressora e materiais para escritório"></div></section>
 <section class="section" id="categorias"><span class="eyebrow">CATEGORIAS</span><h2>Encontre o que procura</h2><p class="muted" style="margin-top:-6px">Escolha uma categoria para ver os produtos disponíveis.</p><div class="cats"><button data-cat="Informática"><div class="cat-visual"></div><div class="cat-copy"><b>💻 Informática</b><small>Computadores, impressoras, redes, cabos e acessórios.</small></div></button><button data-cat="Escritório e Papelaria"><div class="cat-visual"></div><div class="cat-copy"><b>💼 Escritório e Papelaria</b><small>Pastas, papel, escrita, organização e mobiliário.</small></div></button><button data-cat="Material Escolar"><div class="cat-visual"></div><div class="cat-copy"><b>🎒 Material Escolar</b><small>Cadernos, mochilas, lápis, desenho e muito mais.</small></div></button><button data-cat="Smartphones e Tablets"><div class="cat-visual"></div><div class="cat-copy"><b>📱 Smartphones e Tablets</b><small>Telemóveis, tablets, acessórios e smartwatches.</small></div></button><button data-cat="Imagem e Som"><div class="cat-visual"></div><div class="cat-copy"><b>📺 Imagem e Som</b><small>TV, projectores, auscultadores e colunas.</small></div></button><button data-cat="Energia"><div class="cat-visual"></div><div class="cat-copy"><b>⚡ Energia</b><small>UPS, estabilizadores, baterias, tomadas e lâmpadas.</small></div></button></div></section>
 <section class="benefits"><div class="benefit"><span class="benefit-icon">🚚</span><div><b>Entrega em Luanda</b><small>Receba os seus produtos no endereço indicado.</small></div></div><div class="benefit"><span class="benefit-icon">🛡️</span><div><b>Compra segura</b><small>Pagamento por BFA, BAI ou Multicaixa Express.</small></div></div><div class="benefit"><span class="benefit-icon">🏢</span><div><b>Venda para empresas</b><small>Compra com NIF e dados da empresa.</small></div></div><div class="benefit"><span class="benefit-icon">💬</span><div><b>Atendimento WhatsApp</b><small>Fale diretamente com a Al.just.</small></div></div></section>
 <section class="section feature-wrap"><div class="feature-head"><div><span class="eyebrow">DESTAQUES</span><h2>Produtos em destaque</h2></div><a href="#produtos">Ver todos →</a></div><div id="featuredGrid" class="feature-grid"></div><div class="promo-box"><div><h3>🔥 Ofertas da Al.just</h3><p>Consulte os produtos promocionais e equipar o seu negócio com melhores oportunidades.</p></div><a class="btn red" href="#produtos">Ver ofertas →</a></div></section>
-<section class="section" id="produtos"><div class="headrow"><div><span class="eyebrow">CATÁLOGO</span><h2>Todos os produtos</h2><p id="status">A carregar...</p></div><select id="filter"><option>Todos</option><option>Informática</option><option>Escritório e Papelaria</option><option>Material Escolar</option><option>Electrodomésticos</option><option>Segurança Electrónica</option><option>Smartphones e Tablets</option><option>Energia</option><option>Imagem e Som</option><option>Jogos, Consolas e Desportos</option><option>Beleza e Saúde</option><option>Impressão e Consumíveis</option><option>Redes e Telecomunicações</option></select></div><div id="grid" class="grid"></div><p id="empty" class="empty" hidden>Nenhum produto encontrado.</p></section>
+<section class="section" id="produtos"><div class="headrow"><div><span class="eyebrow">CATÁLOGO</span><h2>Todos os produtos</h2><p id="status">A carregar...</p></div></div><div id="grid" class="grid"></div><p id="empty" class="empty" hidden>Nenhum produto encontrado.</p></section>
 <section class="section" id="sobre"><span class="eyebrow">SOBRE A AL.JUST</span><h2>Uma loja pensada para o seu negócio</h2><p>Material informático, de escritório e escolar, com atendimento para empresas e checkout com dados de entrega, NIF e opções de pagamento.</p></section>
 <section class="section" id="contacto"><span class="eyebrow">CONTACTO</span><h2>Fale connosco</h2><p>📞 926 163 681 &nbsp; • &nbsp; 📱 WhatsApp &nbsp; • &nbsp; 📷 Al.just</p><a class="btn red" href="https://wa.me/244926163681" target="_blank" rel="noopener">💬 Falar pelo WhatsApp</a></section>
 </main>
@@ -188,7 +188,7 @@ footer{margin-top:42px;background:#052846;padding:38px 6%;display:grid;grid-temp
   }
   function getFichaRows(p){
     const pd=getProductData(p.description), f=pd.ficha||{};
-    const rows=[['Marca',f.marca],['Modelo',f.modelo],['Referência',f.referencia],['Categoria',p.category],['Subcategoria',f.subcategoria],['Cor',f.cor],['Garantia',f.garantia],['Dimensões',f.dimensoes],['Peso',f.peso],['Material',f.material],['Stock',`${Number(p.stock)||0} unidade(s)`],['Preço',money(p.price)],['Especificações',f.especificacoes]];
+    const rows=[['Marca',f.marca],['Modelo',f.modelo],['Referência',f.referencia],['Categoria',p.category],['Subcategoria',f.subcategoria],['Cor',f.cor],['Garantia',f.garantia],['Dimensões',f.dimensoes],['Peso',f.peso],['Material',f.material],['Preço',money(p.price)],['Especificações',f.especificacoes]];
     return rows.filter(r=>String(r[1]??'').trim()!=='');
   }
   function displayName(p){return p?.name||'Produto'}
@@ -196,7 +196,7 @@ footer{margin-top:42px;background:#052846;padding:38px 6%;display:grid;grid-temp
     const grid=$('grid'), empty=$('empty');
     if(!grid) return;
     const q=($('search')?.value||'').trim().toLowerCase();
-    const cat=activeCategory!=='Todos'?activeCategory:($('filter')?.value||'Todos');
+    const cat=activeCategory||'Todos';
     const sub=activeSubcategory||'';
     const list=products.filter(p=>Number(p.stock)>0 && categoryMatch(p,cat) && subcategoryMatch(p,sub) && (!q||`${p.name} ${p.category||''} ${decodeDescription(p.description)} ${getProductData(p.description).ficha?.subcategoria||''}`.toLowerCase().includes(q)));
     const status=$('status');
@@ -213,7 +213,7 @@ footer{margin-top:42px;background:#052846;padding:38px 6%;display:grid;grid-temp
           <h3>${esc(displayName(p))}</h3>
           ${ref?`<span class="short-meta">Referência: ${esc(ref)}</span>`:''}
           <strong class="price">${money(p.price)}</strong>
-          <span class="stock">${Number(p.stock)} unidade(s) disponíveis</span>
+          <span class="stock">✓ Disponível</span>
           <button class="add" type="button" onclick="event.stopPropagation();addToCart('${String(p.id)}')">Adicionar ao carrinho</button>
         </div>
       </article>`;
@@ -237,7 +237,7 @@ footer{margin-top:42px;background:#052846;padding:38px 6%;display:grid;grid-temp
           <h2>${esc(p.name)}</h2>
           ${ref?`<div class="detail-ref">Referência: <strong>${esc(ref)}</strong></div>`:''}
           <div class="detail-price">${money(p.price)}</div>
-          <div class="detail-stock">${Number(p.stock)>0?`${Number(p.stock)} unidade(s) disponíveis`:'Sem stock'}</div>
+          <div class="detail-stock">${Number(p.stock)>0?'✓ Disponível':'Esgotado'}</div>
           <div class="detail-qty"><button type="button" onclick="changeDetailQty(-1)">−</button><span id="detailQty">1</span><button type="button" onclick="changeDetailQty(1)">+</button></div>
           <button class="detail-add" type="button" onclick="detailAddToCart('${String(p.id)}')">Adicionar ao carrinho</button>
           <button class="detail-buy" type="button" onclick="detailBuy('${String(p.id)}')">Finalizar compra</button>
@@ -476,7 +476,6 @@ footer{margin-top:42px;background:#052846;padding:38px 6%;display:grid;grid-temp
   function closeCategoryMenu(){const m=$('categoriesMenu');if(m)m.hidden=true}
   function applyCategoryFilter(cat,sub){
     activeCategory=cat||'Todos'; activeSubcategory=sub||'';
-    const filter=$('filter'); if(filter){filter.value=CATEGORY_DATA[activeCategory]?activeCategory:'Todos'; if(activeCategory==='Escritorio')filter.value='Escritório e Papelaria'; if(activeCategory==='Escolar')filter.value='Material Escolar';}
     closeCategoryMenu();
     renderProducts();
     const target=$('produtos'); if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
@@ -493,7 +492,7 @@ footer{margin-top:42px;background:#052846;padding:38px 6%;display:grid;grid-temp
     const list=products.slice(0,4);
     host.innerHTML=list.map(p=>{
       const im=firstImage(p.image_url);
-      return `<article class="feature-card" onclick="openProductDetail('${String(p.id)}')"><div class="feature-media">${im?`<img src="${esc(im)}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'">`:'📦'}</div><div class="feature-body"><small>${esc(p.category||'Produto')}</small><h3>${esc(displayName(p))}</h3><div class="feature-price">${money(p.price)}</div><div class="feature-stock">● Stock: ${Number(p.stock)} unid.</div><button class="feature-btn" type="button" onclick="event.stopPropagation();openProductDetail('${String(p.id)}')">🛒 Ver produto</button></div></article>`;
+      return `<article class="feature-card" onclick="openProductDetail('${String(p.id)}')"><div class="feature-media">${im?`<img src="${esc(im)}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'">`:'📦'}</div><div class="feature-body"><small>${esc(p.category||'Produto')}</small><h3>${esc(displayName(p))}</h3><div class="feature-price">${money(p.price)}</div><div class="feature-stock">● Disponível</div><button class="feature-btn" type="button" onclick="event.stopPropagation();openProductDetail('${String(p.id)}')">🛒 Ver produto</button></div></article>`;
     }).join('');
   }
 
@@ -518,14 +517,11 @@ footer{margin-top:42px;background:#052846;padding:38px 6%;display:grid;grid-temp
     categoriesToggle?.addEventListener('click',()=>{const m=$('categoriesMenu');if(m)m.hidden=!m.hidden});
     document.addEventListener('click',e=>{if(!e.target.closest('.categories-menu-wrap'))closeCategoryMenu()});
     document.querySelectorAll('[data-menu-cat]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();applyCategoryFilter(a.dataset.menuCat||'Todos','')}));
-    document.querySelectorAll('.cats button').forEach(b=>b.addEventListener('click',()=>applyCategoryFilter(b.dataset.cat||'Todos','')));
     $('search')?.addEventListener('input',renderProducts);
     $('searchBtn')?.addEventListener('click',renderProducts);
-    $('filter')?.addEventListener('change',e=>{activeCategory=e.target.value||'Todos';activeSubcategory='';renderProducts()});
     $('closeCart')?.addEventListener('click',closeCart);
     $('overlay')?.addEventListener('click',()=>{closeCart();closeCheckout();});
     $('closeCheckout')?.addEventListener('click',closeCheckout);
-    document.querySelectorAll('.cats button').forEach(b=>b.addEventListener('click',()=>{$('filter').value=b.dataset.cat;renderProducts();$('produtos')?.scrollIntoView({behavior:'smooth'});}));
     document.querySelectorAll('.paymethod').forEach(b=>b.addEventListener('click',()=>{paymentMethod=b.dataset.method||'BFA';updatePayDetails();}));
     $('closeInvoice')?.addEventListener('click',()=>$('invoiceModal')?.classList.remove('show'));
     $('printInvoice')?.addEventListener('click',()=>window.print());
