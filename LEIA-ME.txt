@@ -1,12 +1,14 @@
-AL.JUST — FATURA PDF + WHATSAPP
+AL.JUST — versão corrigida
 
-Fluxo:
-1. Cliente finaliza a compra.
-2. A fatura é gerada.
-3. “Baixar PDF” gera uma fatura em PDF real.
-4. “Enviar PDF no WhatsApp” tenta abrir a partilha nativa com o PDF anexado em telemóveis/navegadores compatíveis.
-5. No computador, caso a partilha de ficheiros não seja suportada, o PDF é descarregado e o WhatsApp abre com a mensagem pronta para que o cliente anexe o PDF manualmente.
+1. Extraia o ZIP.
+2. Coloque estes ficheiros no repositório GitHub:
+   index.html
+   admin.html
+   logo.jpg
+   bai.png
+   bfa.png
+   express.png
+3. No site, clique 5 vezes rapidamente no logotipo Al.just.
+4. Será aberta a página admin.html.
 
-IMPORTANTE: um simples link wa.me não pode anexar automaticamente um ficheiro PDF a uma conversa do WhatsApp. Para envio 100% automático sem interação do cliente é necessário usar a WhatsApp Business Platform/Cloud API com um servidor.
-
-O PDF é uma confirmação/resumo do pedido e não substitui um documento fiscal quando este for legalmente exigido.
+Correção desta versão: o index.html agora carrega o Supabase JS antes de iniciar o código, permitindo que o clique de 5 vezes funcione.
