@@ -36,6 +36,22 @@
 const SUPABASE_URL='https://myzlvhpvolpekesibvjz.supabase.co';
 const SUPABASE_KEY='sb_publishable_INVV9XjLZN9HAeReMGV-5g_OFjXoB0b';
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const CATEGORY_DATA={
+  'Informática':['Computadores e Portáteis','Impressoras','Monitores','Teclados e Mouses','Cabos e Adaptadores','Armazenamento','Redes e Conectividade','Componentes','Acessórios de Informática'],
+  'Escritório e Papelaria':['Mobiliário de Escritório','Máquinas de Escritório','Material de Escritório','Organização','Escrita','Livrarias','Material de Apresentação','Mochilas e Bolsas','Papel e Cadernos','POS e Cofres'],
+  'Material Escolar':['Cadernos','Mochilas','Lápis e Canetas','Material de Desenho','Material de Geometria','Pastas','Material de Pintura'],
+  'Electrodomésticos':['Pequenos Electrodomésticos','Cozinha','Limpeza','Ventilação','Outros'],
+  'Segurança Electrónica':['CCTV','Controle de Acesso','Sistemas de Alarme e Detecção','Gravadores','Acessórios de Segurança'],
+  'Smartphones e Tablets':['Smartphones','Tablets','Acessórios Mobile','Smartwatches','Carregadores','Cabos','Capas e Películas'],
+  'Energia':['Blocos de Tomadas','Energias Renováveis','Estabilizadores','Lâmpadas','Pilhas e Baterias','UPS'],
+  'Imagem e Som':['Acessórios de TV','Auscultadores','Colunas','Colunas Portáteis','Projectores','Telas de Projecção','TV Boxes','TV'],
+  'Jogos, Consolas e Desportos':['Acessórios','Carregadores','Consolas','Jogos','Secretárias Gamer','Cadeiras Gamer'],
+  'Beleza e Saúde':['Balanças','Cuidado Masculino','Cuidado Feminino','Higiene Oral','Saúde'],
+  'Impressão e Consumíveis':['Tinteiros','Toners','Papel de Impressão','Fitas','Consumíveis para Impressoras'],
+  'Redes e Telecomunicações':['Routers','Switches','Access Points','Cabos de Rede','Conectores RJ45','Adaptadores','Equipamentos de Rede']
+};
+const categoryOptions=(selected='')=>Object.keys(CATEGORY_DATA).map(c=>`<option value="${esc(c)}" ${c===selected?'selected':''}>${esc(c)}</option>`).join('');
+const subcategoryOptions=(cat,selected='')=>(CATEGORY_DATA[cat]||[]).map(c=>`<option value="${esc(c)}" ${c===selected?'selected':''}>${esc(c)}</option>`).join('');
 let products=[];let editing=null;let pendingAction=null;
 const $=id=>document.getElementById(id);
 const money=n=>new Intl.NumberFormat('pt-AO').format(Number(n||0))+' Kz';
@@ -67,11 +83,11 @@ function showForm(id=null){
  const p=id?products.find(x=>String(x.id)===String(id)):{};editing=id;const pd=decodeProductData(p.description),f=pd.ficha||{},imgs=parseImages(p.image_url);
  const html=`<div class="grid2">
  <div><label>Nome do produto *</label><input id="pName" value="${esc(p.name||'')}"></div>
- <div><label>Categoria</label><select id="pCat"><option ${p.category==='Informática'?'selected':''}>Informática</option><option ${p.category==='Escritório'?'selected':''}>Escritório</option><option ${p.category==='Escolar'?'selected':''}>Escolar</option></select></div>
+ <div><label>Categoria</label><select id="pCat">${categoryOptions(p.category||'Informática')}</select></div>
  <div><label>Marca</label><input id="pBrand" value="${esc(f.marca||'')}"></div>
  <div><label>Modelo</label><input id="pModel" value="${esc(f.modelo||'')}"></div>
  <div><label>Referência / SKU</label><input id="pRef" value="${esc(f.referencia||'')}"></div>
- <div><label>Subcategoria</label><input id="pSubcat" value="${esc(f.subcategoria||'')}"></div>
+ <div><label>Subcategoria</label><select id="pSubcat"><option value="">Selecione uma subcategoria</option>${subcategoryOptions(p.category||'Informática',f.subcategoria||'')}</select></div>
  <div><label>Preço (Kz) *</label><input id="pPrice" type="number" min="0" value="${Number(p.price||0)}"></div>
  <div><label>Stock *</label><input id="pStock" type="number" min="0" step="1" value="${Number(p.stock??0)}"></div>
  <div><label>Cor</label><input id="pColor" value="${esc(f.cor||'')}"></div>
@@ -84,12 +100,13 @@ function showForm(id=null){
  <div class="full"><label>Especificações técnicas</label><textarea id="pSpecs" placeholder="Uma especificação por linha">${esc(f.especificacoes||'')}</textarea><small style="color:#667085">Estas informações aparecerão na ficha informativa quando o cliente clicar no produto.</small></div>
  </div><div class="actions"><button class="btn dark" id="saveProductBtn">${id?'Guardar alterações':'Publicar produto'}</button><button class="btn light" onclick="closeForm()">Cancelar</button></div>`;
  let w=document.createElement('div');w.id='modalWrap';w.style.cssText='position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:20px;z-index:50';w.innerHTML=`<div class="panel" style="max-width:900px;width:100%;max-height:94vh;overflow:auto"><h2 style="margin-top:0">${id?'Editar produto':'Cadastrar produto'}</h2><p style="color:#667085">Ficha informativa: marca, modelo, referência, subcategoria, cor, garantia, dimensões, peso, material e especificações.</p>${html}</div>`;document.body.appendChild(w);
+ $('pCat').addEventListener('change',()=>{ $('pSubcat').innerHTML='<option value="">Selecione uma subcategoria</option>'+subcategoryOptions($('pCat').value,''); });
  $('pImage').onchange=async()=>{const urls=await parseFiles($('pImage').files);$('previewGrid').innerHTML=urls.map((u,i)=>`<img class="preview" src="${esc(u)}" alt="Nova imagem ${i+1}">`).join('')};$('saveProductBtn').onclick=saveProduct;
 }
 function closeForm(){$('modalWrap')?.remove();editing=null}
 function readForm(){return{name:$('pName').value.trim(),category:$('pCat').value,price:Number($('pPrice').value),stock:Math.max(0,Number($('pStock').value)||0)}}
 async function saveProduct(){const btn=$('saveProductBtn');btn.disabled=true;const d=readForm();try{if(!d.name)throw new Error('Digite o nome do produto.');if(!Number.isFinite(d.price)||d.price<0)throw new Error('Digite um preço válido.');if(!Number.isInteger(d.stock))throw new Error('Digite um stock inteiro.');const ficha={marca:$('pBrand').value.trim(),modelo:$('pModel').value.trim(),referencia:$('pRef').value.trim(),subcategoria:$('pSubcat').value.trim(),cor:$('pColor').value.trim(),garantia:$('pWarranty').value.trim(),dimensoes:$('pDimensions').value.trim(),peso:$('pWeight').value.trim(),material:$('pMaterial').value.trim(),especificacoes:$('pSpecs').value.trim()};const description=JSON.stringify({text:$('pDesc').value.trim(),ficha});const files=Array.from($('pImage').files||[]);const newImgs=files.length?await parseFiles(files):[];const oldImgs=editing?parseImages(products.find(x=>String(x.id)===String(editing))?.image_url||''):[];const image_url=files.length?JSON.stringify(newImgs):(editing?JSON.stringify(oldImgs):'');const payload={...d,description,image_url};if(editing){const {error}=await sb.from('produtos').update(payload).eq('id',editing);if(error)throw error;alert('Produto atualizado e publicado.')}else{const {error}=await sb.from('produtos').insert(payload);if(error)throw error;alert('Produto publicado no site.')}closeForm();await loadProducts()}catch(err){console.error(err);alert('Não foi possível guardar o produto.\n\n'+(err?.message||err))}finally{btn.disabled=false}}
-async function importLocalProducts(){requireReauth(async()=>{const local=JSON.parse(localStorage.getItem('aljust_products_v2')||'[]');if(!local.length){alert('Não encontrei produtos guardados neste navegador.');return}if(!confirm(`Foram encontrados ${local.length} produto(s) neste computador. Importar para o Supabase?`))return;let ok=0,fail=0;for(const p of local){const row={name:p.name||'Produto',category:p.category||'Informática',price:Number(p.price||0),stock:Number(p.stock||0),description:typeof p.description==='string'?p.description:JSON.stringify(p.description||''),image_url:p.image||''};const {error}=await sb.from('produtos').insert(row);if(error){console.error(error);fail++}else ok++}alert(`Importação concluída. ${ok} produto(s) importado(s)${fail?` e ${fail} com erro.`:'.'}`);await loadProducts()})}
+async function importLocalProducts(){requireReauth(async()=>{const local=JSON.parse(localStorage.getItem('aljust_products_v2')||'[]');if(!local.length){alert('Não encontrei produtos guardados neste navegador.');return}if(!confirm(`Foram encontrados ${local.length} produto(s) neste computador. Importar para o Supabase?`))return;let ok=0,fail=0;for(const p of local){const legacyCat=String(p.category||'Informática');const normalizedCat=legacyCat==='Escritório'?'Escritório e Papelaria':legacyCat==='Escolar'?'Material Escolar':legacyCat;const row={name:p.name||'Produto',category:normalizedCat,price:Number(p.price||0),stock:Number(p.stock||0),description:typeof p.description==='string'?p.description:JSON.stringify(p.description||''),image_url:p.image||''};const {error}=await sb.from('produtos').insert(row);if(error){console.error(error);fail++}else ok++}alert(`Importação concluída. ${ok} produto(s) importado(s)${fail?` e ${fail} com erro.`:'.'}`);await loadProducts()})}
 async function deleteProduct(id){requireReauth(async()=>{if(!confirm('Eliminar este produto?'))return;const {error}=await sb.from('produtos').delete().eq('id',id);if(error){alert('Não foi possível eliminar. Verifique a política DELETE no Supabase.');console.error(error);return}await loadProducts()})}
 async function adjustStock(id,d){requireReauth(async()=>{const p=products.find(x=>String(x.id)===String(id));if(!p)return;const next=Math.max(0,Number(p.stock)+d);const {error}=await sb.from('produtos').update({stock:next}).eq('id',id);if(error){alert('Não foi possível alterar o stock.');console.error(error);return}await loadProducts()})}
 async function setStock(id){requireReauth(async()=>{const p=products.find(x=>String(x.id)===String(id));if(!p)return;const n=prompt('Novo stock para '+p.name,p.stock);if(n===null||!/^[0-9]+$/.test(n))return;const {error}=await sb.from('produtos').update({stock:Number(n)}).eq('id',id);if(error){alert('Não foi possível definir o stock.');console.error(error);return}await loadProducts()})}

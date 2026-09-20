@@ -1,28 +1,28 @@
-AL.JUST — HOMEPAGE PROFISSIONAL + CHECKOUT COM MORADA
+AL.JUST — Categorias e Subcategorias V5
 
-Esta versão mantém o catálogo, detalhe do produto, carrinho, checkout empresarial, morada de entrega, pagamentos e fatura/PDF.
+Esta versão acrescenta um menu profissional de “Todas as categorias”, com categorias e subcategorias e filtragem do catálogo.
 
-NOVA PÁGINA INICIAL:
-- Cabeçalho profissional em vermelho + azul escuro.
-- Banner principal com imagem realista.
-- Categorias com imagens de produtos.
-- Faixa de benefícios: entrega, compra segura, venda para empresas e WhatsApp.
-- Produtos em destaque.
-- Área de ofertas.
-- Catálogo completo separado do destaque.
-- Rodapé profissional.
+Categorias principais:
+- Informática
+- Escritório e Papelaria
+- Material Escolar
+- Electrodomésticos
+- Segurança Electrónica
+- Smartphones e Tablets
+- Energia
+- Imagem e Som
+- Jogos, Consolas e Desportos
+- Beleza e Saúde
+- Impressão e Consumíveis
+- Redes e Telecomunicações
 
-ARQUIVOS PRINCIPAIS:
-- index.html — site público
-- admin.html — painel do administrador
-- logo.jpg — logotipo
-- hero-realista.jpg — imagem usada no banner
-- bfa.png / bai.png / express.png — meios de pagamento
+No painel admin.html, ao cadastrar/editar produto, a Categoria e a Subcategoria são selecionadas em listas. A subcategoria é guardada dentro da ficha informativa do produto.
 
-PUBLICAÇÃO NO GITHUB PAGES:
-1. Extraia este ZIP.
-2. No repositório, substitua os arquivos pelos arquivos desta pasta.
-3. Faça Commit changes.
-4. No Chrome, use Ctrl + F5 para atualizar o site.
+A página pública permite clicar numa categoria ou subcategoria e filtrar os produtos. O restante checkout, morada, pagamentos, carrinho, ficha do produto e fatura/PDF permanece nesta versão.
 
-Observação: o banner foi criado como imagem de apresentação e a página continua a carregar os produtos reais do Supabase.
+Instalação no GitHub Pages:
+1. Extraia o ZIP.
+2. Substitua index.html e admin.html no repositório.
+3. Mantenha os ficheiros de imagem no mesmo nível.
+4. Faça commit.
+5. Abra o site e use Ctrl+F5.
