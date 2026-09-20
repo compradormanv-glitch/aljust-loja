@@ -1,14 +1,18 @@
-AL.JUST — versão corrigida
+AL.JUST — VÁRIAS IMAGENS POR PRODUTO
 
-1. Extraia o ZIP.
-2. Coloque estes ficheiros no repositório GitHub:
-   index.html
-   admin.html
-   logo.jpg
-   bai.png
-   bfa.png
-   express.png
-3. No site, clique 5 vezes rapidamente no logotipo Al.just.
-4. Será aberta a página admin.html.
+Nesta versão, um único produto pode ter várias imagens.
 
-Correção desta versão: o index.html agora carrega o Supabase JS antes de iniciar o código, permitindo que o clique de 5 vezes funcione.
+COMO USAR:
+1. Entre na área do proprietário (5 cliques rápidos no logotipo).
+2. Vá a Produtos > Cadastrar produto.
+3. Em "Imagens do produto", clique para escolher os ficheiros.
+4. No seletor de ficheiros, selecione várias imagens de uma vez (4, 5, 10 ou mais; o painel aceita até 50 imagens por produto).
+5. Clique em "Publicar produto".
+6. No site, o produto mostra a primeira imagem e, quando houver várias, aparece "Ver X imagens" para abrir a galeria.
+7. As miniaturas permitem trocar de imagem e os botões ← e → permitem navegar.
+
+IMPORTANTE:
+- A coluna image_url do Supabase guarda a galeria como um texto JSON com as imagens.
+- Produtos antigos com apenas uma imagem continuam a funcionar.
+- Ao editar um produto e selecionar novas imagens, a galeria é substituída pelas imagens selecionadas.
+- A versão mantém o checkout, pagamentos BFA/BAI/Express, fatura e acesso por 5 cliques.
